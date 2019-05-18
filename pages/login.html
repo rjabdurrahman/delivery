@@ -1,60 +1,53 @@
 <div class="overlay-container">
     <div class="overlay">
-        <div class="div-box w3-hide-small w3-hide-medium clearfix"
-            style="margin-top: 90px; float: left; margin-right: 40px; margin-left: 40px; min-height: 300px; color: white;">
-            <h1 style="font-size: 60px; text-align: center;" class="ex-font">Welcome To</h1>
-            <section style="text-align: center;">
-                <span id="typing" style="font-size: 60px;" class="ex-font"></span>
-                <span style="font-size: 60px;" class='type-cursor'>|</span>
-            </section>
+        <div class="flex" style="justify-content: space-between; margin-top: 70px;">
+            <!-- Left Div -->
+            <div class="div-box w3-hide-small w3-hide-medium clearfix"
+                style="min-height: 300px; color: white; margin-top: 20px;">
+                <h1 style="font-size: 60px; text-align: center;" class="ex-font">Welcome To</h1>
+                <section style="text-align: center;">
+                    <span id="typing" style="font-size: 60px;" class="ex-font"></span>
+                    <span style="font-size: 60px;" class='type-cursor'>|</span>
+                </section>
+            </div>
+            <!-- Right Div -->
+            <div ng-show="!clogged()" style="margin: auto;">
+                <div ng-show="!clogged()" class="div-box w3-light-gray w3-card-4">
+                    <div class="w3-container main-bg-color div-title">
+                        <h2>LOGIN</h2>
+                    </div>
+                    <div class="w3-container" style="padding-bottom: 18px;">
+                        <form name="comlogin" id="companyLoginForm">
+                            <input id="companyNameField" class="w3-input w3-border" type="text"
+                                style="width: 100%; margin-top: 28px; padding: 10px;" placeholder="Company">
+                            <input id="companyPasswordField" class="w3-input w3-border" type="password"
+                                style="width: 100%; margin-top: 22px; padding: 10px;" placeholder="Password">
+                            <p style="padding: 6px;">
+                                <button id="cLoginBtn" class="w3-btn main-bg-color">Login</button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- User Login -->
+            <div style="margin: auto;" ng-show="clogged() && !logged()" class="div-box w3-light-gray w3-card-4">
+                <div class="w3-container main-bg-color div-title">
+                    <h2>USER LOGIN</h2>
+                </div>
+                <div class="w3-container" style="padding-bottom: 18px;">
+                    <form name="userlogin" id="userLoginForm">
+                        <input id="userEmailField" class="w3-input w3-border" type="text"
+                            style="width: 100%; margin-top: 28px; padding: 10px;" placeholder="Username">
+                        <input id="userPasswordField" class="w3-input w3-border" type="password"
+                            style="width: 100%; margin-top: 22px; padding: 10px;" placeholder="Password">
+                        <p style="padding: 6px;">
+                            <button id="loginBtn" class="w3-btn main-bg-color">Login</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+            <!-- Right Div End -->
         </div>
-        <div ng-show="!clogged()" class="div-box w3-light-gray w3-card-4 clearfix"
-            style="margin-top: 60px; margin-bottom: 20px; float: right; margin-right: 160px; margin-left: 40px;">
-            <div class="w3-container main-bg-color div-title">
-                <h2>COMPANY LOGIN</h2>
-            </div>
-            <div class="w3-container" style="padding-bottom: 18px;">
-                <form name="comlogin" id="companyLoginForm">
-                    <input id="companyNameField" class="w3-input w3-border" type="text"
-                        style="width: 100%; margin-top: 28px; padding: 10px;" placeholder="Company Name">
-                    <input id="companyPasswordField" class="w3-input w3-border" type="password"
-                        style="width: 100%; margin-top: 22px; padding: 10px;" placeholder="Password">
-                    <p style="padding: 6px;">
-                        <button id="cLoginBtn" class="w3-btn main-bg-color">Login</button>
-                    </p>
-                </form>
-            </div>
-        </div>
-        <div ng-show="clogged() && !logged()" class="div-box w3-light-gray w3-card-4 clearfix"
-            style="margin-top: 60px; margin-bottom: 20px; float: right; margin-right: 160px; margin-left: 40px;">
-            <div class="w3-container main-bg-color div-title">
-                <h2>USER LOGIN</h2>
-            </div>
-            <div class="w3-container" style="padding-bottom: 18px;">
-                <form name="userlogin" id="userLoginForm">
-                    <input id="userEmailField" class="w3-input w3-border" type="text"
-                        style="width: 100%; margin-top: 28px; padding: 10px;" placeholder="Username">
-                    <input id="userPasswordField" class="w3-input w3-border" type="password"
-                        style="width: 100%; margin-top: 22px; padding: 10px;" placeholder="Password">
-                    <p style="padding: 6px;">
-                        <button id="loginBtn" class="w3-btn main-bg-color">Login</button>
-                    </p>
-                </form>
-            </div>
-        </div>
-        <!-- <div ng-show="logged() && clogged()" class="div-box w3-light-gray w3-card-4 clearfix" style="margin-top: 60px; margin-bottom: 20px; float: right; margin-right: 160px; margin-left: 40px;">
-            <div class="w3-container main-bg-color div-title">
-                <h2>DASHBOARD</h2>
-            </div>
-            <div class="w3-container">
-                <p style="padding: 6px;">Name: {{userInfo.name}}</p>
-                <p style="padding: 6px;">Email: {{userInfo.email}}</p>
-                <p style="padding: 6px;">
-                    <button onclick="logOut()" class="w3-btn main-bg-color">Logout</button>
-                    <a style="float: right; margin-top: 12px;" href="#">Forget Password?</a>
-                </p>
-            </div>
-        </div> -->
     </div>
 </div>
 <script>
@@ -69,10 +62,10 @@
         let btn = this;
         let cUser = $js('companyNameField').value + '@gmail.com';
         let cPass = $js('companyPasswordField').value;
-                $print(com.$id);
-                $print(com.$value);
-                $print(cUser);
-                $print(cPass);
+        $print(com.$id);
+        $print(com.$value);
+        $print(cUser);
+        $print(cPass);
         if (com) {
             if (com.$id + '@gmail.com' != cUser) {
                 notify('Company Name Incorrect!', 2);

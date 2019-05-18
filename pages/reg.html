@@ -491,7 +491,14 @@
                         notify('Something Went Wrong in Database!', 2);
                     }
                     else {
-                        notify('User Added Sucessfully', 1);
+                        let tempUser = lsGetJ('tempUser');
+                        fsDb.collection('users').doc(Object.keys(tempUser)[0]).set(tempUser[Object.keys(tempUser)[0]])
+                            .then(function () {
+                                notify('User Added Sucessfully', 1);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
                         $js('nodata').style.display = "none";
                         clearFields();
                         exitModel();
@@ -574,9 +581,14 @@
         $js('confirmPermission').addEventListener('click', function () {
             let allPerEl = $sn('perCheck');
             let newPer = {};
+            let jPer = {};
             allPerEl.forEach(function (el) {
+                if (el.id.substring(0, 3) == 'fe_')
+                    jPer[el.id] = el.checked;
                 newPer[el.id] = el.checked;
             })
+            console.log(newPer);
+            console.log(jPer);
             db.child('users').child(cId).update(newPer)
                 .then(function (success) {
                     notify('Permission Sucessfully Updated', 1);

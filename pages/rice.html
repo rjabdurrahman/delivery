@@ -23,8 +23,8 @@
                                     <th>Total quantity</th>
                                     <th>Std unit price</th>
                                     <th>Total price</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th ng-if="userInfo.c_11_e">Edit</th>
+                                    <th ng-if="userInfo.c_11_d">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,12 +38,10 @@
                                     <td>{{comNum (rice.totalQu)}}</td>
                                     <td>{{comNum (rice.stdUnitPri)}}</td>
                                     <td>{{comNum (rice.totalPri)}}</td>
-                                    <td>
+                                    <td ng-if="userInfo.c_11_e">
                                         <button id="{{rice.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
-                                        <button id="{{rice.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                            style="display: none;">Update</button>
                                     </td>
-                                    <td>
+                                    <td ng-if="userInfo.c_11_d">
                                         <button id="{{rice.$id}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
                                     </td>
                                 </tr>

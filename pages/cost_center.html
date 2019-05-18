@@ -16,18 +16,18 @@
                                 <tr class="main-bg-color">
                                     <th>ID</th>
                                     <th>Cost Center</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th ng-if="userInfo.cs_e">Edit</th>
+                                    <th ng-if="userInfo.cs_d">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="costCenter in comCostCenters | orderBy : 'code' track by $index">
                                     <td>{{$index + 1}}</td>
                                     <td>{{costCenter.$value}}</td>
-                                    <td>
+                                    <td ng-if="userInfo.cs_e">
                                         <button id="{{costCenter.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
                                     </td>
-                                    <td>
+                                    <td ng-if="userInfo.cs_d">
                                         <button id="{{costCenter.$id}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
                                     </td>
                                 </tr>

@@ -24,8 +24,8 @@
                                             <th>Account Code</th>
                                             <th>Account Head</th>
                                             <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
+                                            <th ng-if="userInfo.c_1_e">Edit</th>
+                                            <th ng-if="userInfo.c_1_d">Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -38,12 +38,10 @@
                                             <td>{{comAcc.accCode}}</td>
                                             <td>{{comAcc.accText}}</td>
                                             <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>
@@ -83,12 +81,10 @@
                                             <td>{{comAcc.accText}}</td>
                                             <td>{{comAcc.rate}}%</td>
                                             <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>
@@ -126,12 +122,10 @@
                                             <td>{{comAcc.accCode}}</td>
                                             <td>{{comAcc.accText}}</td>
                                             <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>
@@ -169,12 +163,10 @@
                                             <td>{{comAcc.accCode}}</td>
                                             <td>{{comAcc.accText}}</td>
                                             <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>
@@ -212,12 +204,10 @@
                                             <td>{{comAcc.accCode}}</td>
                                             <td>{{comAcc.accText}}</td>
                                             <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>
@@ -253,12 +243,10 @@
                                             <td>{{comAcc.nature}}</td>
                                             <td>{{comAcc.accCode}}</td>
                                             <td>{{comAcc.accText}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>
@@ -294,12 +282,10 @@
                                             <td>{{comAcc.nature}}</td>
                                             <td>{{comAcc.accCode}}</td>
                                             <td>{{comAcc.accText}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>
@@ -335,12 +321,10 @@
                                             <td>{{comAcc.nature}}</td>
                                             <td>{{comAcc.accCode}}</td>
                                             <td>{{comAcc.accText}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>
@@ -378,12 +362,10 @@
                                             <td>{{comAcc.accCode}}</td>
                                             <td>{{comAcc.accText}}</td>
                                             <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>
@@ -421,12 +403,10 @@
                                             <td>{{comAcc.accCode}}</td>
                                             <td>{{comAcc.accText}}</td>
                                             <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>
@@ -462,12 +442,10 @@
                                             <td>{{comAcc.nature}}</td>
                                             <td>{{comAcc.accCode}}</td>
                                             <td>{{comAcc.accText}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>
@@ -503,12 +481,10 @@
                                             <td>{{comAcc.nature}}</td>
                                             <td>{{comAcc.accCode}}</td>
                                             <td>{{comAcc.accText}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>
@@ -544,12 +520,10 @@
                                             <td>{{comAcc.nature}}</td>
                                             <td>{{comAcc.accCode}}</td>
                                             <td>{{comAcc.accText}}</td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_e">
                                                 <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
-                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                                    style="display: none;">Update</button>
                                             </td>
-                                            <td>
+                                            <td ng-if="userInfo.c_1_d">
                                                 <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
                                             </td>
                                         </tr>

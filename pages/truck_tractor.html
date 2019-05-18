@@ -19,8 +19,8 @@
                                     <th>Vehicle Type</th>
                                     <th>Vehicle No</th>
                                     <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th ng-if="userInfo.c_5_e">Edit</th>
+                                    <th ng-if="userInfo.c_5_d">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -30,12 +30,10 @@
                                     <td>{{Tr.type}}</td>
                                     <td>{{Tr.name}}</td>
                                     <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(Tr.balance)}}</td>
-                                    <td>
+                                    <td ng-if="userInfo.c_5_e">
                                         <button id="{{Tr.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
-                                        <button id="{{Tr.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                            style="display: none;">Update</button>
                                     </td>
-                                    <td>
+                                    <td ng-if="userInfo.c_5_d">
                                         <button id="{{Tr.$id}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
                                     </td>
                                 </tr>

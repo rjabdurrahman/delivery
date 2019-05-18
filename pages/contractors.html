@@ -18,8 +18,8 @@
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Contract</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th ng-if="userInfo.c_8_e">Edit</th>
+                                    <th ng-if="userInfo.c_8_d">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,12 +28,10 @@
                                     <td>{{con.code}}</td>
                                     <td>{{con.name}}</td>
                                     <td>{{con.contact}}</td>
-                                    <td>
+                                    <td ng-if="userInfo.c_8_e">
                                         <button id="{{con.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
-                                        <button id="{{con.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                            style="display: none;">Update</button>
                                     </td>
-                                    <td>
+                                    <td ng-if="userInfo.c_8_d">
                                         <button id="{{con.$id}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
                                     </td>
                                 </tr>

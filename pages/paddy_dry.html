@@ -20,8 +20,8 @@
                                     <th>Loan Type</th>
                                     <th>Loan Nature</th>
                                     <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
-                                    <th style="width: 120px;">Edit</th>
-                                    <th style="width: 130px;">Delete</th>
+                                    <th ng-if="userInfo.c_10_e" style="width: 120px;">Edit</th>
+                                    <th ng-if="userInfo.c_10_d" style="width: 130px;">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,10 +32,10 @@
                                     <td>{{paddyDry.type}}</td>
                                     <td>{{paddyDry.nature}}</td>
                                     <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(paddyDry.balance)}}</td>
-                                    <td>
+                                    <td ng-if="userInfo.c_10_e">
                                         <button id="{{paddyDry.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
                                     </td>
-                                    <td>
+                                    <td ng-if="userInfo.c_10_d">
                                         <button id="{{paddyDry.$id}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
                                     </td>
                                 </tr>

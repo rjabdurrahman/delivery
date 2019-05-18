@@ -17,8 +17,8 @@
                                     <th>ID</th>
                                     <th>A/C Code</th>
                                     <th>Party Name</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th ng-if="userInfo.c_4_e">Edit</th>
+                                    <th ng-if="userInfo.c_4_d">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -26,12 +26,10 @@
                                     <td>{{$index + 1}}</td>
                                     <td>{{ch.code}}</td>
                                     <td>{{ch.name}}</td>
-                                    <td>
+                                    <td ng-if="userInfo.c_4_e">
                                         <button id="{{ch.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
-                                        <button id="{{ch.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                            style="display: none;">Update</button>
                                     </td>
-                                    <td>
+                                    <td ng-if="userInfo.c_4_d">
                                         <button id="{{ch.$id}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
                                     </td>
                                 </tr>

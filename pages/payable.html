@@ -23,8 +23,8 @@
                                     <th>Email</th>
                                     <th>Address</th>
                                     <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th ng-if="userInfo.c_3_e">Edit</th>
+                                    <th ng-if="userInfo.c_3_d">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,12 +41,10 @@
                                     <td class="email-field">{{pay.email}}</td>
                                     <td>{{pay.address}}</td>
                                     <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(pay.balance)}}</td>
-                                    <td>
+                                    <td ng-if="userInfo.c_3_e">
                                         <button id="{{pay.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
-                                        <button id="{{pay.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                            style="display: none;">Update</button>
                                     </td>
-                                    <td>
+                                    <td ng-if="userInfo.c_3_d">
                                         <button id="{{pay.$id}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
                                     </td>
                                 </tr>

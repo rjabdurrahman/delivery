@@ -11,7 +11,7 @@
             <div class="w3-card-4 table-container">
                 <div class="ch-table-content">
                     <div class="w3-responsive">
-                        <table class="w3-table-all chart-tables" >
+                        <table class="w3-table-all chart-tables">
                             <thead>
                                 <tr class="main-bg-color">
                                     <th>ID</th>
@@ -23,8 +23,8 @@
                                     <th>Total quantity</th>
                                     <th>Std unit price</th>
                                     <th>Total price</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th ng-if="userInfo.c_12_e">Edit</th>
+                                    <th ng-if="userInfo.c_12_d">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,12 +38,10 @@
                                     <td>{{comNum (byProduct.totalQu)}}</td>
                                     <td>{{comNum (byProduct.stdUnitPri)}}</td>
                                     <td>{{comNum (byProduct.totalPri)}}</td>
-                                    <td>
+                                    <td ng-if="userInfo.c_12_e">
                                         <button id="{{byProduct.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
-                                        <button id="{{byProduct.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
-                                            style="display: none;">Update</button>
                                     </td>
-                                    <td>
+                                    <td ng-if="userInfo.c_12_d">
                                         <button id="{{byProduct.$id}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
                                     </td>
                                 </tr>

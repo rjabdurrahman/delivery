@@ -39,7 +39,7 @@
             display: none !important;
         }
 
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 1100px) {
             .nav-icon {
                 display: block !important;
                 position: absolute;
@@ -64,10 +64,24 @@
             </section>
             <section style="margin-left: auto; font-size: 16px; box-sizing: border-box; font-family: 'Montserrat', sans-serif; font-weight: bold;"
                 class="top-nav">
+                <!-- Top Small Screen Menu -->
                 <div class="w3-bar main-bg-color">
-                    <a href="javascript:void(0);" class="nav-icon w3-bar-item w3-button" onclick="myFunction()">
-                        <i style="font-size: 18px;" class="fa fa-bars"></i>
-                    </a>
+                    <div class="w3-dropdown-click">
+                        <button href="javascript:void(0);" class="nav-icon w3-bar-item w3-button"
+                            onclick="$('#mNav').toggle();$('#smallNavArea').hide();">
+                            <i style="font-size: 18px;" class="fa fa-bars"></i>
+                        </button>
+                        <div id="mNav" class="w3-dropdown-content w3-bar-block w3-border"
+                            style="position: absolute; right: 5px; top: 40px;">
+                            <button id="cNav" class="w3-bar-item w3-button">CHART</button>
+                            <button id="feNav" class="w3-bar-item w3-button">FORM ENTRY</button>
+                            <button id="dNav" class="w3-bar-item w3-button">DATABASE</button>
+                            <button id="lNav" class="w3-bar-item w3-button">LEDGER</button>
+                            <button id="sNav" class="w3-bar-item w3-button">STATEMENT</button>
+                            <button id="uNav" class="w3-bar-item w3-button">{{userInfo.name}}</button>
+                        </div>
+                    </div>
+                    <!-- Top Small Screen Menu -->
                     <section ng-show="!logged()" class="nav-menus">
                         <span style="font-size: 15px;">Please login to get access.</span>
                     </section>
@@ -241,6 +255,100 @@
             </section>
         </div>
     </header>
+    <!-- Small Screen Navigations -->
+    <div id="smallNavArea"
+        style="width: 100%; min-height: 100vh; background-color: white; position: absolute; display: none;">
+        <div class="top-part w3-light-gray" style="height: 40px;">
+            <h4 id="sNavTitle" style="padding: 4px 10px; margin: 0;">MENU</h4>
+            <button class="w3-btn w3-indigo" style="position: absolute; right: 8px; top: 2px; padding: 6px 10px;"
+                onclick="$('#smallNavArea').toggle();">&times;</button>
+        </div>
+        <div class="s-menu-item menu-list w3-container">
+            <a ng-show="userInfo.c_1" href="#account">Main
+                Accounts</a>
+            <a ng-show="userInfo.c_2" href="#receivable">Debtors</a>
+            <a ng-show="userInfo.c_3" href="#payable">Creditors</a>
+            <a ng-show="userInfo.c_4" href="#companyheads">Company
+                Heads</a>
+            <a ng-show="userInfo.c_5" href="#trucktractor">Vehicles</a>
+            <a ng-show="userInfo.c_6" href="#employees">Employees</a>
+            <a ng-show="userInfo.c_7" href="#bank">Banks</a>
+            <a ng-show="userInfo.c_8" href="#contractors">Contractors</a>
+            <a ng-show="userInfo.c_9" href="#paddyraw">Raw
+                Materials</a>
+            <a ng-show="userInfo.c_11" href="#rice">Finished
+                Goods</a>
+            <a ng-show="userInfo.c_12" href="#buyproducts">By
+                Products</a>
+            <a ng-show="userInfo.c_10" href="#paddydry">Loans</a>
+            <a ng-show="userInfo.c_10" href="#costcenter">Cost
+                Centers</a>
+            <a ng-show="userInfo.c_10" href="#exportchat">Export
+                All (Excel)</a>
+        </div>
+        <div class="s-menu-item menu-list w3-container">
+            <a ng-show="userInfo.fe_1" href="#journalform">Journal Form</a>
+            <a ng-show="userInfo.fe_2" href="#purchase">Purchase</a>
+            <a ng-show="userInfo.fe_3" href="#purchasereturn">Puchase Return</a>
+            <a ng-show="userInfo.fe_4" href="#sales">Sales</a>
+            <a ng-show="userInfo.fe_5" href="#salesreturn">Sales Return</a>
+            <a ng-show="userInfo.fe_6" href="#prdinput">Production Input</a>
+            <a ng-show="userInfo.fe_7" href="#prdoutput">Production Output</a>
+            <a ng-show="userInfo.fe_8" href="#byprod">By Product Price</a>
+        </div>
+        <div class="s-menu-item menu-list w3-container">
+            <a href="#journal">Journal</a>
+            <a href="#FGGoods">Finished Goods</a>
+            <a href="#RM">Raw Material</a>
+            <a href="#pdrInputDB">Product Input</a>
+            <a href="#pdrOutputDB">Product Output</a>
+            <a href="#ByPPrc">By Product Price</a>
+        </div>
+        <div class="s-menu-item menu-list w3-container">
+            <a ng-show="userInfo.l_1" href="#debitledger">Debit
+                Ledger</a>
+            <a ng-show="userInfo.l_2" href="#creditledger">Credit
+                Ledger</a>
+            <a ng-show="userInfo.l_3" href="#expenseledger">Expense
+                Ledger</a>
+            <a ng-show="userInfo.l_4" href="#debitorledger">Debtor
+                Ledger</a>
+            <a ng-show="userInfo.l_5" href="#creditorledger">Creditor
+                Ledger</a>
+            <a ng-show="userInfo.l_6" href="#opld">Other
+                Party Ledger Debit</a>
+            <a ng-show="userInfo.l_7" href="#oplc">Other
+                Party Ledger Credit</a>
+            <a ng-show="userInfo.l_8" href="#revledger">Revenue Ledger</a>
+            <a ng-show="userInfo.l_9" href="#dcash">Daily
+                Cash</a>
+            <a ng-show="userInfo.l_10" href="#dbank">Daily
+                Bank</a>
+            <a ng-show="userInfo.l_11" href="#dexpense">Daily
+                Expense</a>
+            <a ng-show="userInfo.l_12" href="#drev">Daily
+                Revenue</a>
+            <a ng-show="userInfo.l_13" href="#dpurchase">Daily Purchase</a>
+            <a ng-show="userInfo.l_14" href="#rawmaterials">Raw Materials</a>
+            <a ng-show="userInfo.l_15" href="#finishedandby">Finished Goods and By Products</a>
+            <a ng-show="userInfo.l_16" href="#invoice">Invoice</a>
+            <a ng-show="userInfo.l_17" href="#proledger">Production Ledger</a>
+            <a ng-show="userInfo.l_18" href="#productperrep">Product Performance Report</a>
+        </div>
+        <div class="s-menu-item menu-list w3-container">
+            <a href="#trialbalance">Trial Balance</a>
+            <a href="#balancesheet">Balance Sheet</a>
+            <a href="#IncomeStatmnt">Income Statement</a>
+            <a href="#REStmnt">RE Statement</a>
+        </div>
+        <div class="s-menu-item menu-list w3-container">
+            <a href="#myjournal">My Journal</a>
+            <a ng-show="userInfo.uc" href="#reg">User
+                Controll</a>
+            <a onclick="logOut()" href="#/">Logout</a>
+        </div>
+    </div>
+    <!-- Small Screen Navigation End -->
     <div id="notification" class="w3-panel w3-green w3-card-4 notification">
         <h6>Added Successfully!</h6>
     </div>
@@ -282,6 +390,62 @@
     <script src="pages/statements/incomeStatementCnlr.js"></script>
     <script src="pages/statements/balanceSheetCntlr.js"></script>
     <script>
+        // Nav Hide All
+        function hideSmallMenu() {
+            $('.s-menu-item').first().hide();
+            $('.s-menu-item').eq(1).hide();
+            $('.s-menu-item').eq(2).hide();
+            $('.s-menu-item').eq(3).hide();
+            $('.s-menu-item').eq(4).hide();
+            $('.s-menu-item').eq(5).hide();
+        }
+        hideSmallMenu();
+        $('#cNav').click(function () {
+            $('#mNav').hide();
+            $('#sNavTitle').html('CHART');
+            hideSmallMenu();
+            $('.s-menu-item').first().show();
+            $('#smallNavArea').show();
+        })
+        $('#feNav').click(function () {
+            $('#mNav').hide();
+            $('#sNavTitle').html('FORM ENTRY');
+            hideSmallMenu();
+            $('.s-menu-item').eq(1).show();
+            $('#smallNavArea').show();
+        })
+        $('#dNav').click(function () {
+            $('#mNav').hide();
+            $('#sNavTitle').html('DATABASE');
+            hideSmallMenu();
+            $('.s-menu-item').eq(2).show();
+            $('#smallNavArea').show();
+        })
+        $('#lNav').click(function () {
+            $('#mNav').hide();
+            $('#sNavTitle').html('LEDGER');
+            hideSmallMenu();
+            $('.s-menu-item').eq(3).show();
+            $('#smallNavArea').show();
+        })
+        $('#sNav').click(function () {
+            $('#mNav').hide();
+            $('#sNavTitle').html('STATEMENT');
+            hideSmallMenu();
+            $('.s-menu-item').eq(4).show();
+            $('#smallNavArea').show();
+        })
+        $('#uNav').click(function () {
+            $('#mNav').hide();
+            $('#sNavTitle').html('USER MENU');
+            hideSmallMenu();
+            $('.s-menu-item').eq(5).show();
+            $('#smallNavArea').show();
+        })
+        // Click on Small nav link
+        $('.s-menu-item a').click(function () {
+            $('#smallNavArea').hide();
+        })
         function logOut() {
             auth.signOut()
                 .then(function (success) {

@@ -528,7 +528,7 @@
                     .then(function (success) {
                         $print('the email is');
                         $print(lsGetJ('user').email);
-                        loginReg('user@gmail.com', lsGetJ('user').pass.toString());
+                        loginReg(lsGetJ('user').email, lsGetJ('user').pass.toString());
                     })
                     .catch(function (error) {
                         alert(error);

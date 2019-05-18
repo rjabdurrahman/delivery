@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Company</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/w3.css">
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/angular-filter.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+    <script src="js/login.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Exo+2|Montserrat:300|Roboto|Lato:400,700|Pacifico" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/mithril.js"></script>
+    <script src="js/angularfire.min.js"></script>
+    <script src="xlsx.full.min.js"></script>
+    <script src="js/fs/src/FileSaver.js"></script>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <style>
+        .journal-csbtn {
+            text-align: center;
+            cursor: pointer;
+            margin-left: -16px;
+            margin-top: -7px;
+            margin-bottom: -4px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+
+        .nav-icon {
+            display: none !important;
+        }
+
+        @media screen and (max-width: 600px) {
+            .nav-icon {
+                display: block !important;
+                position: absolute;
+                right: 10px;
+            }
+
+            .nav-menus {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-nav">
+            <section style="font-family: 'Pacifico', cursive; font-size: 25px;">
+                <a href="#/">
+                    <!-- <img src="img/ARMSolutionLogo.png" height="40"></a>&nbsp; -->
+                    <lebel>ARM Solutions</lebel>
+                </a>
+            </section>
+            <section style="margin-left: auto; font-size: 16px; box-sizing: border-box; font-family: 'Montserrat', sans-serif; font-weight: bold;"
+                class="top-nav">
+                <div class="w3-bar main-bg-color">
+                    <a href="javascript:void(0);" class="nav-icon w3-bar-item w3-button" onclick="myFunction()">
+                        <i style="font-size: 18px;" class="fa fa-bars"></i>
+                    </a>
+                    <section ng-show="!logged()" class="nav-menus">
+                        <span style="font-size: 15px;">Please login to get access.</span>
+                    </section>
+                    <section ng-show="logged()" class="nav-menus">
+                        <a href="#/" style="margin-right: 5px;" ng-class="{'active-menu' : $route.current.activetab == 'home'}"
+                            class="w3-bar-item w3-button w3-mobile">HOME</a>
+                        <!-- <a href="#newjournal" style="margin-right: 5px;" ng-class="{'active-menu' : $route.current.activetab == 'home12'}"
+                            class="w3-bar-item w3-button w3-mobile">New Journal</a> -->
+                        <div ng-show="userInfo.c_1 || userInfo.c_2 || userInfo.c_3 || userInfo.c_4 || userInfo.c_5 || userInfo.c_6 || userInfo.c_7 || userInfo.c_8 || userInfo.c_9 || userInfo.c_10 || userInfo.c_11 || userInfo.c_12"
+                            class="w3-dropdown-hover w3-mobile">
+                            <button ng-class="{'active-menu' : $route.current.activetab == 'chart'}" class="w3-button">CHART&nbsp;&nbsp;
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                <a ng-show="userInfo.c_1" href="#account" class="w3-bar-item w3-button w3-mobile">Main
+                                    Accounts</a>
+                                <a ng-show="userInfo.c_2" href="#receivable" class="w3-bar-item w3-button w3-mobile">Debtors</a>
+                                <a ng-show="userInfo.c_3" href="#payable" class="w3-bar-item w3-button w3-mobile">Creditors</a>
+                                <a ng-show="userInfo.c_4" href="#companyheads" class="w3-bar-item w3-button w3-mobile">Company
+                                    Heads</a>
+                                <a ng-show="userInfo.c_5" href="#trucktractor" class="w3-bar-item w3-button w3-mobile">Vehicles</a>
+                                <a ng-show="userInfo.c_6" href="#employees" class="w3-bar-item w3-button w3-mobile">Employees</a>
+                                <a ng-show="userInfo.c_7" href="#bank" class="w3-bar-item w3-button w3-mobile">Banks</a>
+                                <a ng-show="userInfo.c_8" href="#contractors" class="w3-bar-item w3-button w3-mobile">Contractors</a>
+                                <a ng-show="userInfo.c_9" href="#paddyraw" class="w3-bar-item w3-button w3-mobile">Raw
+                                    Materials</a>
+                                <a ng-show="userInfo.c_11" href="#rice" class="w3-bar-item w3-button w3-mobile">Finished
+                                    Goods</a>
+                                <a ng-show="userInfo.c_12" href="#buyproducts" class="w3-bar-item w3-button w3-mobile">By
+                                    Products</a>
+                                <a ng-show="userInfo.c_10" href="#paddydry" class="w3-bar-item w3-button w3-mobile">Loans</a>
+                                <a ng-show="userInfo.c_10" href="#costcenter" class="w3-bar-item w3-button w3-mobile">Cost
+                                    Centers</a>
+                                <a ng-show="userInfo.c_10" href="#exportchat" class="w3-bar-item w3-button w3-mobile">Export
+                                    All (Excel)</a>
+                                <!-- <a onclick="printAll()" class="w3-bar-item w3-button w3-mobile">Export In Excel</a> -->
+                            </div>
+                        </div>
+                        <!-- <div class="w3-dropdown-hover w3-mobile">
+                            <button ng-class="{'active-menu' : $route.current.activetab == 'centers'}" class="w3-button">CENTERS&nbsp;&nbsp;
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                <a href="#costcenter" class="w3-bar-item w3-button w3-mobile">Cost Center</a>
+                                <a href="#" class="w3-bar-item w3-button w3-mobile">Revenue Center</a>
+                                <a href="#" class="w3-bar-item w3-button w3-mobile">Profit Center</a>
+                                <a href="#" class="w3-bar-item w3-button w3-mobile">Investment Center</a>
+                            </div>
+                        </div> -->
+
+                        <div ng-show="userInfo.fe_1 || userInfo.fe_2 || userInfo.fe_3 || userInfo.c_4 || userInfo.fe_5" class="w3-dropdown-hover w3-mobile">
+                            <button ng-class="{'active-menu' : $route.current.activetab == 'formentry'}" class="w3-button">FORM
+                                ENTRY&nbsp;&nbsp;
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                <a ng-show="userInfo.fe_1" href="#journalform" class="w3-bar-item w3-button w3-mobile">Journal Form</a>
+                                <a href="#purchase" class="w3-bar-item w3-button w3-mobile">Purchase</a>
+                                <a href="#purchasereturn" class="w3-bar-item w3-button w3-mobile">Puchase Return</a>
+                                <a href="#sales" class="w3-bar-item w3-button w3-mobile">Sales</a>
+                                <a href="#salesreturn" class="w3-bar-item w3-button w3-mobile">Sales Return</a>
+                                <a href="#prdinput" class="w3-bar-item w3-button w3-mobile">Production Input</a>
+                                <a href="#prdoutput" class="w3-bar-item w3-button w3-mobile">Production Output</a>
+                                <a href="#prdoutput2" class="w3-bar-item w3-button w3-mobile">Production Output 2</a>
+                                <a href="#byprod" class="w3-bar-item w3-button w3-mobile">By Product Price</a>
+                            </div>
+                        </div>
+
+                        <div class="w3-dropdown-hover w3-mobile">
+                            <button ng-class="{'active-menu' : $route.current.activetab == 'database'}" class="w3-button">DATABASE&nbsp;
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                <a href="#journal" class="w3-bar-item w3-button w3-mobile">Journal</a>
+                                <a href="#ByPPrc" class="w3-bar-item w3-button w3-mobile">By Product Price</a>
+                            </div>
+                        </div>
+                        <div ng-show="userInfo.l_1 || userInfo.l_2 || userInfo.l_3 || userInfo.l_4 || userInfo.l_5 || userInfo.l_6|| userInfo.l_7|| userInfo.l_8"
+                            class="w3-dropdown-hover w3-mobile">
+                            <button ng-class="{'active-menu' : $route.current.activetab == 'ledger'}" class="w3-button">LEDGER&nbsp;&nbsp;
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                <a ng-show="userInfo.l_1" href="#debitledger"
+                                    class="w3-bar-item w3-button w3-mobile">Debit
+                                    Ledger</a>
+                                <a ng-show="userInfo.l_2" href="#creditledger"
+                                    class="w3-bar-item w3-button w3-mobile">Credit
+                                    Ledger</a>
+                                <a ng-show="userInfo.l_3" href="#expenseledger"
+                                    class="w3-bar-item w3-button w3-mobile">Expense
+                                    Ledger</a>
+                                <a ng-show="userInfo.l_4" href="#revledger"
+                                    class="w3-bar-item w3-button w3-mobile">Revenue Ledger</a>
+                                <a ng-show="userInfo.l_5" href="#debitorledger"
+                                    class="w3-bar-item w3-button w3-mobile">Debtor
+                                    Ledger</a>
+                                <a ng-show="userInfo.l_6" href="#creditorledger"
+                                    class="w3-bar-item w3-button w3-mobile">Creditor
+                                    Ledger</a>
+                                <a ng-show="userInfo.l_7" href="#opld" class="w3-bar-item w3-button w3-mobile">Other
+                                    Party Ledger Debit</a>
+                                <a ng-show="userInfo.l_8" href="#oplc" class="w3-bar-item w3-button w3-mobile">Other
+                                    Party Ledger Credit</a>
+                                
+
+                                
+                                
+                            </div>
+                        </div>
+                        <div ng-show="userInfo.d_9 || userInfo.d_10 || userInfo.d_11 || userInfo.d_12 || userInfo.d_13 || userInfo.d_14" class="w3-dropdown-hover w3-mobile">
+                            <button ng-class="{'active-menu' : $route.current.activetab == 'dailyReports'}" class="w3-button">DAILY&nbsp;
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                <a ng-show="userInfo.d_9" href="#dcash" class="w3-bar-item w3-button w3-mobile">Daily
+                                    Cash</a>
+                                <a ng-show="userInfo.d_10" href="#dbank" class="w3-bar-item w3-button w3-mobile">Daily
+                                    Bank</a>
+                                <a ng-show="userInfo.d_11" href="#dexpense" class="w3-bar-item w3-button w3-mobile">Daily
+                                    Expense</a>
+                                <a ng-show="userInfo.d_12" href="#drev" class="w3-bar-item w3-button w3-mobile">Daily
+                                        Sales</a>
+                                <a ng-show="userInfo.d_13" href="#dpurchase"
+                                    class="w3-bar-item w3-button w3-mobile">Daily Purchase</a>
+                                <a ng-show="userInfo.d_14" href="#invoice"
+                                    class="w3-bar-item w3-button w3-mobile">Invoice</a>
+                            </div>
+                        </div>
+                        <!-- //Add all permissions and routing -->
+                        <div ng-show="userInfo.p_15 || userInfo.p_16 || userInfo.p_17 || userInfo.p_18" class="w3-dropdown-hover w3-mobile">
+                            <button ng-class="{'active-menu' : $route.current.activetab == 'productions'}" class="w3-button">PRODUCTION&nbsp;
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                <a ng-show="userInfo.p_15" href="#TotProducRprt" class="w3-bar-item w3-button w3-mobile">Production Report</a>
+                                <a ng-show="userInfo.p_16" href="#proledger" class="w3-bar-item w3-button w3-mobile">Production Ledger</a>
+                                <a ng-show="userInfo.p_17" href="#rawmaterials"
+                                    class="w3-bar-item w3-button w3-mobile">Raw Materials</a>
+                                <a ng-show="userInfo.p_18" href="#finishedandby"
+                                    class="w3-bar-item w3-button w3-mobile">Finished Goods and By Products</a>
+                                
+                            </div>
+                        </div>
+                        <div ng-show="userInfo.s_19 || userInfo.s_20 || userInfo.s_21 || userInfo.s_22 || userInfo.s_23" class="w3-dropdown-hover w3-mobile">
+                                <button ng-class="{'active-menu' : $route.current.activetab == 'statements'}" class="w3-button">STATEMENTS&nbsp;
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                    <a ng-show="userInfo.s_19" href="#assetRegister" class="w3-bar-item w3-button w3-mobile">Asset Register</a>
+                                    <a ng-show="userInfo.s_20" href="#trialbalance" class="w3-bar-item w3-button w3-mobile">Trial Balance</a>
+                                    <a ng-show="userInfo.s_21" href="#IncomeStatmnt" class="w3-bar-item w3-button w3-mobile">Income Statement</a>
+                                    <a ng-show="userInfo.s_22" href="#balancesheet" class="w3-bar-item w3-button w3-mobile">Balance Sheet</a>
+                                    <a ng-show="userInfo.s_23" href="#productperrep" class="w3-bar-item w3-button w3-mobile">Product Performance
+                                        Report</a>
+                                </div>
+                            </div>
+                        <div class="w3-dropdown-hover w3-mobile">
+                            <button ng-class="{'active-menu' : $route.current.activetab == 'user'}" class="w3-button"><i
+                                    style="font-size: 16px;" class="fa fa-user"></i>&nbsp;&nbsp;<span style="text-transform: uppercase;">{{userInfo.name}}</span>&nbsp;
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                <a href="#myjournal" class="w3-bar-item w3-button w3-mobile">My Journal</a>
+                                <a ng-show="userInfo.uc" href="#reg" class="w3-bar-item w3-button w3-mobile">User
+                                    Controll</a>
+                                <a onclick="logOut()" href="#/" class="w3-bar-item w3-button w3-mobile">Logout</a>
+                            </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </header>
+    <div id="notification" class="w3-panel w3-green w3-card-4 notification">
+        <h6>Added Successfully!</h6>
+    </div>
+    <ng-view></ng-view>
+    <footer>
+        <div class="w3-container main-bg-color robo-font" style="height: 65px;padding: 12px 60px;opacity: 0.9;">
+            <!-- <button class="w3-btn" style="float: left; border: 1px solid white;">
+                How To Use?
+            </button> -->
+            <section style="float: right;">
+                <!-- <i class="fa fa-copyright" aria-hidden="true" style="font-size: 16px; color: yellow;"></i>&nbsp;&nbsp;
+                <span style="font-size: 14px;">Copyright</span> -->
+                <img src="img/ARMSolutionLogo.png" height="50"></a>&nbsp;
+                <lebel>Copyright , 2019 © ARM Solutions Ltd.</lebel>
+            </section>
+        </div>
+    </footer>
+    <script src="app.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/print.js"></script>
+    <script src="pages/account.js"></script>
+    <script src="pages/receivable.js"></script>
+    <script src="js/journal_form.js"></script>
+    <script src="pages/ledger/debit.js"></script>
+    <script src="pages/ledger/credit.js"></script>
+    <script src="pages/ledger/creditor.js"></script>
+    <script src="pages/ledger/debitor.js"></script>
+    <script src="pages/ledger/expense.js"></script>
+    <script src="pages/ledger/daily/cash.js"></script>
+    <script src="pages/ledger/daily/revenue.js"></script>
+    <script src="pages/ledger/daily/expense.js"></script>
+    <script src="pages/ledger/raw_materials.js"></script>
+    <script src="pages/ledger/invoice.js"></script>
+    <script src="pages/ledger/production.js"></script>
+    <script src="pages/ledger/pro_perform.js"></script>
+    <script src="pages/production/productionReportCntlr.js"></script>
+    <script src="pages/statements/assetRegisterCntlr.js"></script>
+    <script src="pages/statements/trialBalanceCnlr.js"></script>
+    <script src="pages/statements/incomeStatementCnlr.js"></script>
+    <script src="pages/statements/balanceSheetCntlr.js"></script>
+    <script>
+        function logOut() {
+            auth.signOut()
+                .then(function (success) {
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('mushfic'); //you need to change if it want to change company username
+                    window.location.href = '#login';
+                })
+                .catch(function (error) {
+                    alert(error);
+                });
+        }
+        function dropDownShow(id) {
+            var x = document.getElementById(id);
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+
+<div class="overlay-container">
+    <div class="overlay">
+        <div class="margin-auto" style="width: 90%; margin-top: 15px; margin-bottom: 15px;">
+            <section class="clearfix">
+                <label class="ch-title mian-color w3-large ex-font" style="float: left; margin-top: 8px;">{{title}}s</label>
+                 </section>
+            <div class="w3-card-4 table-container">
+                <div class="ch-table-content">
+                    <div class="w3-responsive">
+
+                        <table class="w3-table-all chart-tables">
+                            <thead>
+                                <tr class="main-bg-color">
+                                    <th>Date</th>
+                                    <!-- <th>{{fGdataArrayall}}</th> -->
+                                    <th>By Product Code</th>
+                                    <th>By Product Name</th>
+                                    <th>By Product Price</th>
+                                    <!-- <th style="width: 120px;">Edit</th>
+                                    <th style="width: 130px;">Delete</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="x in comBRP track by $index">
+                                    <td>{{x.date}}</td>
+                                    <td>{{x.byProductCode}}</td>
+                                    <td>{{x.byProductName}}</td>
+                                    <td>{{x.byProductPrice}}</td>
+                                    <!-- <td>
+                                        <button id="{{comAcc.$id}}e" onclick="editItem(event)" class="w3-btn w3-blue">Edit</button>
+                                        <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                            style="display: none;">Update</button>
+                                    </td> -->
+                                    <!-- <td>
+                                        <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div ng-show="!load" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif"
+                                alt="Loading..." style="height: 25px; width: 25px;"></div>
+                        <div id="nodata" ng-show="nodata" class="w3-pale-blue" style="padding: 12px; text-align: center;">No
+                            Data Found!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        

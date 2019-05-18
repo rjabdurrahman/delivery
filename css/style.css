@@ -1,0 +1,776 @@
+body {
+    background-color: white;
+}
+
+a {
+    text-decoration: none;
+}
+
+.mian-color, .mian-color a, .mian-color button {
+    color: #014387 !important;
+}
+
+.main-bg-color {
+    background-color: #014387 !important;
+    color: white !important;
+}
+
+.robo-font {
+    font-family: 'Roboto', sans-serif;
+}
+
+.mont-font {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+}
+
+.ex-font {
+    font-family: 'Exo 2', sans-serif;
+}
+
+.clearfix::after, .clearfix::before {
+    content: "";
+    display: block;
+}
+
+.clearfix::after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+.active-menu {
+    /* border: 1px solid gray !important; */
+    background-color: white !important;
+    color: #014387 !important;
+}
+
+.top-nav .w3-button {
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    /* box-shadow: 2px 2px 2px lightblue !important; */
+}
+
+span.phone {
+    position: absolute;
+    display: block;
+    left: 8px;
+    top: 9px;
+    z-index: 9;
+    color: gray;
+}
+
+input.phone {
+    padding-left: 58px;
+}
+
+.w3-dropdown-content a {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    border-bottom: 1px solid lightgray !important;
+}
+
+/* Autocomplete Styles */
+
+ul.ui-autocomplete {
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid lightgray;
+    width: 300px;
+    background-color: lightgray;
+    max-height: 110px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 9999;
+    position: fixed;
+}
+
+ul.ui-autocomplete li {
+    padding: 2px;
+    cursor: pointer;
+}
+
+span[role="status"] {
+    display: none;
+}
+
+.hide {
+    visibility: hidden;
+    display: none;
+}
+
+.notification {
+    width: 200px;
+    text-align: center;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: none;
+    z-index: 9999999;
+}
+
+/* Construction notificiton */
+
+#pageCons {
+    width: 10px;
+    margin-top: 100px;
+    padding: 20px;
+    transition: width 1s;
+}
+
+a.w3-button, button.w3-button {
+    outline: none;
+    border-radius: 4px;
+}
+
+.w3-dropdown-hover button.w3-button {
+    margin-right: 5px;
+}
+
+input, select, option, textarea {
+    outline: none;
+}
+
+.w3-btn {
+    border-radius: 4px;
+}
+
+.w3-btn:hover {
+    box-shadow: none !important;
+    opacity: 0.8;
+}
+
+.circle-btn {
+    height: 40px;
+    width: 40px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+input.w3-input:focus, textarea.w3-input:focus, select:focus {
+    border: none;
+    border: 1px solid #014387 !important;
+}
+
+input[type="text"]:disabled {
+    background: #fdf5e6;
+    color: black;
+}
+
+input[type="text"]:disabled:hover {
+    border: 1px solid #ccc !important;
+}
+
+.margin-auto {
+    margin: auto;
+}
+
+.div-box {
+    width: 500px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.tbm {
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+.div-title {
+    position: relative;
+    margin-bottom: 6px;
+}
+
+.div-title h2 {
+    text-transform: uppercase;
+    font-family: 'Exo 2', sans-serif;
+}
+
+.div-title:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -8px;
+    width: 0;
+    height: 0;
+    border-top: solid 8px #014387;
+    border-left: solid 8px transparent;
+    border-right: solid 8px transparent;
+}
+
+.flex {
+    display: -webkit-box !important;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box !important;
+    /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox !important;
+    /* TWEENER - IE 10 */
+    display: -webkit-flex !important;
+    /* NEW - Chrome */
+    display: flex !important;
+}
+
+.overlay-container {
+    padding-top: 50px;
+    width: 100%;
+    min-height: calc(100vh - 115px);
+    background-image: url(../img/bu-bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0px 50px;
+}
+
+.overlay {
+    border: 1px solid transparent;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    min-height: calc(100vh - 115px);
+}
+
+/* Login Input BG */
+
+input#userEmailField {
+    background-image: url('../img/user.png');
+    background-size: 20px 20px;
+    background-position: center right 18px;
+    background-repeat: no-repeat;
+}
+
+input#userPasswordField {
+    background-image: url('../img/pass.png');
+    background-size: 20px 20px;
+    background-position: center right 18px;
+    background-repeat: no-repeat;
+}
+
+/* Data Table Style */
+
+.w3-table-all {
+    border: none !important;
+}
+
+.w3-table-all th, .w3-table-all td {
+    white-space: nowrap !important;
+}
+
+.w3-table-all td:not(:last-child) {
+    border-right: 1px solid lightgray !important;
+}
+
+.w3-table-all th:not(:last-child) {
+    border-right: 1px solid rgba(211, 211, 211, 0.3);
+}
+
+.table-main-cotainer {
+    margin: 20px 30px;
+}
+
+.table-container {
+    font-family: 'Lato', sans-serif;
+    border-radius: 5px;
+    overflow: hidden;
+    /* position: relative; */
+    font-size: 15px;
+    line-height: 21px;
+}
+
+.ch-title {
+    border: none;
+    display: inline-block;
+    padding: 2px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    white-space: nowrap;
+    background-color: white;
+    border-radius: 4px;
+}
+
+/* Chart Styles */
+
+.chart-box {
+    width: 99%;
+    margin-top: 3px;
+    margin-bottom: 15px;
+}
+
+.ch-table-content {
+    max-height: calc(100vh - 150px);
+    overflow: auto;
+    text-transform: uppercase;
+}
+
+.ch-table-content .email-field {
+    text-transform: lowercase !important;
+}
+
+.table-container thead th, .table-container thead td {
+    font-weight: unset;
+    text-align: center;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+}
+
+.table-container tbody th, .table-container tbody td {
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Chart Table Style */
+
+.chart-tables {
+    text-transform: uppercase;
+}
+
+.chart-tables td:first-child, .chart-tables th:first-child {
+    padding-left: 8px !important;
+    padding-right: 0 !important;
+}
+
+.chart-tables td, .chart-tables th {
+    padding-left: 4px !important;
+    padding-right: 0 !important;
+    text-align: center !important;
+}
+
+.chart-tables td .w3-btn {
+    padding: 4px 8px !important;
+}
+
+#chartTable, .chart-table {
+    background-color: white;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+#chartTable input, .chart-table input {
+    padding: 0;
+}
+
+#chartTable td, .chart-table td {
+    border: 1px solid lightgray;
+    display: table-cell;
+    font-size: 15px;
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+}
+
+#chartTable td input, #chartTable td textarea, .chart-table td input, .chart-table td input:hover, .chart-table td input:focus {
+    border: none !important;
+    border-radius: 0;
+}
+
+/* #chartTable td input:disabled {
+    background-color: #f1f1f1;
+} */
+
+#chartTable tr.primary, .chart-table tr.primary {
+    background-color: #4e706d;
+    color: white;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: 'Exo 2', sans-serif;
+    height: 40px;
+}
+
+.secondary {
+    background-color: #f1ffe3;
+    color: #295480 !important;
+    /* background-color: #4e706d; */
+    /* color: white; */
+    color: black;
+}
+
+#chartTable td, #chartTable th, .chart-table th, .chart-table td {
+    vertical-align: middle !important;
+}
+
+.chart-table tr .tab-warn {
+    text-align: right !important;
+    font-size: 12px !important;
+    color: gray;
+}
+
+/* Chart Table Style End */
+
+/* Form Date Tooltip style */
+
+#ACCodeS+label, #date+label, .warn-lab {
+    display: none;
+    position: absolute;
+    padding: 5px;
+    color: black;
+    background-color: orange;
+    text-shadow: none;
+    border-radius: 5px;
+}
+
+.warn-lab {
+    margin-top: 48px;
+    margin-left: 110px;
+}
+
+#date+label {
+    margin-left: -9px;
+    margin-top: 10px;
+}
+
+#ACCodeS+label::before, #date+label::before, .warn-lab::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -8px;
+    width: 0;
+    height: 0;
+    border-bottom: solid 8px orange;
+    border-left: solid 8px transparent;
+    border-right: solid 8px transparent;
+}
+
+#date:focus+label {
+    display: block;
+}
+
+/* Form Date Tooltip style End*/
+
+/* Ledger Style */
+
+.ledger-title {
+    margin: 0;
+    padding: 0;
+}
+
+.ledger-header div label {
+    margin: 0 !important;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.ledger-header div input {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
+.ledger-header div button {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+}
+
+.ledger-header div {
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.ledger-header div:first-child {
+    width: 480px;
+}
+
+.ledger-header div:last-child {
+    width: 300px;
+    margin-left: 0;
+}
+
+.ledger-header div label {
+    padding-left: 5px;
+    font-family: 'Exo 2', sans-serif;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    display: block;
+    color: #014387 !important;
+}
+
+.ledger-header div input {
+    text-align: center;
+}
+
+.ledger-table th {
+    text-align: center;
+}
+
+/* Ledger Style End */
+
+/* Permission Styles */
+
+.w3-check {
+    height: 18px !important;
+    width: 18px !important;
+}
+
+.w3-check+label {
+    font-size: 14px !important;
+}
+
+/* Account Group Header */
+
+.acc_group_header {
+    background-color: #0467ce;
+    /* border-color: #2C3E50;
+    box-shadow: 0 0 0 3px #27AE60; */
+    color: white;
+    /* background-image: linear-gradient(#014387 75%, #014387); */
+    cursor: pointer;
+}
+
+.dcoll {
+    border-bottom: 1px solid #6892f8 !important;
+}
+
+.minimize {
+    background-color: #b3cbf2 !important;
+    cursor: pointer;
+    padding: 8px 20px;
+}
+
+.ac-group ul li {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    border-bottom: 1px solid #6892f8 !important;
+}
+
+.ac-group ul li div.g-header {
+    padding: 8px 40px;
+    background-color: #0467ce;
+    color: white;
+    opacity: 0.8;
+}
+
+/* Header Nav div */
+
+.header-nav {
+    background-color: #014387;
+    color: white !important;
+    display: flex;
+    padding: 5px 10px 10px 30px;
+    height: 35px;
+    box-sizing: unset;
+    position: fixed;
+    width: calc(100% - 40px);
+    box-shadow: 1px 1px 1px 0.5px gray;
+    z-index: 9999;
+    opacity: 0.9;
+}
+
+/* Switch CSS */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Switch CSS End */
+
+/* Print CSS */
+
+@media print {
+    @page {
+        margin: 0mm;
+        /* margin-top: 8mm;
+        margin-bottom: 0mm;
+        margin-left: 0mm;
+        margin-right: 0mm; */
+    }
+}
+
+/* Print CSS End */
+
+/* fixed table head css  start */
+
+/* table{
+    border-collapse: collapse;
+  overflow-x: scroll;
+  display: block;
+  width: 100%;
+}
+thead{
+    background-color: #EFEFEF;
+}
+
+thead{
+    display: block;
+}
+tbody{
+    display: block;
+}
+
+tbody{
+    overflow-y: scroll;
+  overflow-x: hidden;
+  height: 140px;
+}
+
+td,th{
+    min-width: 200px;
+    height: 25px;
+    border: dashed 1px lightblue;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 400px; 
+    text-align: center;
+  } */
+
+/* fixed table head css  end */
+
+/* Chart Permission */
+
+.chart-per p label:first-of-type {
+    font-weight: bold;
+}
+
+.chart-per p {
+    padding-bottom: 4px;
+    border-bottom: 1px solid lightgray;
+}
+
+/* Model Content */
+.w3-modal-content .w3-row{
+    margin: 6px !important;
+}
+.w3-modal-content .w3-row .w3-input{
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+/* Journal Top Menu Style */
+.journal-top-btn{
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+    margin: 0 !important;
+}
+
+/* Invoice Styles */
+
+.invoice .w3-row {
+    margin-bottom: 5px !important;
+}
+
+.a4paper {
+    background: white;
+    min-height: 21cm;
+    width: 29.7cm;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+}
+
+.a4paper table{
+    border-collapse: collapse;
+    white-space: nowrap !important;
+}
+
+.a4paper table.haeder-details td{
+    border: 0;
+}
+
+.a4paper table.records-details{
+    margin: auto;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid rgba(211, 211, 211, 0.3);
+}
+
+.a4paper table.records-details th:not(:last-child), .a4paper table.records-details td:not(:last-child){
+    border-right: 1px solid rgba(211, 211, 211, 0.3);
+    border-bottom: 1px solid rgba(211, 211, 211, 0.3);
+}
+
+/* Production ledger Style */
+.production-ledger-table{
+    font-size: 14px;
+    margin: auto;
+    border-collapse: collapse;
+    white-space: nowrap !important;
+    border: 1px solid rgba(211, 211, 211, 0.3);
+}
+.production-ledger-table th, .production-ledger-table td{
+    border: 1px solid rgba(211, 211, 211, 0.3);
+    text-align: center;
+}
+.production-ledger-table tr.primary{
+    background-color: lightblue;
+}
+.production-ledger-table tr.secondary{
+    background-color: lightcyan;
+}
+
+/* Small Screen Nav */
+#smallNavArea{
+    z-index: 99999;
+    position: relative;
+    top: 50px;
+}
+#smallNavArea .menu-list a{
+    display: block;
+    padding: 4px 12px;
+    margin: 2px;
+    background-color: lightcyan;
+}

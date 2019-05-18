@@ -1,0 +1,681 @@
+<div class="overlay-container">
+    <div class="overlay">
+        <div style="display: flex; justify-content: center; margin-top: calc(50vh - 59px); font-weight: bold; font-size: 22px;">
+            <button ng-if="load" class="w3-btn w3-white" onclick="exportAll()">Export In Excel</button>
+            <button ng-if="!load" class="w3-btn w3-white" style="cursor: wait;">
+                <img src="img/loader.gif" alt="Loading..." style="height: 35px; width: 35px;"><br>
+                <span>Loading Data...</span>
+            </button>
+        </div>
+        <!-- Tables -->
+        <div id="tableList" class="margin-auto chart-box">
+                <!-- Current Assets -->
+                <table id="ca" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(1).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                                <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(1).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(1) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                                <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- Non-Current Assets -->
+                <table id="nca" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(2).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                                <th>Depreciation Rate</th>
+                                <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(2).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(2) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                                <td>{{comAcc.rate}}</td>
+                                <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- Current Liabilities -->
+                <table id="cl" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(3).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                                <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(3).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(3) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                                <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- Non-Current Liabilities -->
+                <table id="ncl" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(4).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                                <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(4).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(4) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                                <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- Equity -->
+                <table id="eqty" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(5).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                                <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(5).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(5) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                                <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- Expenses -->
+                <table id="ex" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(6).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(6).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(6) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- Revenues -->
+                <table id="rev" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(7).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(7).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(7) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- Cost of Goods Sold -->
+                <table id="cogs" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(10).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(10).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(10) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- Contras -->
+                <table id="cn" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(12).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                                <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(12).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(12) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                                <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- Production -->
+                <table id="wip" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(11).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                                <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(11).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(11) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                                <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- Withdrawals -->
+                <table id="wd" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(8).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(8).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(8) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- Contra Expenses -->
+                <table id="pd" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(13).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(13).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(13) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- Contra Revenues -->
+                <table id="sd" class="w3-table-all chart-tables">
+                        <thead ng-hide="getAccArr(9).length == 0" id="table-headm">
+                            <tr class="main-bg-color">
+                                <th>ID</th>
+                                <th>Nature</th>
+                                <th>Account Code</th>
+                                <th>Account Head</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="getAccArr(9).length == 0">
+                                <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                            </tr>
+                            <tr ng-repeat="comAcc in getAccArr(9) | orderBy : 'accCode' track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{comAcc.nature}}</td>
+                                <td>{{comAcc.accCode}}</td>
+                                <td>{{comAcc.accText}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            <!-- Debitors -->
+            <table id="debitors" class="w3-table-all chart-tables">
+                <thead>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Party Code</th>
+                        <th>Party Name</th>
+                        <th>Party Type</th>
+                        <th>Propritor Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="rec in debitors | orderBy : 'code' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{rec.code}}</td>
+                        <td>
+                            <a href="#debitorledger?code={{rec.code}}&name={{rec.name}}&email={{rec.email}}" style="color: blue; cursor: pointer;">{{rec.name}}</a>
+                        </td>
+                        <td>{{rec.cusType}}</td>
+                        <td>{{rec.recProprietor}}</td>
+                        <td>{{rec.mobile}}</td>
+                        <td>{{rec.email}}</td>
+                        <td>{{rec.address}}</td>
+                        <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(rec.balance)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Creditors -->
+            <table id="creditors" class="w3-table-all chart-tables">
+                <thead>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Party Code</th>
+                        <th>Party Name</th>
+                        <th>Party Type</th>
+                        <th>Propritor Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="pay in creditors | orderBy : 'code' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{pay.code}}</td>
+                        <td>
+                            <a href="#creditorledger?code={{pay.code}}&name={{pay.name}}&email={{pay.email}}" style="color: blue; cursor: pointer;">{{pay.name}}</a>
+                        </td>
+                        <td>{{pay.partyType}}</td>
+                        <td>{{pay.proprietor}}</td>
+                        <td>{{pay.mobile}}</td>
+                        <td>{{pay.email}}</td>
+                        <td>{{pay.address}}</td>
+                        <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(pay.balance)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Company Heads -->
+            <table id="companyHeads" class="w3-table-all chart-tables">
+                <thead>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>A/C Code</th>
+                        <th>Party Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="ch in companyHeads | orderBy : 'code' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{ch.code}}</td>
+                        <td>{{ch.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Vehicles -->
+            <table id="vechicles" class="w3-table-all chart-tables">
+                <thead>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Code</th>
+                        <th>Vehicle Type</th>
+                        <th>Vehicle No</th>
+                        <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="Tr in vechicles | orderBy : 'code' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{Tr.code}}</td>
+                        <td>{{Tr.type}}</td>
+                        <td>{{Tr.name}}</td>
+                        <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(Tr.balance)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Employees -->
+            <table id="employees" class="w3-table-all chart-tables">
+                <thead>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Employee Type</th>
+                        <th>Posting</th>
+                        <th>Designation</th>
+                        <th>Salary</th>
+                        <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="emp in employees | orderBy : 'code' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{emp.code}}</td>
+                        <td>{{emp.name}}</td>
+                        <td>{{emp.type}}</td>
+                        <td>{{emp.post}}</td>
+                        <td>{{emp.des}}</td>
+                        <td>{{comNum(emp.salary)}}</td>
+                        <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(emp.balance)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Banks -->
+            <table id="banks" class="w3-table-all chart-tables">
+                <thead>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Account No</th>
+                        <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="bank in banks | orderBy : 'code' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{bank.code}}</td>
+                        <td>{{bank.name}}</td>
+                        <td>{{bank.accno}}</td>
+                        <td name="num" ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(bank.balance)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Contractors -->
+            <table id="contractors" class="w3-table-all chart-tables">
+                <thead>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Contract</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="con in contractors | orderBy : 'code' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{con.code}}</td>
+                        <td>{{con.name}}</td>
+                        <td>{{con.contact}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Raw Materials -->
+            <table id="rawMaterials" class="w3-table-all chart-tables">
+                <thead>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Primary Unit</th>
+                        <th>Primary Quantity</th>
+                        <th>Primary Unit Price</th>
+                        <th>Primary Total Price</th>
+                        <th>stad Unit</th>
+                        <th>Stand Quantity</th>
+                        <th>Stand Unit Price</th>
+                        <th>Standard Total Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="paddyRaw in rawMaterials | orderBy : 'code' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{paddyRaw.code}}</td>
+                        <td>{{paddyRaw.name}}</td>
+                        <td>{{paddyRaw.priUnit}}</td>
+                        <td>{{comNum(paddyRaw.priQu)}}</td>
+                        <td>{{comNum(paddyRaw.priUnitPri)}}</td>
+                        <td>{{comNum(paddyRaw.priTotalPri)}}</td>
+                        <td>{{paddyRaw.stdUnit}}</td>
+                        <td>{{comNum(paddyRaw.stdQu)}}</td>
+                        <td>{{comNum(paddyRaw.stdUnitPri)}}</td>
+                        <td>{{comNum(paddyRaw.totalPri)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Finished Goods -->
+            <table id="finGoods" class="w3-table-all chart-tables">
+                <thead>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Std unit</th>
+                        <th>Pack Size</th>
+                        <th>Number Of pack</th>
+                        <th>Total quantity</th>
+                        <th>Std unit price</th>
+                        <th>Total price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="rice in finGoods | orderBy : 'code' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{rice.code}}</td>
+                        <td>{{rice.name}}</td>
+                        <td>{{rice.stdUnit}}</td>
+                        <td>{{comNum (rice.packSize)}}</td>
+                        <td>{{comNum (rice.noPack)}}</td>
+                        <td>{{comNum (rice.totalQu)}}</td>
+                        <td>{{comNum (rice.stdUnitPri)}}</td>
+                        <td>{{comNum (rice.totalPri)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- By Products -->
+            <table id="byProducts" class="w3-table-all chart-tables">
+                <thead>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Std unit</th>
+                        <th>Pack Size</th>
+                        <th>Number Of pack</th>
+                        <th>Total quantity</th>
+                        <th>Std unit price</th>
+                        <th>Total price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="byProduct in byProducts | orderBy : 'code' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{byProduct.code}}</td>
+                        <td>{{byProduct.name}}</td>
+                        <td>{{byProduct.stdUnit}}</td>
+                        <td>{{comNum (byProduct.packSize)}}</td>
+                        <td>{{comNum (byProduct.noPack)}}</td>
+                        <td>{{comNum (byProduct.totalQu)}}</td>
+                        <td>{{comNum (byProduct.stdUnitPri)}}</td>
+                        <td>{{comNum (byProduct.totalPri)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Loans -->
+            <table id="loans" class="w3-table-all chart-tables">
+                <thead>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Code</th>
+                        <th>Loan No.</th>
+                        <th>Loan Type</th>
+                        <th>Loan Nature</th>
+                        <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="paddyDry in loans | orderBy : 'code' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{paddyDry.code}}</td>
+                        <td>{{paddyDry.name}}</td>
+                        <td>{{paddyDry.type}}</td>
+                        <td>{{paddyDry.nature}}</td>
+                        <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(paddyDry.balance)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- cost centre -->
+            <table id="costCenters" class="w3-table-all chart-tables">
+                <thead>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Cost Center</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="costCenter in costCenters | orderBy : 'code' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{costCenter.$value}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- End of the Journy -->
+    </div>
+</div>
+<script>
+    $("#tableList").hide();
+    function exportAll() {
+        $print("print");
+        var ca = XLSX.utils.table_to_sheet($js('ca'), { cellDates: true });
+        var nca = XLSX.utils.table_to_sheet($js('nca'), { cellDates: true });
+        var cl = XLSX.utils.table_to_sheet($js('cl'), { cellDates: true });
+        var ncl = XLSX.utils.table_to_sheet($js('ncl'), { cellDates: true });
+        var eqty = XLSX.utils.table_to_sheet($js('eqty'), { cellDates: true });
+        var ex = XLSX.utils.table_to_sheet($js('ex'), { cellDates: true });
+        var rev = XLSX.utils.table_to_sheet($js('rev'), { cellDates: true });
+        var cogs = XLSX.utils.table_to_sheet($js('cogs'), { cellDates: true });
+        var cn = XLSX.utils.table_to_sheet($js('cn'), { cellDates: true });
+        var wip = XLSX.utils.table_to_sheet($js('wip'), { cellDates: true });
+        var wd = XLSX.utils.table_to_sheet($js('wd'), { cellDates: true });
+        var pd = XLSX.utils.table_to_sheet($js('pd'), { cellDates: true });
+        var sd = XLSX.utils.table_to_sheet($js('sd'), { cellDates: true });
+        // Account End
+
+        var debitors = XLSX.utils.table_to_sheet($js('debitors'), { cellDates: true });
+        var creditors = XLSX.utils.table_to_sheet($js('creditors'), { cellDates: true });
+        var companyHeads = XLSX.utils.table_to_sheet($js('companyHeads'), { cellDates: true });
+        var vechicles = XLSX.utils.table_to_sheet($js('vechicles'), { cellDates: true });
+        var employees = XLSX.utils.table_to_sheet($js('employees'), { cellDates: true });
+        var banks = XLSX.utils.table_to_sheet($js('banks'), { cellDates: true });
+        var contractors = XLSX.utils.table_to_sheet($js('contractors'), { cellDates: true });
+        var rawMaterials = XLSX.utils.table_to_sheet($js('rawMaterials'), { cellDates: true });
+        var finGoods = XLSX.utils.table_to_sheet($js('finGoods'), { cellDates: true });
+        var byProducts = XLSX.utils.table_to_sheet($js('byProducts'), { cellDates: true });
+        var loans = XLSX.utils.table_to_sheet($js('loans'), { cellDates: true });
+        var costCenters = XLSX.utils.table_to_sheet($js('costCenters'), { cellDates: true });
+
+        XLSX.utils.book_append_sheet(wb, ca, 'Current Assets'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, nca, 'Non-Current Assets'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, cl, 'Current Liabilities'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, ncl, 'Non-Current Liabilities'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, eqty, 'Equity'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, ex, 'Expenses'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, rev, 'Revenues'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, cogs, 'Cost of Goods Sold'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, cn, 'Contras'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, wip, 'Production'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, wd, 'Withdrawals'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, pd, 'Contra Expenses'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, sd, 'Contra Revenues'.toUpperCase());
+        // Accouont End
+        XLSX.utils.book_append_sheet(wb, debitors, 'debitors'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, creditors, 'creditors'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, companyHeads, 'companyHeads'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, vechicles, 'vechicles'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, employees, 'employees'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, banks, 'banks'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, contractors, 'contractors'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, rawMaterials, 'rawMaterials'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, finGoods, 'finGoods'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, byProducts, 'byProducts'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, loans, 'loans'.toUpperCase());
+        XLSX.utils.book_append_sheet(wb, costCenters, 'costCenters'.toUpperCase());
+        var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Charts_Export.xlsx');
+    }
+</script>

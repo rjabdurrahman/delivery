@@ -1,0 +1,116 @@
+<div class="overlay-container">
+    <div class="overlay">
+        <div class="margin-auto clearfix" style="width: 99.5%; margin-bottom: 18px;">
+            <section class="clearfix">
+                <label class="ch-title mian-color w3-large ex-font"
+                    style="float: left; margin-top: 1px;">{{title}}</label>
+            </section>
+
+            <style type="text/css">
+                .tableFixHead {
+                    overflow-y: auto;
+                }
+
+                .tableFixHead th {
+                    position: sticky;
+                    top: 0;
+                }
+
+                /* Just common table stuff. Really. */
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                th,
+                td {
+                    padding: 8px 16px;
+                }
+
+                th {
+                    background: #014387;
+                }
+            </style>
+
+
+            <div class="w3-card-4 table-container">
+                <div class="ch-table-header">
+
+                    <div class=" table table-striped tableFixHead"
+                        style="overflow-y:auto; max-height:calc(100vh - 170px);">
+                        <table class="w3-table-all " id="header-fixed">
+                            <thead>
+                                <tr id="fixTr" class="main-bg-color">
+                                    <th>ENTRY NO</th>
+                                    <th>DATE</th>
+                                    <th>VOUCHER NO</th>
+                                    <th>PS NO</th>
+                                    <th>SEQ NO</th>
+                                    <th>PARTY CODE</th>
+                                    <th>PARTY NAME</th>
+                                    <th>A/C CODE</th>
+                                    <th>A/C NAME</th>
+                                    <th>DEBIT/CREDIT</th>
+                                    <th>DEBIT AMOUNT</th>
+                                    <th>CREDIT AMOUNT</th>
+                                    <th>COST CENTER</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>PRIMARY UNIT</th>
+                                    <th>QUANTITY</th>
+                                    <th>PRIMARY UNIT PRICE</th>
+                                    <th>STANDARD UNIT</th>
+                                    <th>PACKED/UNPACKED</th>
+                                    <th>PACK SIZE</th>
+                                    <th>NO OF PACKS</th>
+                                    <th>TOTAL QUANTITY</th>
+                                    <th>STANDARD UNIT PRICE (TK)</th>
+                                    <th>TOTAL PRICE (TK)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="genTr" ng-repeat="jor in journal | orderBy : 'entryNo' : true track by $index">
+                                <tr ng-repeat="deb in jor.debitCredit track by $index">
+                                    <td>{{jor.entryNo}}</td>
+                                    <td>{{numToDate(jor.date)}}</td>
+                                    <td>{{jor.voucherNo}}</td>
+                                    <td>{{jor.psNo}}</td>
+                                    <td>{{jor.seqNo}}</td>
+                                    <td>{{deb.partyCode}}</td>
+                                    <td>{{deb.partyName}}</td>
+                                    <td>{{deb.ACCode}}</td>
+                                    <td>{{deb.ACName}}</td>
+                                    <td>{{changerDC(deb.type)}}</td>
+                                    <td>{{deb.drAmount}}</td>
+                                    <td>{{deb.crAmount}}</td>
+                                    <td>{{jor.costCenter}}</td>
+                                    <td>{{jor.description}}</td>
+                                    <td>{{deb.primaryUnit}}</td>
+                                    <td>{{deb.primaryQuantity}}</td>
+                                    <td>{{deb.primaryUnitPrice}}</td>
+                                    <td ng-hide="deb.stdUnit">{{deb.stdUnit}}</td>
+                                    <td ng-show="deb.stdUnit">{{deb.stdUnit}}</td>
+                                    <td>{{deb.packType}}</td>
+                                    <td ng-hide="deb.packSize">{{deb.packSize}}</td>
+                                    <td ng-show="deb.packSize">{{deb.packSize}}</td>
+                                    <td ng-hide="deb.packs">{{deb.packs}}</td>
+                                    <td ng-show="deb.packs">{{deb.packs}}</td>
+                                    <td ng-hide="deb.unitQuantity">{{deb.totalQuantity}}</td>
+                                    <td ng-show="deb.unitQuantity">{{deb.unitQuantity}}</td>
+                                    <td ng-hide="deb.unitPrice">{{deb.stdUnitPrice}}</td>
+                                    <td ng-show="deb.unitPrice">{{deb.unitPrice}}</td>
+                                    <td ng-hide="deb.totalPrice">{{deb.totalPriceTK}}</td>
+                                    <td ng-show="deb.totalPrice">{{deb.totalPriceTK}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div ng-show="journal.length == 0 && !noData" class="w3-pale-blue"
+                            style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..."
+                                style="height: 25px; width: 25px;"></div>
+                        <div ng-show="noData" class="w3-pale-blue" style="padding: 12px; text-align: center;">
+                            No
+                            Data Found!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

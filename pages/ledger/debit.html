@@ -1,0 +1,414 @@
+<div id="hi" class="overlay-container">
+    <form id="debitForm">
+        <div class="overlay">
+            <div class="div-box w3-light-gray w3-card-4 margin-auto"
+                style="display: block; width: 99.5%; margin-top: 4px;">
+                <header class="w3-container main-bg-color div-title">
+                    <div class="clearfix">
+                        <h2 class="ledger-title" style="float: left">{{title}}</h2>
+                        <button id="debCal" style="margin-right: 12px; float: right;"
+                            class="w3-xlarge w3-circle w3-white circle-btn PDF_Btn" disabled><i
+                                class="fa fa-print"></i></button>
+                        <button onclick="exportExcel()" style="margin-right: 12px; float: right;"
+                            class="w3-xlarge w3-circle w3-white circle-btn"><i class="fa fa-file"></i></button>
+                    </div>
+                </header>
+                <div class="ledger-header flex" style="overflow: auto; white-space: nowrap;">
+                    <div>
+                        <label>Account Type</label>
+                        <input id="atype" class="w3-input w3-border" type="text" value="Debit" disabled>
+                    </div>
+                    <div style="width: 300px;">
+                        <label>Date From</label>
+                        <input id="debDataForm" class="w3-input w3-border" type="text" ng-model="fromDateEx"
+                            placeholder="DD-Mon-YY">
+                    </div>
+                    <div style="width: 300px;">
+                        <label>Date To</label>
+                        <input id="dateto" class="w3-input w3-border" type="text" ng-model="toDateEx"
+                            placeholder="DD-Mon-YY">
+                    </div>
+                    <div style="width: 500px;">
+                        <label>Account Code</label>
+                        <input id="ACCodeS" class="w3-input w3-border" type="text" ng-model="acCodeEx"
+                            autocomplete="off">
+                    </div>
+                    <div>
+                        <label>Account Name</label>
+                        <input id="aname" class="w3-input w3-border" type="text" disabled>
+                    </div>
+                    <div>
+                        <label style="display: block">&nbsp;</label>
+                        <button ng-click="debitTaker($event);" class="w3-btn main-bg-color">Calculate</button>
+                    </div>
+                </div>
+                <div class="clearfix" style="height: 4px;"></div>
+            </div>
+    </form>
+    <!-- Head Table -->
+    <div class="margin-auto" style="width: 99.5%; margin-top: 3px; margin-bottom: 0px;">
+        <div class="w3-card-4 table-container">
+            <div class="ch-table-content">
+                <div class="w3-responsive">
+                    <table class="w3-table-all ledger-table">
+                        <thead>
+                            <tr class="main-bg-color">
+                                <th></th>
+                                <th>Debit</th>
+                                <th>Credit</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Begining Balance</td>
+                                <td id="begd" style="text-align: right;">{{comNum(begBal + arrTotal(preRecords,
+                                    preRecords.length - 1, 0))}}</td>
+                                <td id="begc" style="text-align: right;">_____</td>
+                                <td id="begb" style="text-align: right;">{{comNum(begBal + arrTotal(preRecords,
+                                    preRecords.length - 1, 0))}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td id="totd" style="text-align: right;">
+                                    {{comNum(arrTotal(records, records.length - 1, 1))}}</td>
+                                <td id="totc" style="text-align: right;">
+                                    {{comNum(-1 * arrTotal(records, records.length - 1, 2))}}</td>
+                                <td id="totb" style="text-align: right;">
+                                    {{comNum(begBal + arrTotal(preRecords, preRecords.length - 1, 0) + arrTotal(records, records.length - 1, 0))}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Debits Table -->
+    <div class="margin-auto chart-box" style="width: 99.5%">
+        <section class="clearfix">
+            <label class="ch-title mian-color w3-large ex-font" style="float: left; margin-top: 1px;">Records</label>
+        </section>
+        <div class="w3-card-4 table-container">
+            <div class="ch-table-content">
+                <div class="w3-responsive">
+                    <table class="w3-table-all ledger-table">
+                        <thead>
+                            <tr class="main-bg-color">
+                                <th>No</th>
+                                <th>EN</th>
+                                <th>VN</th>
+                                <th>Date</th>
+                                <th>Party Code</th>
+                                <th>Party Name</th>
+                                <th>A/C Code</th>
+                                <th>A/C Name</th>
+                                <th>Debit Amount</th>
+                                <th>Credit Amount</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="rec in records track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{rec.entryNo}}</td>
+                                <td>{{rec.voucherNo}}</td>
+                                <td>{{numToDate(rec.date)}}</td>
+                                <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].partyCode}}</td>
+                                <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].partyCode}}</td>
+                                <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].partyName}}</td>
+                                <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].partyName}}</td>
+                                <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].ACCode}}</td>
+                                <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].ACCode}}</td>
+                                <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].ACName}}</td>
+                                <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].ACName}}</td>
+                                <td ng-if="rec.sCode == rec.ACCodes[0]" style="text-align: right;">
+                                    {{comNum(rec.debitCredit[0].drAmount)}}</td>
+                                <td ng-if="rec.sCode == rec.ACCodes[0]" style="text-align: right;">_____</td>
+                                <td ng-if="rec.sCode == rec.ACCodes[1]" style="text-align: right;">_____</td>
+                                <td ng-if="rec.sCode == rec.ACCodes[1]" style="text-align: right;">
+                                    {{comNum(rec.debitCredit[1].crAmount)}}</td>
+                                <td style="text-align: right;">
+                                    {{comNum(begBal + arrTotal(preRecords, preRecords.length - 1, 0) + arrTotal(records, $index, 0))}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <div ng-show="loading" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif"
+                                alt="Loading..." style="height: 25px; width: 25px;"></div> -->
+                    <div ng-show="nodata" class="w3-pale-blue" style="padding: 12px; text-align: center;">No
+                        Data Found!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Debit Table End -->
+</div>
+<!-- Excel Table -->
+<table id="excelTable" style="display: none;">
+    <tr>
+        <td>Account Type</td>
+        <td>Debit</td>
+    </tr>
+    <tr>
+        <td>From Date</td>
+        <td>{{fromDateEx}}</td>
+    </tr>
+    <tr>
+        <td>To Date</td>
+        <td>{{toDateEx}}</td>
+    </tr>
+    <tr>
+        <td>Account Code</td>
+        <td>{{acCodeEx}}</td>
+    </tr>
+    <tr>
+        <td>Account Name</td>
+        <td id="acNameEx"></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>Begining Balance</td>
+        <td>{{comNum(begBal + arrTotal(preRecords,
+            preRecords.length - 1, 0))}}</td>
+        <td>_____</td>
+        <td>{{comNum(begBal + arrTotal(preRecords,
+            preRecords.length - 1, 0))}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Total</td>
+        <td>
+            {{comNum(arrTotal(records, records.length - 1, 1))}}</td>
+        <td>
+            {{comNum(-1 * arrTotal(records, records.length - 1, 2))}}</td>
+        <td>
+            {{comNum(begBal + arrTotal(preRecords, preRecords.length - 1, 0) + arrTotal(records, records.length - 1, 0))}}
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td colspan="11">Records</td>
+    </tr>
+    <tr>
+        <td>No</td>
+        <td>EN</td>
+        <td>VN</td>
+        <td>Date</td>
+        <td>Party Code</td>
+        <td>Party Name</td>
+        <td>A/C Code</td>
+        <td>A/C Name</td>
+        <td>Debit Amount</td>
+        <td>Credit Amount</td>
+        <td>Balance</td>
+    </tr>
+    <tr ng-repeat="rec in records track by $index">
+        <td>{{$index + 1}}</td>
+        <td>{{rec.entryNo}}</td>
+        <td>{{rec.voucherNo}}</td>
+        <td>{{numToDate(rec.date)}}</td>
+        <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].partyCode}}</td>
+        <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].partyCode}}</td>
+        <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].partyName}}</td>
+        <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].partyName}}</td>
+        <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].ACCode}}</td>
+        <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].ACCode}}</td>
+        <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].ACName}}</td>
+        <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].ACName}}</td>
+        <td ng-if="rec.sCode == rec.ACCodes[0]" style="text-align: right;">
+            {{comNum(rec.debitCredit[0].drAmount)}}</td>
+        <td ng-if="rec.sCode == rec.ACCodes[0]" style="text-align: right;">_____</td>
+        <td ng-if="rec.sCode == rec.ACCodes[1]" style="text-align: right;">_____</td>
+        <td ng-if="rec.sCode == rec.ACCodes[1]" style="text-align: right;">
+            {{comNum(rec.debitCredit[1].crAmount)}}</td>
+        <td style="text-align: right;">
+            {{comNum(begBal + arrTotal(preRecords, preRecords.length - 1, 0) + arrTotal(records, $index, 0))}}
+        </td>
+    </tr>
+</table>
+<!-- Excel Tabel End -->
+<!-- Pdf print hide table...........start.................. -->
+<div style="display: none;">
+    <table border="1" cellspacing="0" style="visibility: hidden;" id="debPdfTable">
+        <tr>
+            <td colspan="12" style="text-align: center; height: 50px; font-size: 25px;">
+                <img style="width: 50px; height: 50px; float: left;" src="http://testing.afsanajasi.com/Rahman/img/logo3.png"> <span>DEBIT LEDGER</span>
+                <img style="width: 50px; height: 50px; float: right;" src="http://testing.afsanajasi.com/Rahman/img/logo32.png">
+            </td>
+        </tr>
+        <tr>
+            <th colspan="2">ACCOUNT TYPE</th>
+            <th colspan="2">DATE FROM</th>
+            <th colspan="2">DATE TO</th>
+            <th colspan="2">ACCOUNT CODE</th>
+            <th colspan="4">ACCOUNT NAME</th>
+
+        </tr>
+        <tr>
+            <td colspan="2" id="at"></td>
+            <td colspan="2" id="df"></td>
+            <td colspan="2" id="dt"></td>
+            <td colspan="2" id="ac"></td>
+            <td colspan="4" id="an"></td>
+        </tr>
+        <tr>
+            <td colspan="11" style="text-align: center; height: 20px; font-size: 25px;"></td>
+        </tr>
+        <tr>
+            <td>---</td>
+            <td colspan="3">DEBIT</td>
+            <td colspan="4">CREDIT</td>
+            <td colspan="4">BALANCE</td>
+        </tr>
+        <tr>
+            <td>BEDINNING BALANCE</td>
+            <td colspan="3" id="bd"></td>
+            <td colspan="4" id="bc"></td>
+            <td colspan="4" id="bb"></td>
+        </tr>
+        <tr>
+            <td>TOTAL</td>
+            <td colspan="3" id="td"></td>
+            <td colspan="4" id="tc"></td>
+            <td colspan="4" id="tb"></td>
+        </tr>
+        <tr>
+            <td colspan="11" style="text-align: center; height: 30px; font-size: 25px;"><span>RECORDS</span></td>
+        </tr>
+        <tr class="main-bg-color">
+            <th>No</th>
+            <th>EN</th>
+            <th>VN</th>
+            <th>Date</th>
+            <th>Party Code</th>
+            <th>Party Name</th>
+            <th>A/C Code</th>
+            <th>A/C Name</th>
+            <th>Debit Amount</th>
+            <th>Credit Amount</th>
+            <th>Balance</th>
+        </tr>
+        <tr ng-repeat="rec in records track by $index">
+            <td>{{$index + 1}}</td>
+            <td>{{rec.entryNo}}</td>
+            <td>{{rec.voucherNo}}</td>
+            <td>{{numToDate(rec.date)}}</td>
+            <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].partyCode}}</td>
+            <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].partyCode}}</td>
+            <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].partyName}}</td>
+            <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].partyName}}</td>
+            <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].ACCode}}</td>
+            <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].ACCode}}</td>
+            <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].ACName}}</td>
+            <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].ACName}}</td>
+            <td ng-if="rec.sCode == rec.ACCodes[0]" style="text-align: right;">{{rec.debitCredit[0].drAmount}}</td>
+            <td ng-if="rec.sCode == rec.ACCodes[0]" style="text-align: right;">_____</td>
+            <td ng-if="rec.sCode == rec.ACCodes[1]" style="text-align: right;">_____</td>
+            <td ng-if="rec.sCode == rec.ACCodes[1]" style="text-align: right;">{{rec.debitCredit[1].crAmount}}</td>
+            <td style="text-align: right;">{{begBal + arrTotal(preRecords, preRecords.length - 1, 0) +
+                arrTotal(records, $index,
+                0)}}</td>
+        </tr>
+    </table>
+</div>
+<!-- Pdf print hide table...........end.................. -->
+
+<script>
+    $js('debDataForm').focus();
+    $("#ACCodeS").keyup(ACNameComplete);
+    $js('ACCodeS').onpaste = ACNameComplete;
+    var accArrayA = null;
+    function ACNameComplete(event) {
+        event.target.value = event.target.value.toUpperCase();
+        event.target.value = $.trim(event.target.value);
+        let data = accArrayA.find(function (el) {
+            return el.accCode == event.target.value;
+        });
+        // $print(data);
+        if (data) {
+            event.target.parentElement.nextElementSibling.lastElementChild.value = $js('acNameEx').innerHTML = data.accText;
+        }
+        else event.target.parentElement.nextElementSibling.lastElementChild.value = '';
+    }
+    $js("debitForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+    });
+    function exportExcel() {
+        $print('excelTable');
+        let wb = XLSX.utils.book_new();
+        let ledger = XLSX.utils.table_to_sheet($js('excelTable'), { cellDates: true });
+        XLSX.utils.book_append_sheet(wb, ledger, 'Debit Ledger'.toUpperCase());
+        let wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Debit_Ledger.xlsx');
+    }
+
+    //pdf making and save............................Start....................
+    $('.PDF_Btn').click(function () {
+        location.reload();
+        ///--------------------------------
+        $js('at').innerHTML = $js('atype').value;
+        $js('df').innerHTML = $js('debDataForm').value;
+        $js('dt').innerHTML = $js('dateto').value;
+        $js('ac').innerHTML = $js('ACCodeS').value;
+        $js('an').innerHTML = $js('aname').value;
+        ////-------------------------------------
+        $js('bd').innerHTML = $js('begd').innerHTML;
+        $js('bc').innerHTML = $js('begc').innerHTML;
+        $js('bb').innerHTML = $js('begb').innerHTML;
+        $js('td').innerHTML = $js('totd').innerHTML;
+        $js('tc').innerHTML = $js('totc').innerHTML;
+        $js('tb').innerHTML = $js('totb').innerHTML;
+        ///--------------------------------------------
+        $js('debPdfTable').style.visibility = "visible";
+        var printme = document.getElementById('debPdfTable');
+        var wme = window.open("", "", "width=900,height=900");
+        wme.document.write(printme.outerHTML);
+        wme.document.close();
+        wme.focus();
+        wme.print();
+        wme.close();
+        $js('debPdfTable').style.visibility = "hidden";
+    })
+    //pdf making and save............................End......................
+    //Print in Landscape...........start........
+    var css = '@page { size: landscape; }',
+        head = document.head || document.getElementsByTagName('head')[0],
+        style = document.createElement('style');
+
+    style.type = 'text/css';
+    style.media = 'print';
+
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    head.appendChild(style);
+    //Print in Landscape...........end........
+
+</script>

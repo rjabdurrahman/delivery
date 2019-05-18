@@ -1,0 +1,573 @@
+<div class="overlay-container">
+    <div class="overlay">
+        <div class="margin-auto chart-box">
+            <section class="clearfix">
+                <label class="ch-title mian-color w3-large ex-font" style="float: left; margin-top: 8px;">Users</label>
+                <button onclick="document.getElementById('id01').style.display='block'"
+                    class="w3-xlarge w3-circle w3-white circle-btn" style="float: right;">+</button>
+                <div class="ch-title mian-color w3-large ex-font"
+                    style="margin-top: 8px; float: left; margin-left: 22px;">
+                    <label>Beginning Balance</label>
+                    <label class="switch" style="margin-left: 8px;">
+                        <input type="checkbox" onclick="begBalPer(event)" id="begBalCheck">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div style="margin-top: 8px; float: left; margin-left: 22px;">
+                    <input type="text" class="w3-input" placeholder="DD-MMM-YY"
+                        style="padding: 4px; text-align: center; width: 120px;">
+                </div>
+                <div style="margin-top: 8px; float: left; margin-left: 12px;">
+                    <input type="text" class="w3-input" placeholder="DD-MMM-YY"
+                        style="padding: 4px; text-align: center; width: 120px;">
+                </div>
+                <div style="margin-top: 8px; float: left; margin-left: 12px;">
+                    <button ng-click="reCal($event)" class="w3-btn w3-blue" style="padding: 5px 12px;">Check</button>
+                </div>
+            </section>
+            <div class="w3-card-4 table-container">
+                <div class="ch-table-content">
+                    <div class="w3-responsive">
+                        <table class="w3-table-all chart-tables">
+                            <thead>
+                                <tr class="main-bg-color">
+                                    <th>No</th>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Entry</th>
+                                    <th>Accepted</th>
+                                    <th>Password</th>
+                                    <th style="width: 220px;">Permission</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in users track by $index">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{getUsername(user.email)}}</td>
+                                    <td>{{user.name}}</td>
+                                    <td><button style="outline: none; background-color: transparent; border: none;"
+                                            ng-disabled="getLen(journal, user.id) == 0"><a
+                                                href="#myjournal?id={{user.id}}&n={{getUsername(user.email)}}&fdate={{fQDate}}&ldate={{lQDate}}&t=1"
+                                                class="w3-btn w3-blue">{{getLen(journal, user.id)}}</a></button></td>
+                                    <td><button style="outline: none; background-color: transparent; border: none;"
+                                            button ng-disabled="getAbLen(journal, user.id) == 0"><a
+                                                href="#myjournal?id={{user.id}}&n={{getUsername(user.email)}}&fdate={{fQDate}}&ldate={{lQDate}}&t=2"
+                                                class="w3-btn w3-green">{{getAbLen(journal, user.id)}}</a></button></td>
+                                    <td>{{user.pass}}</td>
+                                    <td>
+                                        <button ng-if="user.uc" class="w3-btn w3-blue" disabled>Admin</button>
+                                        <button ng-if="!user.uc" id="{{user.$id}}" onclick="permission(event)"
+                                            ng-click="getPer($event)" class="w3-btn w3-blue">Permission</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div ng-show="!load" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img
+                                src="img/loader.gif" alt="Loading..." style="height: 25px; width: 25px;"></div>
+                        <div id="nodata" ng-show="nodata" class="w3-pale-blue"
+                            style="padding: 12px; text-align: center;">No
+                            Data Found!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="permissionWin" class="w3-modal">
+            <div class="w3-modal-content div-box w3-animate-zoom w3-card-4" style="width: 650px;">
+                <header class="w3-container main-bg-color div-title">
+                    <span onclick="$js('permissionWin').style.display='none';location.href = '#reg';"
+                        class="w3-button w3-display-topright">&times;</span>
+                    <h2>User Permission</h2>
+                </header>
+                <div class="w3-container">
+                    <section class="w3-container w3-bottombar w3-border-blue w3-pale-blue">
+                        <p>User: <span id="pUserName"></span></p>
+                        <p>Email: <span id="pUserEmail"></span></p>
+                    </section>
+                    <section class="w3-container w3-leftbar w3-border-blue w3-light-gray" style="margin-top: 12px;">
+                        <p>Chart</p>
+                    </section>
+                    <section class="w3-container w3-border chart-per"
+                        style="display: flex; justify-content: space-between;">
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="c_1" name="perCheck"
+                                    ng-checked="getCheck('c_1')">
+                                <label>Main Accounts</label><br>
+                                <input class="w3-check" type="checkbox" id="c_1_e" name="perCheck"
+                                    ng-checked="getCheck('c_1_e')">
+                                <label>Edit&nbsp;</label>
+                                <input class="w3-check" type="checkbox" id="c_1_d" name="perCheck"
+                                    ng-checked="getCheck('c_1_d')">
+                                <label>Delete&nbsp;</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="c_2" name="perCheck"
+                                    ng-checked="getCheck('c_2')">
+                                <label>Debtors</label><br>
+                                <input class="w3-check" type="checkbox" id="c_2_e" name="perCheck"
+                                    ng-checked="getCheck('c_2_e')">
+                                <label>Edit&nbsp;</label>
+                                <input class="w3-check" type="checkbox" id="c_2_d" name="perCheck"
+                                    ng-checked="getCheck('c_2_d')">
+                                <label>Delete&nbsp;</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="c_3" name="perCheck"
+                                    ng-checked="getCheck('c_3')">
+                                <label>Creditors</label><br>
+                                <input class="w3-check" type="checkbox" id="c_3_e" name="perCheck"
+                                    ng-checked="getCheck('c_3_e')">
+                                <label>Edit&nbsp;</label>
+                                <input class="w3-check" type="checkbox" id="c_3_d" name="perCheck"
+                                    ng-checked="getCheck('c_3_d')">
+                                <label>Delete&nbsp;</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="c_4" name="perCheck"
+                                    ng-checked="getCheck('c_4')">
+                                <label>Company Heads</label><br>
+                                <input class="w3-check" type="checkbox" id="c_4_e" name="perCheck"
+                                    ng-checked="getCheck('c_4_e')">
+                                <label>Edit&nbsp;</label>
+                                <input class="w3-check" type="checkbox" id="c_4_d" name="perCheck"
+                                    ng-checked="getCheck('c_4_d')">
+                                <label>Delete&nbsp;</label>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="c_5" name="perCheck"
+                                    ng-checked="getCheck('c_5')">
+                                <label>Vehicles</label><br>
+                                <input class="w3-check" type="checkbox" id="c_5_e" name="perCheck"
+                                    ng-checked="getCheck('c_5_e')">
+                                <label>Edit&nbsp;</label>
+                                <input class="w3-check" type="checkbox" id="c_5_d" name="perCheck"
+                                    ng-checked="getCheck('c_5_d')">
+                                <label>Delete&nbsp;</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="c_6" name="perCheck"
+                                    ng-checked="getCheck('c_6')">
+                                <label>Employees</label><br>
+                                <input class="w3-check" type="checkbox" id="c_6_e" name="perCheck"
+                                    ng-checked="getCheck('c_6_e')">
+                                <label>Edit&nbsp;</label>
+                                <input class="w3-check" type="checkbox" id="c_6_d" name="perCheck"
+                                    ng-checked="getCheck('c_6_d')">
+                                <label>Delete&nbsp;</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="c_7" name="perCheck"
+                                    ng-checked="getCheck('c_7')">
+                                <label>Banks</label><br>
+                                <input class="w3-check" type="checkbox" id="c_7_e" name="perCheck"
+                                    ng-checked="getCheck('c_7_e')">
+                                <label>Edit&nbsp;</label>
+                                <input class="w3-check" type="checkbox" id="c_7_d" name="perCheck"
+                                    ng-checked="getCheck('c_7_d')">
+                                <label>Delete&nbsp;</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="c_8" name="perCheck"
+                                    ng-checked="getCheck('c_8')">
+                                <label>Contractors</label><br>
+                                <input class="w3-check" type="checkbox" id="c_8_e" name="perCheck"
+                                    ng-checked="getCheck('c_8_e')">
+                                <label>Edit&nbsp;</label>
+                                <input class="w3-check" type="checkbox" id="c_8_d" name="perCheck"
+                                    ng-checked="getCheck('c_8_d')">
+                                <label>Delete&nbsp;</label>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="c_9" name="perCheck"
+                                    ng-checked="getCheck('c_9')">
+                                <label>Raw Materials</label><br>
+                                <input class="w3-check" type="checkbox" id="c_9_e" name="perCheck"
+                                    ng-checked="getCheck('c_9_e')">
+                                <label>Edit&nbsp;</label>
+                                <input class="w3-check" type="checkbox" id="c_9_d" name="perCheck"
+                                    ng-checked="getCheck('c_9_d')">
+                                <label>Delete&nbsp;</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="c_11" name="perCheck"
+                                    ng-checked="getCheck('c_11')">
+                                <label>Finished Goods</label><br>
+                                <input class="w3-check" type="checkbox" id="c_11_e" name="perCheck"
+                                    ng-checked="getCheck('c_11_e')">
+                                <label>Edit&nbsp;</label>
+                                <input class="w3-check" type="checkbox" id="c_11_d" name="perCheck"
+                                    ng-checked="getCheck('c_11_d')">
+                                <label>Delete&nbsp;</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="c_12" name="perCheck"
+                                    ng-checked="getCheck('c_12')">
+                                <label>By Products</label><br>
+                                <input class="w3-check" type="checkbox" id="c_12_e" name="perCheck"
+                                    ng-checked="getCheck('c_12_e')">
+                                <label>Edit&nbsp;</label>
+                                <input class="w3-check" type="checkbox" id="c_12_d" name="perCheck"
+                                    ng-checked="getCheck('c_12_d')">
+                                <label>Delete&nbsp;</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="c_10" name="perCheck"
+                                    ng-checked="getCheck('c_10')">
+                                <label>Loans</label><br>
+                                <input class="w3-check" type="checkbox" id="c_10_e" name="perCheck"
+                                    ng-checked="getCheck('c_10_e')">
+                                <label>Edit&nbsp;</label>
+                                <input class="w3-check" type="checkbox" id="c_10_d" name="perCheck"
+                                    ng-checked="getCheck('c_10_d')">
+                                <label>Delete&nbsp;</label>
+                            </p>
+                        </div>
+                    </section>
+                    <section class="w3-container w3-leftbar w3-border-blue w3-light-gray" style="margin-top: 12px;">
+                        <p>Form Entry</p>
+                    </section>
+                    <section class="w3-container w3-border" style="display: flex; justify-content: space-between;">
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="fe_1" name="perCheck"
+                                    ng-checked="getCheck('fe_1')">
+                                <label>Journal Form</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="fe_2" name="perCheck"
+                                    ng-checked="getCheck('fe_2')">
+                                <label>Purchase</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="fe_3" name="perCheck"
+                                    ng-checked="getCheck('fe_3')">
+                                <label>Purchase Return</label>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="fe_4" name="perCheck"
+                                    ng-checked="getCheck('fe_4')">
+                                <label>Sales</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="fe_5" name="perCheck"
+                                    ng-checked="getCheck('fe_5')">
+                                <label>Sales Return</label>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="fe_6" name="perCheck"
+                                    ng-checked="getCheck('fe_6')">
+                                <label>Production Input</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="fe_7" name="perCheck"
+                                    ng-checked="getCheck('fe_7')">
+                                <label>Production Output</label>
+                            </p>
+                        </div>
+                    </section>
+                    <section class="w3-container w3-leftbar w3-border-blue w3-light-gray" style="margin-top: 12px;">
+                        <p>Ledger</p>
+                    </section>
+                    <section class="w3-container w3-border" style="display: flex; justify-content: space-between;">
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_1" name="perCheck"
+                                    ng-checked="getCheck('l_1')">
+                                <label>Debit Ledger</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_2" name="perCheck"
+                                    ng-checked="getCheck('l_2')">
+                                <label>Credit Ledger</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_3" name="perCheck"
+                                    ng-checked="getCheck('l_3')">
+                                <label>Expense Ledger</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_4" name="perCheck"
+                                    ng-checked="getCheck('l_4')">
+                                <label>Debitor Ledger</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_5" name="perCheck"
+                                    ng-checked="getCheck('l_5')">
+                                <label>Creditor Ledger</label>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_6" name="perCheck"
+                                    ng-checked="getCheck('l_6')">
+                                <label>Other Party Ledger Debit</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_7" name="perCheck"
+                                    ng-checked="getCheck('l_7')">
+                                <label>Other Party Ledger Credit</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_8" name="perCheck"
+                                    ng-checked="getCheck('l_8')">
+                                <label>Revenue Ledger</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_14" name="perCheck"
+                                    ng-checked="getCheck('l_14')">
+                                <label>RAW Materials</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_15" name="perCheck"
+                                    ng-checked="getCheck('l_15')">
+                                <label>Finished Goods and By Products</label>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_8" name="perCheck"
+                                    ng-checked="getCheck('l_16')">
+                                <label>Invoice</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_14" name="perCheck"
+                                    ng-checked="getCheck('l_17')">
+                                <label>Production Ledger</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_15" name="perCheck"
+                                    ng-checked="getCheck('l_18')">
+                                <label>Product Performance Report</label>
+                            </p>
+                        </div>
+                    </section>
+                    <section class="w3-container w3-leftbar w3-border-blue w3-light-gray" style="margin-top: 12px;">
+                        <p>Daily</p>
+                    </section>
+                    <section class="w3-container w3-border" style="display: flex; justify-content: space-between;">
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_9" name="perCheck"
+                                    ng-checked="getCheck('l_9')">
+                                <label>Daily Cash</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_10" name="perCheck"
+                                    ng-checked="getCheck('l_10')">
+                                <label>Daily Bank</label>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_11" name="perCheck"
+                                    ng-checked="getCheck('l_11')">
+                                <label>Daily Expense</label>
+                            </p>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_12" name="perCheck"
+                                    ng-checked="getCheck('l_12')">
+                                <label>Daily Revenue</label>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="l_13" name="perCheck"
+                                    ng-checked="getCheck('l_13')">
+                                <label>Daily Purchase</label>
+                            </p>
+                        </div>
+                    </section>
+                    <section class="w3-container w3-leftbar w3-border-blue w3-light-gray" style="margin-top: 12px;">
+                        <p>Journal</p>
+                    </section>
+                    <section class="w3-container w3-border" style="display: flex; justify-content: space-between;">
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="j_1" name="perCheck"
+                                    ng-checked="getCheck('j_1')">
+                                <label>Pre Journal</label>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <input class="w3-check" type="checkbox" id="j_2" name="perCheck"
+                                    ng-checked="getCheck('j_2')">
+                                <label>Final Journal</label>
+                            </p>
+                        </div>
+                    </section>
+                </div>
+                <footer class="w3-container w3-white">
+                    <p class="flex" style="justify-content: center;">
+                        <button id="confirmPermission" class="w3-btn w3-green"
+                            style="margin-left: 20px; margin-right: 20px;">Submit</button>
+                        <button onclick="$js('permissionWin').style.display='none';location.href = '#reg';"
+                            class="w3-btn main-bg-color" style="margin-left: 20px; margin-right: 20px;">Cancel</button>
+                    </p>
+                </footer>
+            </div>
+        </div>
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent;">
+                <div class="div-box w3-light-gray w3-card-4 margin-auto" style="display: block;">
+                    <header class="w3-container main-bg-color div-title">
+                        <span onclick="exitModel();clearFields();" class="w3-button w3-display-topright">&times;</span>
+                        <h2>Register User</h2>
+                    </header>
+                    <div class="w3-container">
+                        <input id="emailField" class="w3-input w3-border" type="text"
+                            style="width: 100%; margin-top: 28px; padding: 10px;" placeholder="Username">
+                        <input id="passwordField" class="w3-input w3-border" type="password"
+                            style="width: 100%; margin-top: 22px; padding: 10px;" placeholder="Password">
+                        <input id="rePasswordField" class="w3-input w3-border" type="password"
+                            style="width: 100%; margin-top: 22px; padding: 10px;" placeholder="Re-enter Password">
+                        <input id="nameField" class="w3-input w3-border" type="text"
+                            style="width: 100%; margin-top: 22px; padding: 10px;" placeholder="Name">
+                        <p style="padding: 6px;" class="clearfix">
+                            <button id="regBtn" style="float: right;" class="w3-btn main-bg-color">Register</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    getRef('begBalPer').on('value', function (snapshot) {
+        let bBal = snapshot.val();
+        if (bBal == 1)
+            $js("begBalCheck").checked = true;
+        else
+            $js("begBalCheck").checked = false;
+
+    });
+    function begBalPer(e) {
+        $print(e.target.checked);
+        db.child('begBalPer').set(e.target.checked ? 1 : 0, function (error) {
+            if (error) {
+                notify(error, 2);
+            }
+            else {
+                notify('Permission Sucessfully Updated', 1);
+            }
+        });
+    }
+    let email = $js('emailField');
+    let password = $js('passwordField');
+    let rePassword = $js('rePasswordField');
+    let name = $js('nameField');
+    function loginReg(uEmail, uPass) {
+        firebase.auth().signInWithEmailAndPassword(uEmail, uPass)
+            .then(function (sucess) {
+                db.child('users').update(lsGetJ('tempUser'), function (error) {
+                    if (error) {
+                        notify('Something Went Wrong in Database!', 2);
+                    }
+                    else {
+                        notify('User Added Sucessfully', 1);
+                        $js('nodata').style.display = "none";
+                        clearFields();
+                        exitModel();
+                        location.reload();
+                    }
+                });
+            })
+            .catch(function (error) {
+                var code = error.code;
+                var message = error.message;
+                alert(message + "Login Again!");
+            });
+    }
+    $js('regBtn').addEventListener('click', function (e) {
+        if (email.value == "") {
+            notify('Empty Email!', 2);
+            email.focus();
+            return;
+        }
+        else if (password.value == "") {
+            notify('Empty Password!', 2);
+            password.focus();
+            return;
+        }
+        else if (rePassword.value == "") {
+            notify('Re-enter Password Empty!', 2);
+            rePassword.focus();
+            return;
+        }
+        else if (rePassword.value != password.value) {
+            notify('Password Not Matched!', 2);
+            rePassword.focus();
+            return;
+        }
+        else if (name.value == "") {
+            notify('Password Not Matched!', 2);
+            name.focus();
+            return;
+        }
+        e.target.textContent = "Registering...";
+        e.target.disabled = true;
+        firebase.auth().createUserWithEmailAndPassword(email.value + '@gmail.com', password.value)
+            .then(function (success) {
+                let user = {};
+                user[auth.currentUser.uid] = {
+                    email: email.value + '@gmail.com',
+                    name: name.value,
+                    pass: password.value
+                };
+                Object.assign(user[auth.currentUser.uid], dPermission);
+                lsSetJ('tempUser', user);
+                auth.signOut()
+                    .then(function (success) {
+                        $print('the email is');
+                        $print(lsGetJ('user').email);
+                        loginReg('user@gmail.com', lsGetJ('user').pass.toString());
+                    })
+                    .catch(function (error) {
+                        alert(error);
+                    });
+            })
+            .catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                alert(errorMessage);
+            });
+        $print('ok');
+    });
+    function clearFields() {
+        clearer(email, password, rePassword, name);
+    }
+    // Delete data
+    function permission(e) {
+        $js('permissionWin').style.display = 'block';
+        let cId = e.target.id;
+        pId = cId;
+        let userName = e.target.parentElement.previousElementSibling.textContent;
+        let userEmail = e.target.parentElement.previousElementSibling.previousElementSibling.textContent;
+        $js('pUserName').textContent = userName;
+        $js('pUserEmail').textContent = userEmail;
+        $js('confirmPermission').addEventListener('click', function () {
+            let allPerEl = $sn('perCheck');
+            let newPer = {};
+            allPerEl.forEach(function (el) {
+                newPer[el.id] = el.checked;
+            })
+            db.child('users').child(cId).update(newPer)
+                .then(function (success) {
+                    notify('Permission Sucessfully Updated', 1);
+                    location.href = "#reg";
+                })
+                .catch(function (err) {
+                    notify('Something Went Wrong!', 2);
+                });
+        });
+    }
+</script>

@@ -1,0 +1,507 @@
+<div class="overlay-container">
+    <div class="overlay">
+        <div class="margin-auto chart-box">
+            <section class="clearfix">
+                <label class="ch-title mian-color w3-large ex-font" style="float: left; margin-top: 8px;">{{title}}s</label>
+                <button id="plusBtn" onclick="document.getElementById('id01').style.display='block';$js('byProductSubmit').innerHTML = 'Submit'; $js('byProductCode').focus();"
+                    class="w3-xlarge w3-circle w3-white circle-btn" style="float: right;">+</button>
+                <!-- <button class="w3-btn w3-xlarge w3-circle w3-white circle-btn"><i class="fa fa-edit"></i></button> -->
+                <button ng-show="load" style="margin-left: 12px;" class="w3-xlarge w3-circle w3-white circle-btn PDF_Btn"><i class="fa fa-print"></i></button>                
+            </section>
+            <div class="w3-card-4 table-container">
+                <div class="ch-table-content">
+                    <div class="w3-responsive">
+                        <table class="w3-table-all chart-tables" >
+                            <thead>
+                                <tr class="main-bg-color">
+                                    <th>ID</th>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>Std unit</th>
+                                    <th>Pack Size</th>
+                                    <th>Number Of pack</th>
+                                    <th>Total quantity</th>
+                                    <th>Std unit price</th>
+                                    <th>Total price</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="byProduct in comByProducts | orderBy : 'code' track by $index">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{byProduct.code}}</td>
+                                    <td>{{byProduct.name}}</td>
+                                    <td>{{byProduct.stdUnit}}</td>
+                                    <td>{{comNum (byProduct.packSize)}}</td>
+                                    <td>{{comNum (byProduct.noPack)}}</td>
+                                    <td>{{comNum (byProduct.totalQu)}}</td>
+                                    <td>{{comNum (byProduct.stdUnitPri)}}</td>
+                                    <td>{{comNum (byProduct.totalPri)}}</td>
+                                    <td>
+                                        <button id="{{byProduct.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
+                                        <button id="{{byProduct.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                            style="display: none;">Update</button>
+                                    </td>
+                                    <td>
+                                        <button id="{{byProduct.$id}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div ng-show="!load" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif"
+                                alt="Loading..." style="height: 25px; width: 25px;"></div>
+                        <div id="nodata" ng-show="nodata" class="w3-pale-blue" style="padding: 12px; text-align: center;">No
+                            Data Found!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Confirmation diallog start -->
+        <div id="confirmDel" class="w3-modal">
+            <div class="w3-modal-content div-box w3-animate-zoom w3-card-4" style="width: 450px;">
+                <header class="w3-container main-bg-color div-title">
+                    <span onclick="$js('confirmDel').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <h2>Confirm Delete?</h2>
+                </header>
+                <div class="w3-container">
+                    <p>Deleting this account will not remove name from journal account name.</p>
+                    <p>And no more suggestion is available for this account code until you create new one.</p>
+                </div>
+                <footer class="w3-container w3-white">
+                    <p class="flex" style="justify-content: center;">
+                        <button onclick="rmItem(onDel);" class="w3-btn w3-red" style="margin-left: 20px; margin-right: 20px;">Confirm
+                            Delete</button>
+                        <button onclick="$js('confirmDel').style.display='none'" class="w3-btn main-bg-color" style="margin-left: 20px; margin-right: 20px;">Cancel</button>
+                    </p>
+                </footer>
+            </div>
+        </div>
+        <!-- Confirmation diallog end -->
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent;">
+                <div class="div-box w3-light-gray w3-card-4 margin-auto">
+                    <div class="w3-container main-bg-color div-title">
+                        <span onclick="exitModel();clearFields();" class="w3-button w3-display-topright">&times;</span>
+                        <h2>{{title}}</h2>
+                    </div>
+                    <div class="w3-container">
+                        <form id="form1">
+
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:150px; padding: 10px;">
+                                    <label class="w3-medium">Code</label>
+                                </div>
+                                <div class="w3-rest">
+                                    <input class="w3-input w3-border" type="text" name="" id="byProductCode" required>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:150px; padding: 10px;">
+                                    <label class="w3-medium">Name</label>
+                                </div>
+                                <div class="w3-rest">
+                                    <input class="w3-input w3-border" type="text" name="" id="byProductName" required>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:150px; padding: 10px;">
+                                    <label class="w3-medium">Standard Unit</label>
+                                </div>
+                                <div class="w3-rest">
+                                    <input class="w3-input w3-border" type="text" name="" id="stdUnit" required>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:150px; padding: 10px;">
+                                    <label class="w3-medium">Pack Size</label>
+                                </div>
+                                <div class="w3-rest">
+                                    <input class="w3-input w3-border commanum" type="text" name="" id="packSize"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:150px; padding: 10px;">
+                                    <label class="w3-medium">Number Of Pack</label>
+                                </div>
+                                <div class="w3-rest">
+                                    <input class="w3-input w3-border commanum" type="text" name="" id="noPack" required>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:150px; padding: 10px;">
+                                    <label class="w3-medium">Total Quantity</label>
+                                </div>
+                                <div class="w3-rest">
+                                    <input class="w3-input w3-border commanum" type="text" name="" id="totalQu"
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:150px; padding: 10px;">
+                                    <label class="w3-medium">Standard Unit Price</label>
+                                </div>
+                                <div class="w3-rest">
+                                    <input class="w3-input w3-border commanum" type="text" name="" id="stdUnitPri"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:150px; padding: 10px;">
+                                    <label class="w3-medium">Total Price</label>
+                                </div>
+                                <div class="w3-rest">
+                                    <input class="w3-input w3-border commanum" type="text" name="" id="totalPri"
+                                        disabled>
+                                </div>
+                            </div>
+                            <p class="clearfix">
+                                <button id="byProductSubmit" class="w3-btn main-bg-color" style="float: right;">Submit</button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of the Journy -->
+    </div>
+</div>
+<!-- Pdf print hide table...........start.................. -->
+<div style="display: none;">
+    <table border="1" cellspacing="0" style="visibility: hidden;" id="PdfTable">
+        <thead>
+            <tr>
+                <td colspan="9" style="text-align: center; height: 50px; font-size: 25px;"><span>BY PRODUCTS</span><img
+                        style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+            </tr>
+            <tr class="main-bg-color">
+                <th>ID</th>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Std unit</th>
+                <th>Pack Size</th>
+                <th>Number Of pack</th>
+                <th>Total quantity</th>
+                <th>Std unit price</th>
+                <th>Total price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="byProduct in comByProducts | orderBy : 'code' track by $index">
+                <td>{{$index + 1}}</td>
+                <td>{{byProduct.code}}</td>
+                <td>{{byProduct.name}}</td>
+                <td>{{byProduct.stdUnit}}</td>
+                <td>{{comNum (byProduct.packSize)}}</td>
+                <td>{{comNum (byProduct.noPack)}}</td>
+                <td>{{comNum (byProduct.totalQu)}}</td>
+                <td>{{comNum (byProduct.stdUnitPri)}}</td>
+                <td>{{comNum (byProduct.totalPri)}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Pdf print hide table...........end.................. -->
+
+<script>
+    var dbByProducts = null;
+    $(document).keypress(function (event) {
+        if (event.shiftKey && event.which == 43) {
+            event.preventDefault();
+            $('#plusBtn').click();
+        }
+    });
+    $js("form1").addEventListener("submit", function (event) {
+        event.preventDefault();
+    });
+    $js('byProductSubmit').addEventListener('click', function () {
+        byProductSubmit();
+    });
+
+    $('input.commanum').keyup(function (event) {
+        if (event.target.value.includes(".")) {
+            let str = event.target.value.split('.');
+            event.target.value = str[0] + "." + str[1].replace(/\D/g, "");
+            return;
+        }
+        // skip for arrow keys
+        if ((event.which >= 37 && event.which <= 40) || event.which == 190) return;
+
+        // format number
+        $(this).val(function (index, value) {
+            return value
+                .replace(/\D/g, "")
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        });
+    });
+
+    //Total Cal
+    $js('packSize').onkeyup = function (event) {
+        let priTP = $js('noPack').value;
+        // $print(priTP);
+        if (priTP != "") {
+            $js('totalQu').value = numToComma(parseFloat(commaToNum(event.target.value)) * parseFloat(commaToNum(priTP)));
+            if ($js('stdUnitPri').value != "") {
+                let priTP = $js('totalQu').value;
+                $js('totalPri').value = numToComma(parseFloat(commaToNum($js('stdUnitPri').value)) * parseFloat(commaToNum(priTP)));
+            }
+        }
+    }
+    $js('noPack').onkeyup = function (event) {
+        let priTP = $js('packSize').value;
+        // $print(priTP);
+        if (priTP != "") {
+            $js('totalQu').value = numToComma(parseFloat(commaToNum(event.target.value)) * parseFloat(commaToNum(priTP)));
+            if ($js('stdUnitPri').value != "") {
+                let priTP = $js('totalQu').value;
+                $js('totalPri').value = numToComma(parseFloat(commaToNum($js('stdUnitPri').value)) * parseFloat(commaToNum(priTP)));
+            }
+        }
+    }
+    $js('stdUnitPri').onkeyup = function (event) {
+        let priTP = $js('totalQu').value;
+        // $print(priTP);
+        if (priTP != "") {
+            $js('totalPri').value = numToComma(parseFloat(commaToNum(event.target.value)) * parseFloat(commaToNum(priTP)));
+        }
+    }
+
+    // // Total Cal End
+    /// edit data show in field start........................
+
+    var editTriget = 0;
+    var dbDataCode = "";
+    var dbID = "";
+
+    function editView(ID) {
+        $js('byProductSubmit').innerHTML = 'Update';
+        document.getElementById('id01').style.display = 'block';
+        var id = ID.slice(0, -1);
+        dbID = ID.slice(0, -1);
+        editTriget = 1;
+        console.log(id, editTriget);
+        getRef('buyProducts/' + id).on('value', function (snapshot) {
+            let dbData = snapshot.val();
+            console.log(dbData);
+
+            dbDataCode = dbData.code;   ///   from database code grip to control notification...............
+
+            $js('byProductCode').value = dbData.code;
+            $js('byProductName').value = dbData.name;
+            $js('stdUnit').value = dbData.stdUnit;
+            $js('packSize').value = numToComma(dbData.packSize);
+            $js('noPack').value = numToComma(dbData.noPack);
+            $js('totalQu').value = numToComma(dbData.totalQu);
+            $js('stdUnitPri').value = numToComma(dbData.stdUnitPri);
+            $js('totalPri').value = numToComma(dbData.totalPri);
+        });
+
+        console.log(" view last");
+
+    }
+
+    /// edit data show in field end........................
+
+    function byProductSubmit() {
+        var byProductCode = $js('byProductCode').value;
+        var byProductName = $js('byProductName').value;
+        var stdUnit = $js('stdUnit').value;
+        var packSize = $js('packSize').value;
+        var noPack = $js('noPack').value;
+        var totalQu = $js('totalQu').value;
+        var stdUnitPri = $js('stdUnitPri').value;
+        var totalPri = $js('totalPri').value;
+        if (byProductCode == "") {
+            $('#notification').html("<h6>Code Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+            return;
+        }
+        else if (byProductName == "") {
+            $('#notification').html("<h6>Name Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+            return;
+        }
+        else if (stdUnit == "") {
+            $('#notification').html("<h6>Standard Unit Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+            return;
+        }
+        else if (packSize == "") {
+            $('#notification').html("<h6>Pack Size Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+            return;
+        }
+        else if (noPack == "") {
+            $('#notification').html("<h6>Number Of Pack Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+            return;
+        }
+        else if (totalQu == "") {
+            $('#notification').html("<h6>Total Qunantity Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+            return;
+        }
+        else if (stdUnitPri == "") {
+            $('#notification').html("<h6>Standard Unit Price Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+            return;
+        }
+        else if (totalPri == "") {
+            $('#notification').html("<h6>Total Price Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+            return;
+        }
+
+        var byProduct = {
+            code: byProductCode,
+            name: byProductName,
+            stdUnit: stdUnit,
+            packSize: commaToNum(packSize),
+            noPack: commaToNum(noPack),
+            totalQu: commaToNum(totalQu),
+            stdUnitPri: commaToNum(stdUnitPri),
+            totalPri: commaToNum(totalPri),
+            type: 1
+        };
+
+        if (editTriget == 1 && dbDataCode == byProductCode) {
+
+            editTriget = 0;
+            db.child('buyProducts/' + dbID).update(byProduct, function (error) {
+                if (error) {
+                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+                } else {
+                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
+                    $js('nodata').style.display = "none";
+                    clearFields();
+
+                }
+            });
+
+        }
+        else if (editTriget == 1 && dbDataCode != byProductCode) {
+
+            for (i = 0; i < dbByProducts.length; i++) {
+                if (byProductCode == dbByProducts[i].code) {
+                    $('#notification').html("<h6>Code Already Used in Another Account!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+                    $js('byProductCode').focus();
+                    return;
+                }
+            }
+            editTriget = 0;
+            db.child('buyProducts/' + dbID).update(byProduct, function (error) {
+                if (error) {
+                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+                } else {
+                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
+                    $js('nodata').style.display = "none";
+                    clearFields();
+
+                }
+            });
+        } else {
+            editTriget = 0;
+            for (i = 0; i < dbByProducts.length; i++) {
+                if (byProductCode == dbByProducts[i].code) {
+                    $('#notification').html("<h6>Code Already Used in Another Account!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+                    $js('byProductCode').focus();
+                    return;
+                }
+            }
+            db.child('buyProducts').push(byProduct, function (error) {
+                if (error) {
+                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+                } else {
+                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
+                    $js('nodata').style.display = "none";
+                    clearFields();
+
+                }
+            });
+        }
+        console.log(" edit and update an insert last");
+
+        exitModel();
+    }
+
+    function clearFields() {
+        $js('byProductCode').value = $js('byProductName').value = $js('riceCode').value = $js('riceName').value = $js('stdUnit').value = $js('packSize').value = $js('noPack').value = $js('totalQu').value = $js('stdUnitPri').value = $js('totalPri').value = "";
+    }
+
+    // function printbyProduct() {
+    //     $print("print");
+    //     var ws = XLSX.utils.table_to_sheet(document.getElementById('byProductTable'), { cellDates: true });
+    //     // var wscols = [
+    //     //     { wch: 4 },
+    //     //     { wch: 12 },
+    //     //     { wch: 20 },
+    //     //     { wch: 20 },
+    //     //     { wch: 14 },
+    //     //     { wch: 40 }
+    //     // ];
+    //     // var wsrows = [
+    //     //     {
+    //     //         hpx: 24,
+    //     //         level: 2
+    //     //     }
+    //     // ];
+    //     // ws['!cols'] = wscols;
+    //     // ws['!rows'] = wsrows;
+    //     XLSX.utils.book_append_sheet(wb, ws, 'byProduct');
+    //     var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+    //     function s2ab(s) {
+    //         var buf = new ArrayBuffer(s.length);
+    //         var view = new Uint8Array(buf);
+    //         for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    //         return buf;
+    //     }
+    //     saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'byProduct.xlsx');
+    // }
+
+    // Delete data start......................
+    var onDel = '';
+    function getDbId(e) {
+        console.log("ok click");
+        $js('confirmDel').style.display = 'block';
+        onDel = e.target.id;
+        console.log(" get id last");
+
+    }
+    function rmItem(dbId) {
+        getRef('buyProducts').child(dbId).remove()
+            .then(function (sucess) {
+                $js('confirmDel').style.display = 'none';
+                notify('Deleted Sucessfully', 1);
+            })
+            .catch(function (err) {
+                notify(err, 2);
+            });
+
+        console.log(" i last");
+    }
+    // Delete data end......................
+    //pdf making and save............................Start....................
+    $('.PDF_Btn').click(function () {
+        location.reload();
+        $js('PdfTable').style.visibility = "visible";
+        var printme = document.getElementById('PdfTable');
+        var wme = window.open("", "", "width=900,height=900");
+        wme.document.write(printme.outerHTML);
+        wme.document.close();
+        wme.focus();
+        wme.print();
+        wme.close();
+        $js('PdfTable').style.visibility = "hidden";
+
+    })
+    //pdf making and save............................End......................
+    //Print in Landscape...........start........
+    var css = '@page { size: landscape; }',
+        head = document.head || document.getElementsByTagName('head')[0],
+        style = document.createElement('style');
+
+    style.type = 'text/css';
+    style.media = 'print';
+
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    head.appendChild(style);
+    //Print in Landscape...........end........
+</script>

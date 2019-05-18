@@ -1,0 +1,381 @@
+<div class="overlay-container">
+    <div class="overlay">
+        <div class="margin-auto clearfix" style="width: 99.5%; margin-bottom: 18px;">
+            <section class="clearfix w3-btn-sec">
+                <button ng-click="show = 'prejournal'" class="w3-btn ex-font journal-top-btn"
+                    type="submit"
+                    ng-class="{'w3-white' : !(show == 'prejournal' || (show=='postjournal'==false && show=='alljournal'== false)), 'w3-blue' : show == 'prejournal' || (show=='postjournal'==false && show=='alljournal'== false)}"
+                    class="ex-font">PRE
+                    JOURNAL</button>
+                <button ng-click="show = 'postjournal'" class="w3-btn ex-font journal-top-btn" type="submit"
+                    ng-class="{'w3-white' : show != 'postjournal', 'w3-blue' : show=='postjournal'}">POST
+                    JOURNAL</button>
+                <button ng-click="show = 'alljournal'" class="w3-btn ex-font journal-top-btn" type="submit"
+                    ng-class="{'w3-white' : show != 'alljournal', 'w3-blue' : show=='alljournal'}">ALL IN
+                    JOURNAL</button>
+            </section>
+
+            <style type="text/css">
+                .tableFixHead {
+                    overflow-y: auto;
+                }
+
+                .tableFixHead th {
+                    position: sticky;
+                    top: 0;
+                }
+
+                /* Just common table stuff. Really. */
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                th,
+                td {
+                    padding: 8px 16px;
+                }
+
+                th {
+                    background: #014387;
+                }
+
+                .active-submenu {
+                    border: #d6e2ee;
+                }
+            </style>
+            <div class="w3-card-4 table-container" ng-show="show=='postjournal'">
+                <div class="ch-table-header">
+
+                    <div class="table table-striped tableFixHead"
+                        style="overflow-y:auto; max-height:calc(100vh - 170px);">
+                        <table class="w3-table-all " id="header-fixed">
+                            <thead>
+                                <tr id="fixTr" class="main-bg-color">
+                                    <th>ENTRY NO</th>
+                                    <th>DATE</th>
+                                    <th>VOUCHER NO</th>
+                                    <th>PS NO</th>
+                                    <th>SEQ NO</th>
+                                    <th>PARTY CODE</th>
+                                    <th>PARTY NAME</th>
+                                    <th>A/C CODE</th>
+                                    <th>A/C NAME</th>
+                                    <th>DEBIT/CREDIT</th>
+                                    <th>DEBIT AMOUNT</th>
+                                    <th>CREDIT AMOUNT</th>
+                                    <th>COST CENTER</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>PRIMARY UNIT</th>
+                                    <th>QUANTITY</th>
+                                    <th>PRIMARY UNIT PRICE</th>
+                                    <th>STANDARD UNIT</th>
+                                    <th>PACKED/UNPACKED</th>
+                                    <th>PACK SIZE</th>
+                                    <th>NO OF PACKS</th>
+                                    <th>TOTAL QUANTITY</th>
+                                    <th>STANDARD UNIT PRICE (TK)</th>
+                                    <th>TOTAL PRICE (TK)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="genTr" ng-repeat="jor in poJournal | orderBy : 'entryNo' : true track by $index">
+                                <tr ng-repeat="deb in jor.debitCredit track by $index">
+                                    <td>{{jor.entryNo}}</td>
+                                    <td>{{numToDate(jor.date)}}</td>
+                                    <td>{{jor.voucherNo}}</td>
+                                    <td>{{jor.psNo}}</td>
+                                    <td>{{jor.seqNo}}</td>
+                                    <td>{{deb.partyCode}}</td>
+                                    <td>{{deb.partyName}}</td>
+                                    <td>{{deb.ACCode}}</td>
+                                    <td>{{deb.ACName}}</td>
+                                    <td>{{changerDC(deb.type)}}</td>
+                                    <td>{{deb.drAmount | number : fractionSize}}</td>
+                                    <td>{{deb.crAmount | number : fractionSize}}</td>
+                                    <td>{{jor.costCenter}}</td>
+                                    <td>{{jor.description}}</td>
+                                    <td>{{deb.primaryUnit}}</td>
+                                    <td>{{deb.primaryQuantity}}</td>
+                                    <td>{{deb.primaryUnitPrice | number : fractionSize}}</td>
+                                    <td ng-hide="deb.stdUnit">{{deb.stdUnit}}</td>
+                                    <td ng-show="deb.stdUnit">{{deb.stdUnit}}</td>
+                                    <td>{{deb.packType}}</td>
+                                    <td ng-hide="deb.packSize">{{deb.packSize}}</td>
+                                    <td ng-show="deb.packSize">{{deb.packSize}}</td>
+                                    <td ng-hide="deb.packs">{{deb.packs}}</td>
+                                    <td ng-show="deb.packs">{{deb.packs}}</td>
+                                    <td ng-hide="deb.unitQuantity">{{deb.totalQuantity}}</td>
+                                    <td ng-show="deb.unitQuantity">{{deb.unitQuantity}}</td>
+                                    <td ng-hide="deb.unitPrice">{{deb.stdUnitPrice | number : fractionSize}}</td>
+                                    <td ng-show="deb.unitPrice">{{deb.unitPrice | number : fractionSize}}</td>
+                                    <td ng-hide="deb.totalPrice">{{deb.totalPriceTK | number : fractionSize}}</td>
+                                    <td ng-show="deb.totalPrice">{{deb.totalPriceTK | number : fractionSize}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div ng-show="poJournal.length == 0 && !poNoData" class="w3-pale-blue"
+                            style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..."
+                                style="height: 25px; width: 25px;"></div>
+                        <div ng-show="poNoData" class="w3-pale-blue" style="padding: 12px; text-align: center;">
+                            No
+                            Data Found!</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="w3-card-4 table-container"
+                ng-if="show=='prejournal' || (show=='postjournal'==false && show=='alljournal'== false)">
+                <div class="ch-table-header">
+
+                    <div class=" table table-striped tableFixHead"
+                        style="overflow-y:auto; max-height: calc(100vh - 170px);">
+                        <table class="w3-table-all " id="header-fixed">
+                            <thead>
+                                <tr id="fixTr" class="main-bg-color">
+                                    <th>ENTRY NO</th>
+                                    <th>DATE</th>
+                                    <th>VOUCHER NO</th>
+                                    <th>PS NO</th>
+                                    <th>SEQ NO</th>
+                                    <th>PARTY CODE</th>
+                                    <th>PARTY NAME</th>
+                                    <th>A/C CODE</th>
+                                    <th>A/C NAME</th>
+                                    <th>DEBIT/CREDIT</th>
+                                    <th>DEBIT AMOUNT</th>
+                                    <th>CREDIT AMOUNT</th>
+                                    <th>COST CENTER</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>PRIMARY UNIT</th>
+                                    <th>QUANTITY</th>
+                                    <th>PRIMARY UNIT PRICE</th>
+                                    <th>STANDARD UNIT</th>
+                                    <th>PACKED/UNPACKED</th>
+                                    <th>PACK SIZE</th>
+                                    <th>NO OF PACKS</th>
+                                    <th>TOTAL QUANTITY</th>
+                                    <th>STANDARD UNIT PRICE (TK)</th>
+                                    <th>TOTAL PRICE (TK)</th>
+                                    <th>SUBMITTED BY</th>
+                                    <th>ALLOW/NOT</th>
+                                </tr>
+                            </thead>
+                            <tbody id="genTr" ng-repeat="jor in pJournal | orderBy : 'entryNo' : true track by $index">
+                                <tr ng-repeat="deb in jor.debitCredit track by $index">
+                                    <td>{{jor.entryNo}}</td>
+                                    <td>{{numToDate(jor.date)}}</td>
+                                    <td>{{jor.voucherNo}}</td>
+                                    <td>{{jor.psNo}}</td>
+                                    <td>{{jor.seqNo}}</td>
+                                    <td>{{deb.partyCode}}</td>
+                                    <td>{{deb.partyName}}</td>
+                                    <td>{{deb.ACCode}}</td>
+                                    <td>{{deb.ACName}}</td>
+                                    <td>{{changerDC(deb.type)}}</td>
+                                    <td>{{deb.drAmount | number : fractionSize}}</td>
+                                    <td>{{deb.crAmount | number : fractionSize}}</td>
+                                    <td>{{jor.costCenter}}</td>
+                                    <td>{{jor.description}}</td>
+                                    <td>{{deb.primaryUnit}}</td>
+                                    <td>{{deb.primaryQuantity}}</td>
+                                    <td>{{deb.primaryUnitPrice | number : fractionSize}}</td>
+                                    <td ng-hide="deb.stdUnit">{{deb.stdUnit}}</td>
+                                    <td ng-show="deb.stdUnit">{{deb.stdUnit}}</td>
+                                    <td>{{deb.packType}}</td>
+                                    <td ng-hide="deb.packSize">{{deb.packSize}}</td>
+                                    <td ng-show="deb.packSize">{{deb.packSize}}</td>
+                                    <td ng-hide="deb.packs">{{deb.packs}}</td>
+                                    <td ng-show="deb.packs">{{deb.packs}}</td>
+                                    <td ng-hide="deb.unitQuantity">{{deb.totalQuantity}}</td>
+                                    <td ng-show="deb.unitQuantity">{{deb.unitQuantity}}</td>
+                                    <td ng-hide="deb.unitPrice">{{deb.stdUnitPrice | number : fractionSize}}</td>
+                                    <td ng-show="deb.unitPrice">{{deb.unitPrice | number : fractionSize}}</td>
+                                    <td ng-hide="deb.totalPrice">{{deb.totalPriceTK | number : fractionSize}}</td>
+                                    <td ng-show="deb.totalPrice">{{deb.totalPriceTK | number : fractionSize}}</td>
+                                    <td>{{idToUsername(jor.uId)}}</td>
+                                    <td>
+                                        <button id="{{jor.entryNo}}u" onclick="updateconfirm(this.id);"
+                                            class="w3-btn w3-blue journal-top-btn">Confirm Both (DR/CR)</button>&nbsp;
+                                        <button id="{{jor.entryNo}}d" onclick="deleteconfirm(this.id)"
+                                            class="w3-btn w3-red journal-top-btn">Reject</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div ng-show="pJournal.length == 0 && !pNoData" class="w3-pale-blue"
+                            style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..."
+                                style="height: 25px; width: 25px;"></div>
+                        <div ng-show="pNoData" class="w3-pale-blue" style="padding: 12px; text-align: center;">
+                            No
+                            Data Found!</div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="w3-card-4 table-container" ng-show="show=='alljournal'">
+                <div class="ch-table-header">
+
+                    <div class=" table table-striped tableFixHead"
+                        style="overflow-y:auto; max-height:calc(100vh - 170px);">
+                        <table class="w3-table-all " id="header-fixed">
+                            <thead>
+                                <tr id="fixTr" class="main-bg-color">
+                                    <th>ENTRY NO</th>
+                                    <th>DATE</th>
+                                    <th>VOUCHER NO</th>
+                                    <th>PS NO</th>
+                                    <th>SEQ NO</th>
+                                    <th>PARTY CODE</th>
+                                    <th>PARTY NAME</th>
+                                    <th>A/C CODE</th>
+                                    <th>A/C NAME</th>
+                                    <th>DEBIT/CREDIT</th>
+                                    <th>DEBIT AMOUNT</th>
+                                    <th>CREDIT AMOUNT</th>
+                                    <th>COST CENTER</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>PRIMARY UNIT</th>
+                                    <th>QUANTITY</th>
+                                    <th>PRIMARY UNIT PRICE</th>
+                                    <th>STANDARD UNIT</th>
+                                    <th>PACKED/UNPACKED</th>
+                                    <th>PACK SIZE</th>
+                                    <th>NO OF PACKS</th>
+                                    <th>TOTAL QUANTITY</th>
+                                    <th>STANDARD UNIT PRICE (TK)</th>
+                                    <th>TOTAL PRICE (TK)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="genTr" ng-repeat="jor in journal | orderBy : 'entryNo' : true track by $index">
+                                <tr ng-repeat="deb in jor.debitCredit track by $index">
+                                    <td>{{jor.entryNo}}</td>
+                                    <td>{{numToDate(jor.date)}}</td>
+                                    <td>{{jor.voucherNo}}</td>
+                                    <td>{{jor.psNo}}</td>
+                                    <td>{{jor.seqNo}}</td>
+                                    <td>{{deb.partyCode}}</td>
+                                    <td>{{deb.partyName}}</td>
+                                    <td>{{deb.ACCode}}</td>
+                                    <td>{{deb.ACName}}</td>
+                                    <td>{{changerDC(deb.type)}}</td>
+                                    <td>{{deb.drAmount| number : fractionSize}}</td>
+                                    <td>{{deb.crAmount| number : fractionSize}}</td>
+                                    <td>{{jor.costCenter}}</td>
+                                    <td>{{jor.description}}</td>
+                                    <td>{{deb.primaryUnit}}</td>
+                                    <td>{{deb.primaryQuantity}}</td>
+                                    <td>{{deb.primaryUnitPrice| number : fractionSize}}</td>
+                                    <td ng-hide="deb.stdUnit">{{deb.stdUnit}}</td>
+                                    <td ng-show="deb.stdUnit">{{deb.stdUnit}}</td>
+                                    <td>{{deb.packType}}</td>
+                                    <td ng-hide="deb.packSize">{{deb.packSize}}</td>
+                                    <td ng-show="deb.packSize">{{deb.packSize}}</td>
+                                    <td ng-hide="deb.packs">{{deb.packs}}</td>
+                                    <td ng-show="deb.packs">{{deb.packs}}</td>
+                                    <td ng-hide="deb.unitQuantity">{{deb.totalQuantity}}</td>
+                                    <td ng-show="deb.unitQuantity">{{deb.unitQuantity}}</td>
+                                    <td ng-hide="deb.unitPrice">{{deb.stdUnitPrice| number : fractionSize}}</td>
+                                    <td ng-show="deb.unitPrice">{{deb.unitPrice| number : fractionSize}}</td>
+                                    <td ng-hide="deb.totalPrice">{{deb.totalPriceTK| number : fractionSize}}</td>
+                                    <td ng-show="deb.totalPrice">{{deb.totalPriceTK| number : fractionSize}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div ng-show="journal.length == 0 && !noData" class="w3-pale-blue"
+                            style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..."
+                                style="height: 25px; width: 25px;"></div>
+                        <div ng-show="noData" class="w3-pale-blue" style="padding: 12px; text-align: center;">
+                            No
+                            Data Found!</div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of the Journy -->
+            <!-- <table style="display: block;" class="w3-table w3-white w3-striped w3-border">
+                <tr>
+                    <th>Date</th>
+                    <th>Debit</th>
+                    <th>Credit</th>
+                </tr>
+                <tr ng-repeat="(key, value) in journal | groupBy: 'date'">
+                    <td>{{numToDate(intMk(key))}}</td>
+                    <td>{{totalDrCr(value, 1)}}</td>
+                    <td>{{totalDrCr(value, 2)}}</td>
+                </tr>
+            </table> -->
+        </div>
+    </div>
+</div>
+<script>
+    function updateAccept(id) {
+        fsDb.collection('JournalForm').doc(id.substring(0, id.length - 1)).update({ flagPrejournal: 1, acceptedBy: firebase.auth().currentUser.uid })
+            .then(function () {
+                notify('Updated Sucessfully', 1);
+            })
+            .catch(function (error) {
+                console.log(error)
+                notify('Not Accepted!', 2);
+            });
+    }
+
+    function deleteDocument(entry) {
+        fsDb.collection("JournalForm").doc(entry.substring(0, entry.length - 1)).delete().then(function () {
+            notify('Sucessfully Deleted', 1);
+        }).catch(function (error) {
+            console.error("Error removing document: ", error);
+            notify('Deletion Not Accepted!', 2);
+        });
+    }
+
+
+    function deleteconfirm(entry) {
+        if (confirm("These data will be deleted Permanently ! Are you sure to delete ??") == true) {
+            deleteDocument(entry);
+        }
+    }
+
+    function updateconfirm(id) {
+        if (confirm("Are you sure to update ??") == true) {
+            updateAccept(id);
+        }
+    }
+    // function myFunction() {
+    //     var n = document.getElementById("tab").scrollLeft;
+    //     // console.log(n);
+    //     $js('fixHead').style.marginLeft = "-" + n + "px";
+    // }
+    // var count = 0;
+    // var priTr = document.getElementById('fixTr');
+    // setTimeout(function () {
+    //     $('#genTr tr:nth-child(1) td').each(function () {
+    //         if (count > 4)
+    //             return;
+    //         // console.log($(priTr.childNodes[2 * count + 1]).outerWidth());
+    //         // console.log($(this).outerWidth());
+    //         if ($(priTr.childNodes[2 * count + 1]).outerWidth() > $(this).outerWidth()) {
+    //             let cl = document.createElement("COL");
+    //             cl.style.width = $(priTr.childNodes[2 * count + 1]).outerWidth() + 'px';
+    //             $js('colF').appendChild(cl);
+    //             let cl2 = document.createElement("COL");
+    //             cl2.style.width = $(priTr.childNodes[2 * count + 1]).outerWidth() + 'px';
+    //             $js('colS').appendChild(cl2);
+    //         }
+    //         else {
+    //             let cl = document.createElement("COL");
+    //             cl.style.width = $(this).outerWidth() + 'px';
+    //             $js('colF').appendChild(cl);
+    //             let cl2 = document.createElement("COL");
+    //             cl2.style.width = $(this).outerWidth() + 'px';
+    //             $js('colS').appendChild(cl2);
+    //         }
+    //         count++;
+    //     });
+        // console.log(cg);
+        // priTr.parentElement.parentElement.insertBefore(priTr.parentElement, cg);
+        // console.log(priTr.parentElement.parentElement);
+        // $js('genTr').parentElement.insertBefore($js('genTr'), cg);
+    // }, 3000);
+</script>

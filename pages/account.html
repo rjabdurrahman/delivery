@@ -1,0 +1,1589 @@
+<div class="overlay-container">
+    <div class="overlay">
+        <div class="margin-auto chart-box">
+            <section class="clearfix">
+                <label class="ch-title mian-color w3-large ex-font" style="float: left; margin-top: 8px;">Main
+                    {{title}}s</label>
+                <button id="addAccount" onclick="document.getElementById('id01').style.display='block'; $js('submitAccBtn').innerHTML = 'Submit'; $js('accCodeFirst').focus();"
+                    class="w3-xlarge w3-circle w3-white circle-btn" style="float: right;">+</button>
+                <!-- <button class="w3-btn w3-xlarge w3-circle w3-white circle-btn"><i class="fa fa-edit"></i></button> -->
+                <button ng-show="load" id="printAccount" style="margin-left: 12px;" class="w3-xlarge w3-circle w3-white circle-btn PDF_Btn"><i
+                        class="fa fa-print"></i></button>
+            </section>
+            <div class="w3-card-4 table-container ac-group">
+                <ul class="w3-ul">
+                    <li>
+                        <div class="g-toggle g-header">Current Assets</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(1).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(1).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(1) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-toggle g-header">Non-Current Assets</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(2).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th>Depreciation Rate</th>
+                                            <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(2).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(2) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td>{{comAcc.rate}}%</td>
+                                            <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-toggle g-header">Current Liabilities</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(3).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(3).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(3) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-toggle g-header">Non-Current Liabilities</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(4).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(4).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(4) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-toggle g-header">Equity</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(5).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(5).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(5) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-toggle g-header">Expenses</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(6).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(6).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(6) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-toggle g-header">Revenues</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(7).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(7).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(7) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-toggle g-header">Cost of Goods Sold</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(10).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(10).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(10) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-toggle g-header">Contras</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(12).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(12).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(12) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-toggle g-header">Production</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(11).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(11).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(11) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-toggle g-header">Withdrawals</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(8).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(8).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(8) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-toggle g-header">Contra Expenses</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(13).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(13).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(13) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-toggle g-header">Contra Revenues</div>
+                        <div>
+                            <div class="w3-responsive" style="max-height: 600px;">
+                                <table class="w3-table-all chart-tables">
+                                    <thead ng-hide="getAccArr(9).length == 0" id="table-headm">
+                                        <tr class="main-bg-color">
+                                            <th>ID</th>
+                                            <th>Nature</th>
+                                            <th>Account Code</th>
+                                            <th>Account Head</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="getAccArr(9).length == 0">
+                                            <td class="acc_group_empty" colspan="6">No Record Added!</td>
+                                        </tr>
+                                        <tr ng-repeat="comAcc in getAccArr(9) | orderBy : 'accCode' track by $index">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{comAcc.nature}}</td>
+                                            <td>{{comAcc.accCode}}</td>
+                                            <td>{{comAcc.accText}}</td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}e" onclick="editView(this.id);" class="w3-btn w3-blue">Edit</button>
+                                                <button id="{{comAcc.$id}}ec" onclick="editConfirm(event)" class="w3-btn w3-blue"
+                                                    style="display: none;">Update</button>
+                                            </td>
+                                            <td>
+                                                <button id="{{comAcc.$id}}" onclick="removeItem(event)" class="w3-btn w3-red">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="minimize">
+                                <i class="fa fa-minus"></i>&nbsp;&nbsp;<span>Minimize</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div id="confirmDel" class="w3-modal">
+                <div class="w3-modal-content div-box w3-animate-zoom w3-card-4" style="width: 450px;">
+                    <header class="w3-container main-bg-color div-title">
+                        <span onclick="$js('confirmDel').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                        <h2>Confirm Delete?</h2>
+                    </header>
+                    <div class="w3-container">
+                        <p>Deleting this account will not remove name from journal account name.</p>
+                        <p>And no more suggestion is available for this account code until you create new one.</p>
+                    </div>
+                    <footer class="w3-container w3-white">
+                        <p class="flex" style="justify-content: center;">
+                            <button id="delAcBtn" class="w3-btn w3-red" style="margin-left: 20px; margin-right: 20px;">Confirm
+                                Delete</button>
+                            <button onclick="$js('confirmDel').style.display='none'" class="w3-btn main-bg-color" style="margin-left: 20px; margin-right: 20px;">Cancel</button>
+                        </p>
+                    </footer>
+                </div>
+            </div>
+            <div id="id01" class="w3-modal">
+                <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent;">
+                    <div class="div-box w3-light-gray w3-card-4 margin-auto" style="display: block;">
+                        <header class="w3-container main-bg-color div-title">
+                            <span onclick="exitModel();clearFields();" class="w3-button w3-display-topright">&times;</span>
+                            <h2>{{title}}</h2>
+                        </header>
+                        <div class="w3-container">
+                            <form id="form1">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:130px; padding: 10px;">
+                                        <label class="w3-medium">Nature</label>
+                                    </div>
+                                    <div class="w3-rest">
+                                        <select ng-model="natureSelection" id="accNature" class="w3-select w3-border"
+                                            onchange="$('#equitySelector').hide();" name="option" disabled>
+                                            <option ng-repeat="(key, acc) in accounts track by $index" value="{{key}}">{{acc.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:130px; padding: 10px;">
+                                        <label class="w3-medium">Account Code</label>
+                                    </div>
+                                    <div class="w3-rest flex">
+                                        <section id="accCodeInit" ng-switch="natureSelection">
+                                            <select id="equitySelector" class="w3-select w3-border" style="width: 65px; color: gray;display: none;">
+                                                <option value="SE">SE</option>
+                                                <option value="RE">RE</option>
+                                            </select>
+                                            <select ng-switch-when="EQTY" class="w3-select w3-border" style="width: 65px; color: gray;">
+                                                <option value="SE">SE</option>
+                                                <option value="RE">RE</option>
+                                            </select>
+                                            <input ng-switch-default class="w3-input w3-border" type="text" id="natureCodeFill"
+                                                value="{{natureSelection}}" style="width: 65px; text-align: center"
+                                                disabled>
+                                        </section>
+                                        <label style="padding: 8px;">-</label>
+                                        <input type="text" id="accCodeFirst" class="w3-input w3-border" maxlength="4"
+                                            style="text-align: center; width: calc(100% - 180px);">
+                                        <label style="padding: 8px;">-</label>
+                                        <input id="accCodeSecond" class="w3-input w3-border" type="text" maxlength="2"
+                                            style="width: 65px; text-align: center">
+                                    </div>
+                                </div>
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:130px; padding: 10px;">
+                                        <label class="w3-medium">Account Head</label>
+                                    </div>
+                                    <div class="w3-rest">
+                                        <textarea id="accTxt" class="w3-input w3-border" name="" rows="5" required></textarea>
+                                    </div>
+                                </div>
+                                <div id="rateArea" class="w3-row w3-section" id="begBalField">
+                                    <div class="w3-col" style="width:130px; padding: 0px 10px;">
+                                        <label class="w3-medium">Depreciation Rate</label>
+                                    </div>
+                                    <div class="w3-rest" style="position: relative;">
+                                        <input type="text" id="rate" maxlength="3" class="w3-input w3-border" style="width: 68px;"></input>
+                                        <span class="phone" style="margin-left: 35px;">%</span>
+                                    </div>
+                                </div>
+                                <div class="w3-row w3-section" id="begBalField">
+                                    <div class="w3-col" style="width:130px; padding: 0px 10px;">
+                                        <label class="w3-medium">Beginning Balance</label>
+                                    </div>
+                                    <div class="w3-rest">
+                                        <input id="begBal" class="w3-input w3-border comma-num-minus"></input>
+                                    </div>
+                                </div>
+                                <p class="clearfix">
+                                    <button id="submitAccBtn" class="w3-btn main-bg-color" style="float: right;">Submit</button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Pdf print hide table...........start.................. -->
+    <div style="display: none;">
+        <!-- current asset -->
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="curAstTable">
+            <thead ng-hide="getAccArr(1).length == 0" id="table-headm">
+                <tr>
+                    <td colspan="5" style="text-align: center; height: 50px; font-size: 25px;"><span>CURRENT ASSETS</span><img
+                            style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                </tr>
+                <tr class="main-bg-color">
+                    <th>ID</th>
+                    <th>Nature</th>
+                    <th>Account Code</th>
+                    <th>Account Head</th>
+                    <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="comAcc in getAccArr(1) | orderBy : 'accCode' track by $index">
+                    <td>{{$index + 1}}</td>
+                    <td>{{comAcc.nature}}</td>
+                    <td>{{comAcc.accCode}}</td>
+                    <td>{{comAcc.accText}}</td>
+                    <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!--non current asset -->
+
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="nonCurAstTable">
+            <thead ng-hide="getAccArr(2).length == 0" id="table-headm">
+                <tr>
+                    <td colspan="6" style="text-align: center; height: 50px; font-size: 25px;"><span>NON_CURRENT ASSETS</span><img
+                            style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                </tr>
+                <tr class="main-bg-color">
+                    <th>ID</th>
+                    <th>Nature</th>
+                    <th>Account Code</th>
+                    <th>Account Head</th>
+                    <th>Depreciation Rate</th>
+                    <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="comAcc in getAccArr(2) | orderBy : 'accCode' track by $index">
+                    <td>{{$index + 1}}</td>
+                    <td>{{comAcc.nature}}</td>
+                    <td>{{comAcc.accCode}}</td>
+                    <td>{{comAcc.accText}}</td>
+                    <td>{{comAcc.rate}}%</td>
+                    <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!--current liability asset -->
+
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="curLiaTable">
+                <thead ng-hide="getAccArr(3).length == 0" id="table-headm">
+                    <tr>
+                        <td colspan="5" style="text-align: center; height: 50px; font-size: 25px;"><span>CURRENT LIABILITIES</span><img
+                                style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                    </tr>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Nature</th>
+                        <th>Account Code</th>
+                        <th>Account Head</th>
+                        <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="comAcc in getAccArr(3) | orderBy : 'accCode' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{comAcc.nature}}</td>
+                        <td>{{comAcc.accCode}}</td>
+                        <td>{{comAcc.accText}}</td>
+                        <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        <!--non current liability asset -->
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="nonCurLiaTable">
+                <thead ng-hide="getAccArr(4).length == 0" id="table-headm">
+                    <tr>
+                        <td colspan="5" style="text-align: center; height: 50px; font-size: 25px;"><span>NON-CURRENT LIABILITIES</span><img
+                                style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                    </tr>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Nature</th>
+                        <th>Account Code</th>
+                        <th>Account Head</th>
+                        <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="comAcc in getAccArr(4) | orderBy : 'accCode' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{comAcc.nature}}</td>
+                        <td>{{comAcc.accCode}}</td>
+                        <td>{{comAcc.accText}}</td>
+                        <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        <!--equity asset -->
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="eqiTable">
+                <thead ng-hide="getAccArr(5).length == 0" id="table-headm">
+                    <tr>
+                        <td colspan="5" style="text-align: center; height: 50px; font-size: 25px;"><span>EQUITY</span><img
+                                style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                    </tr>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Nature</th>
+                        <th>Account Code</th>
+                        <th>Account Head</th>
+                        <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="comAcc in getAccArr(5) | orderBy : 'accCode' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{comAcc.nature}}</td>
+                        <td>{{comAcc.accCode}}</td>
+                        <td>{{comAcc.accText}}</td>
+                        <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        <!--expense asset -->
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="expTable">
+                <thead ng-hide="getAccArr(6).length == 0" id="table-headm">
+                    <tr>
+                        <td colspan="4" style="text-align: center; height: 50px; font-size: 25px;"><span>EXPENSES</span><img
+                                style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                    </tr>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Nature</th>
+                        <th>Account Code</th>
+                        <th>Account Head</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="comAcc in getAccArr(6) | orderBy : 'accCode' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{comAcc.nature}}</td>
+                        <td>{{comAcc.accCode}}</td>
+                        <td>{{comAcc.accText}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        <!--revenue asset -->
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="revTable">
+                <thead ng-hide="getAccArr(7).length == 0" id="table-headm">
+                    <tr>
+                        <td colspan="4" style="text-align: center; height: 50px; font-size: 25px;"><span>REVENUES</span><img
+                                style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                    </tr>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Nature</th>
+                        <th>Account Code</th>
+                        <th>Account Head</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="comAcc in getAccArr(7) | orderBy : 'accCode' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{comAcc.nature}}</td>
+                        <td>{{comAcc.accCode}}</td>
+                        <td>{{comAcc.accText}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        <!--cost of goods sold asset -->
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="cogsTable">
+                <thead ng-hide="getAccArr(10).length == 0" id="table-headm">
+                    <tr>
+                        <td colspan="4" style="text-align: center; height: 50px; font-size: 25px;"><span>COST OF GOODS SOLD</span><img
+                                style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                    </tr>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Nature</th>
+                        <th>Account Code</th>
+                        <th>Account Head</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="comAcc in getAccArr(10) | orderBy : 'accCode' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{comAcc.nature}}</td>
+                        <td>{{comAcc.accCode}}</td>
+                        <td>{{comAcc.accText}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        <!--contras asset -->
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="conTable">
+                <thead ng-hide="getAccArr(12).length == 0" id="table-headm">
+                    <tr>
+                        <td colspan="5" style="text-align: center; height: 50px; font-size: 25px;"><span>CONTRAS</span><img
+                                style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                    </tr>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Nature</th>
+                        <th>Account Code</th>
+                        <th>Account Head</th>
+                        <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="comAcc in getAccArr(12) | orderBy : 'accCode' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{comAcc.nature}}</td>
+                        <td>{{comAcc.accCode}}</td>
+                        <td>{{comAcc.accText}}</td>
+                        <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        <!--production asset -->
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="proTable">
+                <thead ng-hide="getAccArr(11).length == 0" id="table-headm">
+                    <tr>
+                        <td colspan="5" style="text-align: center; height: 50px; font-size: 25px;"><span>PRODUCTION</span><img
+                                style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                    </tr>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Nature</th>
+                        <th>Account Code</th>
+                        <th>Account Head</th>
+                        <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="comAcc in getAccArr(11) | orderBy : 'accCode' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{comAcc.nature}}</td>
+                        <td>{{comAcc.accCode}}</td>
+                        <td>{{comAcc.accText}}</td>
+                        <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(comAcc.balance)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        <!--withdrawl asset -->
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="WidTable">
+                <thead ng-hide="getAccArr(8).length == 0" id="table-headm">
+                    <tr>
+                        <td colspan="4" style="text-align: center; height: 50px; font-size: 25px;"><span>WIDTHDRAWALS</span><img
+                                style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                    </tr>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Nature</th>
+                        <th>Account Code</th>
+                        <th>Account Head</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="comAcc in getAccArr(8) | orderBy : 'accCode' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{comAcc.nature}}</td>
+                        <td>{{comAcc.accCode}}</td>
+                        <td>{{comAcc.accText}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        <!--contra expense asset -->
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="conExpTable">
+                <thead ng-hide="getAccArr(13).length == 0" id="table-headm">
+                    <tr>
+                        <td colspan="5" style="text-align: center; height: 50px; font-size: 25px;"><span>CONTRA EXPENSES</span><img
+                                style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                    </tr>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Nature</th>
+                        <th>Account Code</th>
+                        <th>Account Head</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="comAcc in getAccArr(13) | orderBy : 'accCode' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{comAcc.nature}}</td>
+                        <td>{{comAcc.accCode}}</td>
+                        <td>{{comAcc.accText}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        <!--contra revenue asset -->
+        <table border="1" cellspacing="0" style="visibility: hidden;" id="conRevTable">
+                <thead ng-hide="getAccArr(9).length == 0" id="table-headm">
+                    <tr>
+                        <td colspan="5" style="text-align: center; height: 50px; font-size: 25px;"><span>CONTRA EXPENSES</span><img
+                                style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                    </tr>
+                    <tr class="main-bg-color">
+                        <th>ID</th>
+                        <th>Nature</th>
+                        <th>Account Code</th>
+                        <th>Account Head</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="comAcc in getAccArr(9) | orderBy : 'accCode' track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{comAcc.nature}}</td>
+                        <td>{{comAcc.accCode}}</td>
+                        <td>{{comAcc.accText}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+
+
+
+
+
+
+    </div>
+    <!-- Pdf print hide table...........end.................. -->
+
+    <script>
+
+        $(document).keypress(function (event) {
+            if (event.shiftKey && event.which == 43 && $js('addAccount').style.display == 'block') {
+                event.preventDefault();
+                $('#addAccount').click();
+            }
+        });
+        $js('accCodeFirst').onkeyup = function (event) {
+            event.target.value = event.target.value.replace(/\D/g, "");
+        }
+        $js('accCodeSecond').onkeyup = function (event) {
+            event.target.value = event.target.value.replace(/\D/g, "");
+        }
+        $js('rate').onkeyup = function (event) {
+            event.target.value = event.target.value.replace(/\D/g, "")
+            if (parseFloat(event.target.value) > 100) {
+                notify("Depreciation Rate is Over 100", 2);
+            }
+        }
+        $js("form1").addEventListener("submit", function (event) {
+            event.preventDefault();
+        });
+        $js('submitAccBtn').addEventListener('click', function () {
+            submitAccBtn();
+        });
+        $('#rateArea').hide();
+        // Enter Hit End
+        $('#addAccount').hide();
+        $('#addAccount').hide();
+        $('#printAccount').hide();
+
+        $('.g-toggle+div').hide();
+
+        var accountSelection = 'NO';
+
+        $('.g-toggle').click(function () {
+            // $print(this.textContent);
+            if ($('+div', this).is(":visible")) {
+                $('+div', this).slideToggle();
+                $js('accNature').selectedIndex = 0;
+                $js('natureCodeFill').value = '';
+                $('#addAccount').hide();
+                $('#printAccount').hide();
+                accountSelection = 'NO';
+                return;
+            }
+            else {
+                $('.g-toggle+div').hide();
+                $('+div', this).slideToggle();
+                $('#addAccount').show();
+                $('#printAccount').show();
+                accountSelection = this.textContent;
+                $print('snf' + accountSelection);
+
+            }
+
+            // Equity Select
+            if (removeNewlines(this.textContent) == 'Equity') {
+                $js('accNature').selectedIndex = 5;
+                $js('natureCodeFill').style.display = 'none';
+                $js('equitySelector').style.display = 'block';
+                $('#begBalField').show();
+                $('#rateArea').hide();
+            }
+            else {
+                $js('natureCodeFill').style.display = 'block';
+                $js('equitySelector').style.display = 'none';
+            }
+            // Fill AC Code
+            if (removeNewlines(this.textContent) == 'Current Assets') {
+                $js('accNature').selectedIndex = 1;
+                $js('natureCodeFill').value = 'CA';
+                $('#begBalField').show();
+                $('#rateArea').hide();
+            }
+            else if (removeNewlines(this.textContent) == 'Non-Current Assets') {
+                $js('accNature').selectedIndex = 2;
+                $js('natureCodeFill').value = 'NCA';
+                $('#begBalField').show();
+                $('#rateArea').show();
+            }
+            else if (removeNewlines(this.textContent) == 'Current Liabilities') {
+                $js('accNature').selectedIndex = 3;
+                $js('natureCodeFill').value = 'CL';
+                $('#begBalField').show();
+                $('#rateArea').hide();
+            }
+            else if (removeNewlines(this.textContent) == 'Non-Current Liabilities') {
+                $js('accNature').selectedIndex = 4;
+                $js('natureCodeFill').value = 'NCL';
+                $('#begBalField').show();
+                $('#rateArea').hide();
+            }
+            else if (removeNewlines(this.textContent) == 'Expenses') {
+                $js('accNature').selectedIndex = 6;
+                $js('natureCodeFill').value = 'EX';
+                $('#begBalField').hide();
+                $('#rateArea').hide();
+            }
+            else if (removeNewlines(this.textContent) == 'Revenues') {
+                $js('accNature').selectedIndex = 7;
+                $js('natureCodeFill').value = 'REV';
+                $('#begBalField').hide();
+                $('#rateArea').hide();
+            }
+            else if (removeNewlines(this.textContent) == 'Cost of Goods Sold') {
+                $js('accNature').selectedIndex = 8;
+                $js('natureCodeFill').value = 'COGS';
+                $('#begBalField').hide();
+                $('#rateArea').hide();
+            }
+            else if (removeNewlines(this.textContent) == 'Contras') {
+                $js('accNature').selectedIndex = 9;
+                $js('natureCodeFill').value = 'CN';
+                $('#begBalField').show();
+                $('#rateArea').hide();
+            }
+            else if (removeNewlines(this.textContent) == 'Production') {
+                $js('accNature').selectedIndex = 10;
+                $js('natureCodeFill').value = 'WIP';
+                $('#begBalField').show();
+                $('#rateArea').hide();
+            }
+            else if (removeNewlines(this.textContent) == 'Withdrawals') {
+                $js('accNature').selectedIndex = 11;
+                $js('natureCodeFill').value = 'WD';
+                $('#begBalField').hide();
+                $('#rateArea').hide();
+            }
+            else if (removeNewlines(this.textContent) == 'Contra Expenses') {
+                $js('accNature').selectedIndex = 12;
+                $js('natureCodeFill').value = 'PD';
+                $('#begBalField').hide();
+                $('#rateArea').hide();
+            }
+            else if (removeNewlines(this.textContent) == 'Contra Revenues') {
+                $js('accNature').selectedIndex = 13;
+                $js('natureCodeFill').value = 'SD';
+                $('#begBalField').hide();
+                $('#rateArea').hide();
+            }
+        });
+        $('.minimize').click(function () {
+            $(this).parent().slideToggle();
+            $js('accNature').selectedIndex = 0;
+            $js('natureCodeFill').value = '';
+        });
+
+        var dbAccounts = null;
+        /// edit data show in field start........................
+
+        ////////////////////////////////////////////////////////// A A mamun work start/...........................
+
+        var editTriget = 0;
+        var dbDataCode = "";
+        var dbID = "";
+
+        function editView(ID) {
+            $js('submitAccBtn').innerHTML = 'Update';
+            document.getElementById('id01').style.display = 'block';
+            var id = ID.slice(0, -1);
+            dbID = ID.slice(0, -1);
+            editTriget = 1;
+            console.log(id, editTriget);
+            getRef('accounts/' + id).on('value', function (snapshot) {
+                let dbData = snapshot.val();
+                console.log(dbData);
+
+                dbDataCode = dbData.accCode;                   //      
+
+                let codeSp = dbData.accCode.split("-");
+                console.log(codeSp);
+                var codeShortForm = codeSp[0];
+                var firstCode = codeSp[1];
+                var secondCode = '';
+                $('#rateArea').hide();
+                if (codeSp.length == 3) {
+                    secondCode = codeSp[2];
+                }
+                if (dbData.nature == 'Equity') {
+                    $js('accNature').selectedIndex = 5;
+                    console.log(codeShortForm);
+                    $js('natureCodeFill').style.display = 'none';
+                    $js('equitySelector').style.display = 'block';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+                    if (codeShortForm == 'RE') {
+                        $js('equitySelector').selectedIndex = 1;
+
+                    } else if (codeShortForm == 'SE') {
+                        $js('equitySelector').selectedIndex = 0;
+
+                    }
+
+                }
+                else {
+                    $js('natureCodeFill').style.display = 'block';
+                    $js('equitySelector').style.display = 'none';
+                }
+                // Fill AC Code
+                if (dbData.nature == 'Current Asset') {
+                    $js('accNature').selectedIndex = 1;
+                    console.log('ok isn');
+                    $js('natureCodeFill').value = 'CA';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+                }
+                else if (dbData.nature == 'Non-Current Asset') {
+                    $js('accNature').selectedIndex = 2;
+                    $js('natureCodeFill').value = 'NCA';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+                    $('#rateArea').show();
+                    $js('rate').value = parseFloat(dbData.rate);
+
+                }
+                else if (dbData.nature == 'Current Liability') {
+                    $js('accNature').selectedIndex = 3;
+                    $js('natureCodeFill').value = 'CL';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+
+                }
+                else if (dbData.nature == 'Non-Current Liability') {
+                    $js('accNature').selectedIndex = 4;
+                    $js('natureCodeFill').value = 'NCL';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+
+                }
+                else if (dbData.nature == 'Expense') {
+                    $js('accNature').selectedIndex = 6;
+                    $js('natureCodeFill').value = 'EX';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+
+                }
+                else if (dbData.nature == 'Revenue') {
+                    $js('accNature').selectedIndex = 7;
+                    $js('natureCodeFill').value = 'REV';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+
+                }
+                else if (dbData.nature == 'Cost of Goods Sold') {
+                    $js('accNature').selectedIndex = 8;
+                    $js('natureCodeFill').value = 'COGS';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+
+                }
+                else if (dbData.nature == 'Contra') {
+                    $js('accNature').selectedIndex = 9;
+                    $js('natureCodeFill').value = 'CN';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+
+                }
+                else if (dbData.nature == 'Production') {
+                    $js('accNature').selectedIndex = 10;
+                    $js('natureCodeFill').value = 'WIP';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+                }
+                else if (dbData.nature == 'Withdrawal') {
+                    $js('accNature').selectedIndex = 11;
+                    $js('natureCodeFill').value = 'WD';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+
+                }
+                else if (dbData.nature == 'Contra Expense') {
+                    $js('accNature').selectedIndex = 12;
+                    $js('natureCodeFill').value = 'PD';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+
+                }
+                else if (dbData.nature == 'Contra Revenue') {
+                    $js('accNature').selectedIndex = 13;
+                    $js('natureCodeFill').value = 'SD';
+                    $js('accCodeFirst').value = firstCode;
+                    $js('accCodeSecond').value = secondCode;
+                    $js('accTxt').value = dbData.accText;
+
+                }
+                if (codeShortForm == 'SE' || codeShortForm == 'RE') {
+                    $js('begBal').value = dbData.balance;
+                }
+                else if (accounts[codeShortForm].begBal) {
+                    $js('begBal').value = numToComma(dbData.balance);
+                }
+            });
+        }
+
+        /// edit data show in field end........................
+
+        ////////////////////////////////////////////////////////// A A mamun work start/...........................
+
+        $('input.comma-num-minus').keyup(commaNumMakerMinus);
+        function submitAccBtn() {
+            let accNatureCode = $js('accNature').options[$js('accNature').selectedIndex].value;
+            let accNature = $js('accNature').options[$js('accNature').selectedIndex].text;
+            var accCodeInit = null;
+            let accCodeInitNode = $js('accCodeInit').firstElementChild.nextElementSibling;
+            let balance = $js('begBal').value;
+            var rate = $js('rate').value;
+            if ($js('equitySelector').style.display == 'block') {
+                accCodeInit = $js('equitySelector').options[$js('equitySelector').selectedIndex].text;
+            }
+            else {
+                if (accCodeInitNode.tagName == 'INPUT') {
+                    accCodeInit = accCodeInitNode.value;
+                }
+                else if (accCodeInitNode.tagName == 'SELECT') {
+                    accCodeInit = accCodeInitNode.options[accCodeInitNode.selectedIndex].text;
+                }
+            }
+            let accCodeFirst = $js('accCodeFirst').value;
+            let accCodeSecond = $js('accCodeSecond').value;
+            let accTxt = $js('accTxt').value;
+            if (accNature == '' || accNature == 'Choose Nature') {
+                notify('Select Nature!', 2);
+                return;
+            }
+            else if ($js('accCodeFirst').value == '') {
+                notify('Input Account Code!', 2);
+                return;
+            }
+            else if (parseInt($js('accCodeFirst').value) < accounts[accNatureCode].min || parseInt($js('accCodeFirst').value) > accounts[accNatureCode].max) {
+                notify('Code Must Between ' + accounts[accNatureCode].min + ' to ' + accounts[accNatureCode].max, 2);
+                return;
+            }
+            else if ($js('accTxt').value == '') {
+                notify('Account Head Empty!', 2);
+                return;
+            }
+            else if (accounts[accNatureCode].begBal && balance == "") {
+                notify('Beginning Balance Empty!', 2);
+                return;
+            }
+            else if ((accCodeInit == 'NCA' && rate == "") || rate < 0 || rate > 100) {
+                notify('Depreciation Rate Empty or Wrong!', 2);
+                $js('rate').focus();
+                return;
+            }
+            var accNumber = accCodeInit + "-" + accCodeFirst;
+            if (accCodeSecond != '') {
+                accNumber += "-" + accCodeSecond;
+            }
+
+            let account = {
+                nature: accNature,
+                accCode: accNumber,
+                accText: accTxt,
+                flag: accountFlag(accNature)
+            };
+            // Account Type
+            if (accCodeInit == 'SE' || accCodeInit == 'RE') {
+                account['type'] = accounts['EQTY'].type;
+            }
+            else {
+                account['type'] = accounts[accCodeInit].type;
+            }
+            // Account Type End
+
+            // D Rate
+            if (accCodeInit == 'NCA') {
+                account['rate'] = rate;
+            }
+            // D Rate End
+
+            if (accounts[accNatureCode].begBal) {
+                account['balance'] = commaToNum(balance);
+            }
+
+            if (editTriget == 1 && dbDataCode == accNumber) {
+                editTriget = 0;
+                db.child('accounts/' + dbID).update(account, function (error) {
+                    if (error) {
+                        $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+                    } else {
+                        $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
+                        clearFields();
+
+                    }
+                });
+            }
+            else if (editTriget == 1 && dbDataCode != accNumber) {
+
+                for (i = 0; i < dbAccounts.length; i++) {
+                    if (accNumber == dbAccounts[i].accCode) {
+                        notify('Code Already Used in Another Account!', 2);
+                        $js('accCodeSecond').focus();
+                        return;
+                    }
+                }
+                editTriget = 0;
+                db.child('accounts/' + dbID).update(account, function (error) {
+                    if (error) {
+                        $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+                    } else {
+                        $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
+                        clearFields();
+
+                    }
+                });
+            } else {
+                editTriget = 0;
+                for (i = 0; i < dbAccounts.length; i++) {
+                    if (accNumber == dbAccounts[i].accCode) {
+                        notify('Code Already Used in Another Account!', 2);
+                        $js('accCodeSecond').focus();
+                        return;
+                    }
+                }
+                db.child('accounts').push(account, function (error) {
+                    if (error) {
+                        $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
+                    } else {
+                        $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
+                        clearFields();
+
+                    }
+                });
+            }
+            exitModel();
+        }
+
+
+
+        function clearFields() {
+            accCodeFirst.value = accCodeSecond.value = accTxt.value = $js('begBal').value = "";
+            let accCodeInitNode = $js('accCodeInit').firstElementChild;
+        }
+
+        // Delete data
+        function removeItem(e) {
+            $js('confirmDel').style.display = 'block';
+            $js('delAcBtn').addEventListener('click', function () {
+                getRef('accounts').child(e.target.id).remove();
+                $js('confirmDel').style.display = 'none';
+                notify('Deleted Sucessfully', 1);
+            });
+        }
+
+        function editItem(e) {
+            let id = e.target.id.slice(0, -1);
+            let head = e.target.parentElement.previousElementSibling;
+            let code = head.previousElementSibling;
+            let nature = code.previousElementSibling;
+            head.innerHTML = '<input type="text" value="' + head.textContent + '">';
+            code.innerHTML = '<input type="text" value="' + code.textContent + '">';
+            nature.innerHTML = '<input type="text" value="' + nature.textContent + '">';
+            e.target.style.display = 'none';
+            e.target.nextElementSibling.style.display = 'block';
+        }
+
+
+        function printAccounts() {
+            $print("print");
+            var ws = XLSX.utils.table_to_sheet(document.getElementById('accountsTable'), { cellDates: false });
+            var wscols = [
+                { wch: 4 },
+                { wch: 24 },
+                { wch: 12 },
+                { wch: 40 }
+            ];
+            var wsrows = [
+                {
+                    hpx: 24,
+                    level: 2
+                }
+            ];
+            ws['!cols'] = wscols;
+            ws['!rows'] = wsrows;
+            XLSX.utils.book_append_sheet(wb, ws, 'Accounts');
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: false, type: 'binary' });
+            function s2ab(s) {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Accounts.xlsx');
+        }
+        //pdf making and save............................Start....................
+        var tab = 'no';
+        function pdfMake(tab) {
+            if (tab == 'no') {
+
+            }
+            else {
+                location.reload();
+                $js(tab).style.visibility = "visible";
+                var printme = document.getElementById(tab);
+                var wme = window.open("", "", "width=900,height=900");
+                wme.document.write(printme.outerHTML);
+                wme.document.close();
+                wme.focus();
+                wme.print();
+                wme.close();
+                $js(tab).style.visibility = "hidden";
+                tab = 'no';
+            }
+
+        }
+        $('.PDF_Btn').click(function () {
+            console.log(accountSelection);
+            if (accountSelection == 'Current Assets') {
+                pdfMake('curAstTable');
+            }
+            else if (accountSelection == 'Non-Current Assets') {
+                pdfMake('nonCurAstTable');
+            }
+            else if (accountSelection == 'Current Liabilities') {
+                pdfMake('curLiaTable');
+            }
+            else if(accountSelection == 'Non-Current Liabilities'){
+                pdfMake('nonCurLiaTable');
+            }
+            else if(accountSelection == 'Equity'){
+                pdfMake('eqiTable');
+            }
+            else if(accountSelection == 'Expenses'){
+                pdfMake('expTable');
+            }
+            else if(accountSelection == 'Revenues'){
+                pdfMake('revTable');
+            }
+            else if(accountSelection == 'Cost of Goods Sold'){
+                pdfMake('cogsTable');
+            }
+            else if(accountSelection == 'Contras'){
+                pdfMake('conTable');
+            }
+            else if(accountSelection == 'Production'){
+                pdfMake('proTable');
+            }
+            else if(accountSelection == 'Withdrawals'){
+                pdfMake('WidTable');
+            }
+            else if(accountSelection == 'Contra Expenses'){
+                pdfMake('conExpTable');
+            }
+            else if(accountSelection == 'Contra Revenues'){
+                pdfMake('conRevTable');
+            }
+
+        })
+        //pdf making and save............................End......................
+        //Print in Landscape...........start........
+        var css = '@page { size: landscape; }',
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+
+        style.type = 'text/css';
+        style.media = 'print';
+
+        if (style.styleSheet) {
+            style.styleSheet.cssText = css;
+        } else {
+            style.appendChild(document.createTextNode(css));
+        }
+
+        head.appendChild(style);
+    //Print in Landscape...........end........
+    </script>

@@ -1,0 +1,209 @@
+<div class="overlay-container">
+    <div class="overlay">
+        <div class="div-box w3-white w3-card-4 margin-auto" style="display: block; width: 99.5%; margin-top: 4px;">
+            <header class="w3-container main-bg-color div-title clearfix">
+                <div class="clearfix">
+                    <h2 class="ledger-title" style="float: left">Invoice</h2>
+                    <button id="pdfBtn" style="margin-right: 12px; float: right; display: none;"
+                        class="w3-xlarge w3-circle w3-white circle-btn" onclick="createPDF()"><i
+                            class="fa fa-print"></i></button>
+                    <button onclick="exportExcel()" style="margin-right: 12px; float: right; display: none;"
+                        class="w3-xlarge w3-circle w3-white circle-btn"><i class="fa fa-file"></i></button>
+                </div>
+            </header>
+            <div class="w3-container invoice" style="overflow: auto; white-space: nowrap;">
+                <div class="w3-row">
+                    <div class="w3-col w3-light-blue w3-round-large"
+                        style="padding: 6px; width: 100px; font-size: 12px;">Credit Invoice</div>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-col" style="width:150px; padding: 6px;">
+                        <label class="w3-medium">Voucher No</label>
+                    </div>
+                    <div class="w3-rest flex">
+                        <input class="w3-input w3-border" type="text"
+                            style="width: 200px; padding: 5px; text-align: center;" onkeypress="numValidate(event)"
+                            id="voucherNo" required>
+                        <button ng-click="createInvoice($event);" class="w3-btn main-bg-color"
+                            style="margin-left: 6px; padding-top: 4px; padding-bottom: 4px;">Create</button>
+                    </div>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-col" style="width:150px; padding: 6px;">
+                        <label class="w3-medium">Date</label>
+                    </div>
+                    <div class="w3-rest">
+                        <input class="w3-input w3-border" type="text" ng-value="(records[0].date)"
+                            style="width: 200px; padding: 5px; text-align: center;" disabled>
+                    </div>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-col" style="width:150px; padding: 6px;">
+                        <label class="w3-medium">Party</label>
+                    </div>
+                    <div class="w3-rest flex">
+                        <input class="w3-input w3-border" type="text" ng-value="records[0].partyCodes[0]"
+                            style="width: 120px; padding: 5px; text-align: center;" disabled>
+                        <input class="w3-input w3-border" type="text" ng-value="records[0].debitCredit[0].partyName"
+                            style="width: 300px; padding: 5px; text-align: center;" disabled>
+                    </div>
+                </div>
+                <div style="margin: 10px;"></div>
+            </div>
+            <!-- Table -->
+            <div class="w3-card-4 table-container">
+                <div class="ch-table-content">
+                    <div class="w3-responsive">
+                        <table class="w3-table-all ledger-table">
+                            <thead>
+                                <tr class="main-bg-color">
+                                    <th>No</th>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>Standard Unit</th>
+                                    <th>Packed/Unpacked</th>
+                                    <th>Pack Size</th>
+                                    <th>No of Packs</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Total Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="rec in records track by $index" ng-if="$odd">
+                                    <td>{{$index}}</td>
+                                    <td>{{rec.debitCredit[1].partyCode}}</td>
+                                    <td>{{rec.debitCredit[1].partyName}}</td>
+                                    <td>{{records[$index - 1].debitCredit[1].stdUnit}}</td>
+                                    <td>{{records[$index - 1].debitCredit[1].packType}}</td>
+                                    <td style="text-align: right;">
+                                        {{comNum(records[$index - 1].debitCredit[1].packSize)}}</td>
+                                    <td style="text-align: right;">{{comNum(records[$index - 1].debitCredit[1].packs)}}
+                                    </td>
+                                    <td style="text-align: right;">
+                                        {{comNum(records[$index - 1].debitCredit[1].totalQuantity)}}</td>
+                                    <td style="text-align: right;">
+                                        {{comNum(records[$index - 1].debitCredit[1].stdUnitPrice)}}</td>
+                                    <td style="text-align: right;">
+                                        {{comNum(records[$index - 1].debitCredit[1].totalPriceTK)}}</td>
+                                </tr>
+                                <tr style="border-top: 2px solid blue">
+                                    <td colspan="8"></td>
+                                    <td>Total</td>
+                                    <td>{{comNum(totalAmount)}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <div ng-show="!load" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif"
+                                alt="Loading..." style="height: 25px; width: 25px;"></div>
+                        <div id="nodata" ng-show="nodata" class="w3-pale-blue" style="padding: 12px; text-align: center;">No
+                            Data Found!</div> -->
+
+                        <div class="flex" style="margin: 20px 20px; justify-content: space-between">
+                            <div style="padding-top: 50px;"><span
+                                    style="font-weight: bold; text-decoration: underline;">In
+                                    Words:</span>
+                                {{amountInWords(totalAmount)}}</div>
+                            <div style="padding-top: 80px; margin-right: 80px;"><span
+                                    style="font-weight: bold; text-decoration: underline;">Authorized By</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Table End -->
+        </div>
+        <!-- Landscape PDF Area -->
+        <div id="jsTable" class="a4paper" style="text-transform: uppercase; display: none;">
+            <div class="w3-container">
+                <div class="flex" style="justify-content: space-between;margin-top: 10px;">
+                    <img src="http://testing.afsanajasi.com/Rahman/img/logo3.png" height="40">
+                    <h3 style="font-weight: bold;">{{companay.name}}</h3>
+                    <img src="http://testing.afsanajasi.com/Rahman/img/logo32.png" height="40">
+                </div>
+                <div class="w3-row" style="margin-top: 8px;">
+                    <div class="w3-col w3-light-blue w3-round-large"
+                        style="padding: 4px; width: 100px; font-size: 10px; margin-bottom: 8px;">Credit Invoice</div>
+                </div>
+                <table class="haeder-details" style="margin-bottom: 18px; text-transform: uppercase;">
+                    <tr>
+                        <td>VOUCHER NO</td>
+                        <td>: {{vn}}</td>
+                    </tr>
+                    <tr>
+                        <td>DATE</td>
+                        <td>: {{records[0].date}}</td>
+                    </tr>
+                    <tr>
+                        <td>PARTY</td>
+                        <td>: {{records[0].partyCodes[0]}} ({{records[0].debitCredit[0].partyName}})</td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table class="records-details">
+                    <thead>
+                        <tr class="main-bg-color">
+                            <th>No</th>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Standard Unit</th>
+                            <th>Packed/Unpacked</th>
+                            <th>Pack Size</th>
+                            <th>No of Packs</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="rec in records track by $index" ng-if="$odd">
+                            <td>{{$index}}</td>
+                            <td>{{rec.debitCredit[1].partyCode}}</td>
+                            <td>{{rec.debitCredit[1].partyName}}</td>
+                            <td>{{records[$index - 1].debitCredit[1].stdUnit}}</td>
+                            <td>{{records[$index - 1].debitCredit[1].packType}}</td>
+                            <td style="text-align: right;">{{comNum(records[$index - 1].debitCredit[1].packSize)}}</td>
+                            <td style="text-align: right;">{{comNum(records[$index - 1].debitCredit[1].packs)}}</td>
+                            <td style="text-align: right;">{{comNum(records[$index - 1].debitCredit[1].totalQuantity)}}
+                            </td>
+                            <td style="text-align: right;">{{comNum(records[$index - 1].debitCredit[1].stdUnitPrice)}}
+                            </td>
+                            <td style="text-align: right;">{{comNum(records[$index - 1].debitCredit[1].totalPriceTK)}}
+                            </td>
+                        </tr>
+                        <tr style="border-top: 2px solid blue">
+                            <td colspan="8"></td>
+                            <td>Total</td>
+                            <td>{{comNum(totalAmount)}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Record Table End -->
+
+            <div class="flex" style="margin: 20px 20px; justify-content: space-between">
+                <div style="padding-top: 50px;"><span style="font-weight: bold; text-decoration: underline;">In
+                        Words:</span>
+                    {{amountInWords(totalAmount)}}</div>
+                <div style="padding-top: 80px; margin-right: 80px;"><span
+                        style="font-weight: bold; text-decoration: underline;">Authorized By</span></div>
+            </div>
+            <!-- Landscape PDF Area End By Div -->
+        </div>
+    </div>
+</div>
+
+<script>
+    function createPDF() {
+        console.log('jsTable');
+        $js('jsTable').style.display = 'block';
+        let doc = new jsPDF('l', 'pt', 'a4');
+        doc.addHTML($('#jsTable')[0], 0, 0, {
+            'bakground': '#fff'
+        }, function () {
+            doc.save('invoice.pdf');
+            $js('jsTable').style.display = 'none';
+
+        });
+    }
+</script>

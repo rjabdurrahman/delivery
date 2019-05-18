@@ -99,8 +99,8 @@
                 </header>
                 <div class="w3-container">
                     <section class="w3-container w3-bottombar w3-border-blue w3-pale-blue">
-                        <p>User: <span id="pUserName"></span></p>
-                        <p>Email: <span id="pUserEmail"></span></p>
+                        <p>Username: <span id="pUserName"></span></p>
+                        <p>Name: <span id="pUserEmail"></span></p>
                     </section>
                     <section class="w3-container w3-leftbar w3-border-blue w3-light-gray" style="margin-top: 12px;">
                         <p>Chart</p>
@@ -566,13 +566,11 @@
     }
     // Delete data
     function permission(e) {
+        $js('pUserName').innerHTML = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+        $js('pUserEmail').innerHTML = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
         $js('permissionWin').style.display = 'block';
         let cId = e.target.id;
         pId = cId;
-        let userName = e.target.parentElement.previousElementSibling.textContent;
-        let userEmail = e.target.parentElement.previousElementSibling.previousElementSibling.textContent;
-        $js('pUserName').textContent = userName;
-        $js('pUserEmail').textContent = userEmail;
         $js('confirmPermission').addEventListener('click', function () {
             let allPerEl = $sn('perCheck');
             let newPer = {};

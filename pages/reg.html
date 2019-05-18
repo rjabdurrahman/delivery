@@ -41,7 +41,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="user in users track by $index">
+                                <tr ng-repeat="user in users track by $index" ng-if="user.uc">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{getUsername(user.email)}}</td>
+                                    <td>{{user.name}}</td>
+                                    <td><button style="outline: none; background-color: transparent; border: none;"
+                                            ng-disabled="getLen(journal, user.id) == 0"><a
+                                                href="#myjournal?id={{user.id}}&n={{getUsername(user.email)}}&fdate={{fQDate}}&ldate={{lQDate}}&t=1"
+                                                class="w3-btn w3-blue">{{getLen(journal, user.id)}}</a></button></td>
+                                    <td><button style="outline: none; background-color: transparent; border: none;"
+                                            button ng-disabled="getAbLen(journal, user.id) == 0"><a
+                                                href="#myjournal?id={{user.id}}&n={{getUsername(user.email)}}&fdate={{fQDate}}&ldate={{lQDate}}&t=2"
+                                                class="w3-btn w3-green">{{getAbLen(journal, user.id)}}</a></button></td>
+                                    <td>{{user.pass}}</td>
+                                    <td>
+                                        <button ng-if="user.uc" class="w3-btn w3-blue" disabled>Admin</button>
+                                        <button ng-if="!user.uc" id="{{user.$id}}" onclick="permission(event)"
+                                            ng-click="getPer($event)" class="w3-btn w3-blue">Permission</button>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="user in users | orderBy : 'email' track by $index" ng-if="!user.uc">
                                     <td>{{$index + 1}}</td>
                                     <td>{{getUsername(user.email)}}</td>
                                     <td>{{user.name}}</td>

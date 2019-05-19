@@ -581,17 +581,18 @@
         $js('confirmPermission').addEventListener('click', function () {
             let allPerEl = $sn('perCheck');
             let newPer = {};
-            let jPer = {};
             allPerEl.forEach(function (el) {
-                if (el.id.substring(0, 3) == 'fe_')
-                    jPer[el.id] = el.checked;
                 newPer[el.id] = el.checked;
             })
-            console.log(newPer);
-            console.log(jPer);
             db.child('users').child(cId).update(newPer)
                 .then(function (success) {
-                    notify('Permission Sucessfully Updated', 1);
+                    fsDb.collection('users').doc(cId).update(newPer)
+                        .then(function () {
+                            notify('Permission Sucessfully Updated', 1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
                     location.href = "#reg";
                 })
                 .catch(function (err) {

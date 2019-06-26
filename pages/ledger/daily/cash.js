@@ -83,8 +83,18 @@ app.controller('CashCntlr', function ($scope, $firebaseArray) {
                     snapshot.docs.forEach(element => {
                         let obj = element.data();
                         obj.sCode = code.value;
-                        $print(obj);
-                        $scope.records.push(obj);
+                        let nObj = JSON.parse(JSON.stringify(obj));
+                        let mObj = JSON.parse(JSON.stringify(obj));
+                        if (obj.debitCredit[0].ACCode == obj.debitCredit[1].ACCode) {
+                            nObj.ACCodes[0] = 'ZZZ0';
+                            console.log(nObj);
+                            $scope.records.push(nObj);
+                            mObj.ACCodes[1] = 'ZZZ1';
+                            $scope.records.push(mObj);
+                            console.log(mObj);
+                        }
+                        else
+                            $scope.records.push(obj);
                         $scope.nodata = false;
                         $scope.$applyAsync();
                         $print($scope.records);

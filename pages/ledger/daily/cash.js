@@ -10,6 +10,7 @@ app.controller('CashCntlr', function ($scope, $firebaseArray) {
         let name = e.target.parentElement.previousElementSibling.lastElementChild;
         let code = name.parentElement.previousElementSibling.lastElementChild;
         let dateFrom = code.parentElement.previousElementSibling.lastElementChild;
+        let isPurchase = e.target.previousElementSibling.textContent == 'PurPage';
 
         if (dateFrom.value == "") {
             $('#notification').html("<h6>Input Date</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
@@ -55,13 +56,17 @@ app.controller('CashCntlr', function ($scope, $firebaseArray) {
                         let obj = element.data();
                         obj.sCode = code.value;
                         // $print(obj);
-                        $scope.preRecords.push(obj);
+                        if (isPurchase) {
+                            if (!obj.psNo && !obj.seqNo)
+                                $scope.preRecords.push(obj);
+                        }
+                        else {
+                            $scope.preRecords.push(obj);
+                        }
                         $scope.nodata = false;
                         $scope.$applyAsync();
-                        $print('Pre Records');
-                        $print($scope.preRecords);
-                        // e.target.disabled = false;
-                        // e.target.textContent = 'Calculate';
+                        // $print('Pre Records');
+                        // $print($scope.preRecords);
                     });
                 }
             })
@@ -86,18 +91,37 @@ app.controller('CashCntlr', function ($scope, $firebaseArray) {
                         let nObj = JSON.parse(JSON.stringify(obj));
                         let mObj = JSON.parse(JSON.stringify(obj));
                         if (obj.debitCredit[0].ACCode == obj.debitCredit[1].ACCode) {
-                            nObj.ACCodes[0] = 'ZZZ0';
-                            console.log(nObj);
-                            $scope.records.push(nObj);
-                            mObj.ACCodes[1] = 'ZZZ1';
-                            $scope.records.push(mObj);
-                            console.log(mObj);
+                            if (obj.isPurchase) {
+                                if (!obj.psNo && !obj.seqNo) {
+                                    nObj.ACCodes[0] = 'ZZZ0';
+                                    // console.log(nObj);
+                                    $scope.records.push(nObj);
+                                    mObj.ACCodes[1] = 'ZZZ1';
+                                    $scope.records.push(mObj);
+                                    // console.log(mObj);
+                                }
+                            }
+                            else {
+                                nObj.ACCodes[0] = 'ZZZ0';
+                                // console.log(nObj);
+                                $scope.records.push(nObj);
+                                mObj.ACCodes[1] = 'ZZZ1';
+                                $scope.records.push(mObj);
+                                // console.log(mObj);
+                            }
                         }
-                        else
-                            $scope.records.push(obj);
+                        else {
+                            if (isPurchase) {
+                                if (!obj.psNo && !obj.seqNo)
+                                    $scope.records.push(obj);
+                            }
+                            else {
+                                $scope.records.push(obj);
+                            }
+                        }
                         $scope.nodata = false;
                         $scope.$applyAsync();
-                        $print($scope.records);
+                        // $print($scope.records);
                         e.target.disabled = false;
                         e.target.textContent = 'Calculate';
                     });

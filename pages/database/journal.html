@@ -158,6 +158,7 @@
                                     <th>STANDARD UNIT PRICE (TK)</th>
                                     <th>TOTAL PRICE (TK)</th>
                                     <th>SUBMITTED BY</th>
+                                    <th>VIEW</th>
                                     <th>ALLOW/NOT</th>
                                 </tr>
                             </thead>
@@ -194,6 +195,10 @@
                                     <td ng-hide="deb.totalPrice">{{deb.totalPriceTK | number : fractionSize}}</td>
                                     <td ng-show="deb.totalPrice">{{deb.totalPriceTK | number : fractionSize}}</td>
                                     <td>{{idToUsername(jor.uId)}}</td>
+                                    <td>
+                                        <button id="{{jor.entryNo}}v" name="{{jor.formName}}" onclick="viewEntry(this.id, this.name);"
+                                            class="w3-btn w3-blue journal-top-btn">View</button>
+                                    </td>
                                     <td>
                                         <button id="{{jor.entryNo}}u" onclick="updateconfirm(this.id);"
                                             class="w3-btn w3-blue journal-top-btn">Confirm Both (DR/CR)</button>&nbsp;
@@ -341,6 +346,10 @@
         if (confirm("Are you sure to update ??") == true) {
             updateAccept(id);
         }
+    }
+
+    function viewEntry(id, fName){
+        alert(fName);
     }
     // function myFunction() {
     //     var n = document.getElementById("tab").scrollLeft;

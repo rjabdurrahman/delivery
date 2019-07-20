@@ -303,8 +303,12 @@
         <!-- Forms -->
         <div id="journalFormModal" class="w3-modal">
             <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent;">
-                <div class="div-box tbm w3-light-gray w3-card-4 margin-auto"
-                    style="width: 95%; border-top-left-radius: 8px;">
+                <header class="w3-container main-bg-color div-title">
+                    <span onclick="$js('journalFormModal').style.display='none'"
+                        class="w3-button w3-display-topright" style="z-index: 9999">&times;</span>
+                </header>
+                <div class="div-box w3-light-gray w3-card-4 margin-auto"
+                    style="width: 100%; border-top-left-radius: 8px;">
                     <div class="w3-container main-bg-color div-title">
                         <h2>Journal Form</h2>
                     </div>
@@ -314,21 +318,11 @@
                                 <td class="secondary" style="width: 115px; padding-left: 5px; text-align: center;">
                                     <span>Entry No</span>
                                 </td>
-                                <td class="border">
-                                    <input class="w3-input w3-border" type="text" style="text-align: center"
-                                        id="entryNo" value="{{lastEntry.$value}}" disabled>
-                                </td>
-                                <td class="secondary" style=" text-align: center;">Voucher No</td>
-                                <td>
-                                    <input class="w3-input w3-border" type="text" style="text-align: center"
-                                        id="voucherNo" autofocus>
-                                </td>
+                                <td class="border" style="text-align: center">121</td>
+                                <td class="secondary" style="text-align: center;">Voucher No</td>
+                                <td style="text-align: center">121</td>
                                 <td class="secondary" style="width: 125px; text-align: center;">Date</td>
-                                <td style="width: 125px;">
-                                    <input class="w3-input w3-border" type="text" id="date" style="text-align: center;"
-                                        placeholder="DD-Mon-YY">
-                                    <label>Ex: 12-Jan-18</label>
-                                </td>
+                                <td style="width: 125px;">12-jan-18</td>
                             </tr>
                         </table>
                         <table id="chartTable" class="w3-table chart-table" style="font-size: 16px;">
@@ -522,8 +516,8 @@
     }
 
     function viewEntry(id, fName) {
-        $js('journalFormModal').style.display = 'block';
-        alert(fName);
+        if (fName == 'Journal Form')
+            $js('journalFormModal').style.display = 'block';
     }
 
 </script>

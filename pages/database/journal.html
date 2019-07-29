@@ -1,17 +1,19 @@
 <div class="overlay-container">
     <div class="overlay">
-        <div class="margin-auto clearfix" style="width: 99.5%; margin-bottom: 18px;">
+        <div class="margin-auto clearfix" style="width: 99.5%;">
             <section class="clearfix w3-btn-sec">
                 <button ng-click="show = 'prejournal'" class="w3-btn ex-font journal-top-btn" type="submit"
                     ng-class="{'w3-white' : !(show == 'prejournal' || (show=='postjournal'==false && show=='alljournal'== false)), 'w3-blue' : show == 'prejournal' || (show=='postjournal'==false && show=='alljournal'== false)}"
                     class="ex-font">PRE
-                    JOURNAL</button>
+                    JOURNAL
+                </button>
                 <button ng-click="show = 'postjournal'" class="w3-btn ex-font journal-top-btn" type="submit"
                     ng-class="{'w3-white' : show != 'postjournal', 'w3-blue' : show=='postjournal'}">POST
                     JOURNAL</button>
                 <button ng-click="show = 'alljournal'" class="w3-btn ex-font journal-top-btn" type="submit"
                     ng-class="{'w3-white' : show != 'alljournal', 'w3-blue' : show=='alljournal'}">ALL IN
                     JOURNAL</button>
+                <input type="number" placeholder="Entry No" ng-keyup="dataPartLoad($event)" style="text-align: center;">
             </section>
 
             <style type="text/css">
@@ -126,7 +128,6 @@
             <div class="w3-card-4 table-container"
                 ng-if="show=='prejournal' || (show=='postjournal'==false && show=='alljournal'== false)">
                 <div class="ch-table-header">
-
                     <div class=" table table-striped tableFixHead"
                         style="overflow-y:auto; max-height: calc(100vh - 170px);">
                         <table class="w3-table-all " id="header-fixed">
@@ -196,7 +197,7 @@
                                     <td>{{idToUsername(jor.uId)}}</td>
                                     <td>
                                         <button id="{{jor.entryNo}}v" name="{{jor.formName}}"
-                                            onclick="viewEntry(this.id, this.name);"
+                                            onclick="viewEntry(this.id, this.name);" ng-click="viewData($event)"
                                             class="w3-btn w3-blue journal-top-btn">View</button>
                                     </td>
                                     <td>
@@ -299,13 +300,25 @@
                 </div>
             </div>
             <!-- End of the Journy -->
+            <!-- Pagination Start -->
+            <div class="w3-center" style="margin-top: 4px">
+                <div class="w3-bar w3-border w3-round w3-white">
+                  <a href="#" class="w3-bar-item w3-button">&laquo;</a>
+                  <a href="#" class="w3-bar-item w3-button">1</a>
+                  <a href="#" class="w3-bar-item w3-button">2</a>
+                  <a href="#" class="w3-bar-item w3-button">3</a>
+                  <a href="#" class="w3-bar-item w3-button">4</a>
+                  <a href="#" class="w3-bar-item w3-button">&raquo;</a>
+                </div>
+            </div>
+            <!-- Pagination End -->
         </div>
         <!-- Forms -->
         <div id="journalFormModal" class="w3-modal">
             <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent;">
                 <header class="w3-container main-bg-color div-title">
-                    <span onclick="$js('journalFormModal').style.display='none'"
-                        class="w3-button w3-display-topright" style="z-index: 9999">&times;</span>
+                    <span onclick="$js('journalFormModal').style.display='none'" class="w3-button w3-display-topright"
+                        style="z-index: 9999">&times;</span>
                 </header>
                 <div class="div-box w3-light-gray w3-card-4 margin-auto"
                     style="width: 100%; border-top-left-radius: 8px;">
@@ -318,14 +331,14 @@
                                 <td class="secondary" style="width: 115px; padding-left: 5px; text-align: center;">
                                     <span>Entry No</span>
                                 </td>
-                                <td class="border" style="text-align: center">121</td>
-                                <td class="secondary" style="text-align: center;">Voucher No</td>
-                                <td style="text-align: center">121</td>
+                                <td class="border">{{vData.entryNo}}</td>
+                                <td class="secondary">Voucher No</td>
+                                <td>{{vData.voucherNo}}</td>
                                 <td class="secondary" style="width: 125px; text-align: center;">Date</td>
-                                <td style="width: 125px;">12-jan-18</td>
+                                <td style="width: 125px;">{{numToDate(vData.date)}}</td>
                             </tr>
                         </table>
-                        <table id="chartTable" class="w3-table chart-table" style="font-size: 16px;">
+                        <table class="w3-table chart-table" style="font-size: 16px;">
                             <tr class="primary">
                                 <td style="width: 45px;"></td>
                                 <td colspan="8" style="text-align: center;">Debit Info</td>
@@ -343,37 +356,15 @@
                             </tr>
                             <tr>
                                 <td>1</td>
-                                <td>
-                                    <input class="w3-input w3-border" type="text" name="drPartyCode"
-                                        onpaste="partyNameComplete(event)" onkeyup="partyNameComplete(event)"
-                                        style="text-align: center;">
-                                </td>
-                                <td colspan="3">
-                                    <input class="w3-input w3-border" type="text" style="text-align: center"
-                                        value="-----" disabled>
-                                </td>
-                                <td>
-                                    <input class="w3-input w3-border" type="text" name="ACCode"
-                                        onpaste="ACNameComplete(event); costcenterDisableforEx(event)"
-                                        onkeyup="ACNameComplete(event); costcenterDisableforEx(event)"
-                                        style="text-align: center">
-                                </td>
-                                <td colspan="3">
-                                    <input class="w3-input w3-border" type="text" style="text-align:center"
-                                        value="-----" disabled>
-                                </td>
-                                <td>
-                                    <input class="w3-input w3-border comma-num-minus" type="text" name="debitAmount"
-                                        onkeydown="numValidate(event)" onkeyup="findTotal(event);"
-                                        style="text-align: right">
-                                </td>
-                                <td>
-                                    <input class="w3-input w3-border" type="text" name="partyName"
-                                        style="text-align: center" value="x" disabled>
-                                </td>
+                                <td>{{vData.debitCredit[0].partyCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[0].partyName}}</td>
+                                <td>{{vData.debitCredit[0].ACCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[0].ACName}}</td>
+                                <td>{{vData.debitCredit[0].drAmount}}</td>
+                                <td>x</td>
                             </tr>
-                            <tr id="debitLine">
-                                <td id="addDebitField">
+                            <tr>
+                                <td>
                                     <button class="main-bg-color w3-btn journal-csbtn" onclick="addField()"
                                         tabindex="-1">+</button>
                                 </td>
@@ -400,37 +391,15 @@
                             </tr>
                             <tr>
                                 <td>1</td>
-                                <td>
-                                    <input class="w3-input w3-border" type="text" name="crPartyCode"
-                                        onpaste="partyNameComplete(event)" onkeyup="partyNameComplete(event)"
-                                        style="text-align: center">
-                                </td>
-                                <td colspan="3">
-                                    <input class="w3-input w3-border" type="text" name="partyName"
-                                        style="text-align:center" value="-----" disabled>
-                                </td>
-                                <td>
-                                    <input class="w3-input w3-border" type="text" name="ACCode"
-                                        onpaste="ACNameComplete(event); costcenterDisableforEx(event)"
-                                        onkeyup="ACNameComplete(event); costcenterDisableforEx(event)"
-                                        style="text-align: center">
-                                </td>
-                                <td colspan="3">
-                                    <input class="w3-input w3-border" type="text" name="ACName"
-                                        style="text-align: center" value="-----" disabled>
-                                </td>
-                                <td>
-                                    <input class="w3-input w3-border" type="text" name="partyName"
-                                        style="text-align: center" value="x" disabled>
-                                </td>
-                                <td>
-                                    <input class="w3-input w3-border" type="text" name="creditAmount"
-                                        onkeydown="numValidate(event)" onkeyup="findTotal(event)"
-                                        style="text-align: right">
-                                </td>
+                                <td>{{vData.debitCredit[1].partyCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[1].partyName}}</td>
+                                <td>{{vData.debitCredit[1].ACCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[1].ACName}}</td>
+                                <td>x</td>
+                                <td>{{vData.debitCredit[1].crAmount}}</td>
                             </tr>
-                            <tr id="creditline">
-                                <td id="addCreditField">
+                            <tr>
+                                <td>
                                     <button class="main-bg-color w3-btn journal-csbtn" onclick="addField()"
                                         tabindex="-1">+</button>
                                 </td>
@@ -447,30 +416,22 @@
                             <tr class="primary">
                                 <td></td>
                                 <td colspan="8" style="text-align: center;">Total</td>
-                                <td id="totalDebit" style="text-align: right">0</td>
-                                <td id="totalCredit" style="text-align: right">0</td>
+                                <td style="text-align: right">{{vData.debitCredit[0].drAmount}}</td>
+                                <td style="text-align: right">{{vData.debitCredit[1].crAmount}}</td>
                             </tr>
                             <tr>
                                 <td class="secondary" colspan="2" style="text-transform:uppercase; text-align: center;">
                                     Cost
                                     Center</td>
-                                <td colspan="5">
-                                    <input class="w3-input w3-border" type="text" id="costCenter"
-                                        style="text-align: center" disabled>
-                                </td>
+                                <td colspan="5">{{vData.costCenter}}</td>
                                 <td colspan="4"></td>
                             </tr>
                             <tr>
                                 <td class="secondary" colspan="2" style="text-transform:uppercase; text-align: center;">
                                     Description</td>
-                                <td colspan="5">
-                                    <textarea class="w3-input" name="" id="description" rows="2"></textarea>
-                                </td>
+                                <td colspan="5">{{vData.description}}</td>
                                 <td colspan="3"></td>
-                                <td class="main-bg-color" style="text-align: center; cursor: pointer;">
-                                    <button onclick="window.print();" type="submit" id="submitBtn" class="w3-btn"
-                                        disabled>Submit</button>
-                                </td>
+                                <td></td>
                             </tr>
                         </table>
                         <br style="clear: both;">

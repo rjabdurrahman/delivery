@@ -122,7 +122,7 @@ app.config(function ($routeProvider) {
       controller: 'JournalCntlr',
       activetab: 'database'
     })
-    
+
     .when('/ByPPrc', {
       templateUrl: 'pages/database/by_productDB.html',
       controller: 'ByProdCntlr',
@@ -243,13 +243,13 @@ app.config(function ($routeProvider) {
       controller: 'RawMaterialLedgerCntlr',
       activetab: 'productions'
     })
-    
+
     .when('/proledger', {
       templateUrl: 'pages/ledger/production.html',
       controller: 'ProductionLedgerCntlr',
       activetab: 'productions'
     })
-    
+
     .when('/reg', {
       templateUrl: 'pages/reg.html',
       controller: 'RegCntlr',
@@ -508,7 +508,6 @@ app.controller('JournalFormCntlr', function ($scope, $firebaseArray, $firebaseOb
   partyArray.push($firebaseArray(getRef('receivables')));
   partyArray.push($firebaseArray(getRef('rice')));
   partyArray.push($firebaseArray(getRef('truckTrackors')));
-
   $scope.records = [];
   fsDb.collection("JournalForm").get()
     .then(function (snapshot) {
@@ -539,7 +538,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
   // All Juournals
   $scope.noData = false;
   $scope.journal = [];
-  fsDb.collection("JournalForm").get()
+  fsDb.collection("JournalForm").orderBy("entryNo").where("entryNo", ">", 1).limit(100).get()
     .then(function (snapshot) {
 
       //Added Line Start
@@ -549,8 +548,6 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
         return;
       }
       //Added Line End
-
-
       snapshot.docs.forEach(element => {
         $scope.journal.push(element.data());
         $scope.$applyAsync();
@@ -562,7 +559,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
   // Pre Journal
   $scope.pNoData = false;
   $scope.pJournal = [];
-  fsDb.collection("JournalForm").where('flagPrejournal', '==', 0).get()
+  fsDb.collection("JournalForm").orderBy("entryNo").where("entryNo", ">", 1).limit(100).where('flagPrejournal', '==', 0).get()
     .then(function (snapshot) {
 
       //Added Line Start
@@ -585,7 +582,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
   // Post Journal
   $scope.poNoData = false;
   $scope.poJournal = [];
-  fsDb.collection("JournalForm").where('flagPrejournal', '==', 1).get()
+  fsDb.collection("JournalForm").where("entryNo", ">", 1).orderBy("entryNo").limit(100).where('flagPrejournal', '==', 1).get()
     .then(function (snapshot) {
 
       //Added Line Start
@@ -595,8 +592,6 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
         return;
       }
       //Added Line End
-
-
       snapshot.docs.forEach(element => {
         $scope.poJournal.push(element.data());
         $scope.$applyAsync();
@@ -605,7 +600,87 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
     .catch(function (err) {
       $print(err);
     });
+  // Pagination
+  $scope.dataPartLoad = function (e) {
+    if (e.keyCode == 13) {
+      if ($scope.show == undefined || $scope.show == 'prejournal') {
+        $scope.pJournal = [];
+        let lim = parseInt(e.target.value);
+        fsDb.collection("JournalForm").orderBy("entryNo").where("entryNo", ">=", lim).limit(100).where('flagPrejournal', '==', 0).get()
+          .then(function (snapshot) {
 
+            //Added Line Start
+            if (snapshot.docs.length == 0) {
+              $scope.pNoData = true;
+              $scope.$applyAsync();
+              return;
+            }
+            //Added Line End
+            snapshot.docs.forEach(element => {
+              $scope.pJournal.push(element.data());
+              $scope.$applyAsync();
+            });
+          })
+          .catch(function (err) {
+            $print(err);
+          });
+      }
+      // Post
+      if ($scope.show == 'postjournal') {
+        $scope.poJournal = [];
+        let lim = parseInt(e.target.value);
+        fsDb.collection("JournalForm").orderBy("entryNo").where("entryNo", ">=", lim).limit(100).where('flagPrejournal', '==', 1).get()
+          .then(function (snapshot) {
+            //Added Line Start
+            if (snapshot.docs.length == 0) {
+              $scope.poNoData = true;
+              $scope.$applyAsync();
+              return;
+            }
+            //Added Line End
+            snapshot.docs.forEach(element => {
+              $scope.poJournal.push(element.data());
+              $scope.$applyAsync();
+            });
+          })
+          .catch(function (err) {
+            $print(err);
+          });
+      }
+      // All
+      if ($scope.show == 'alljournal') {
+        $scope.journal = [];
+        let lim = parseInt(e.target.value);
+        fsDb.collection("JournalForm").orderBy("entryNo").where("entryNo", ">=", lim).limit(100).get()
+          .then(function (snapshot) {
+            //Added Line Start
+            if (snapshot.docs.length == 0) {
+              $scope.noData = true;
+              $scope.$applyAsync();
+              return;
+            }
+            //Added Line End
+            snapshot.docs.forEach(element => {
+              $scope.journal.push(element.data());
+              $scope.$applyAsync();
+            });
+          })
+          .catch(function (err) {
+            $print(err);
+          });
+      }
+      // End If of journal show
+    }
+  }
+  $scope.vData = [];
+  $scope.viewData = function (e) {
+    let allJour = [...$scope.journal, ...$scope.pJournal, ...$scope.poJournal];
+    let vId = parseInt(e.target.id.slice(0, -1));
+    $scope.vData = allJour.find(function (el) {
+      return el.entryNo == vId;
+    });
+    $scope.$applyAsync();
+  }
   $scope.changerDC = function (code) {
     if (code == 'Dr') return 'Debit';
     if (code == 'Cr') return 'Credit';
@@ -629,7 +704,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
 
   $scope.users = $firebaseArray(getRef('users'));
   $scope.idToUsername = function (uId) {
-    let tUsr = $scope.users.find(function(user){
+    let tUsr = $scope.users.find(function (user) {
       return user.id == uId;
     })
     return tUsr.email;
@@ -803,7 +878,7 @@ app.controller('RegCntlr', function ($scope, $firebaseArray) {
   }
   $scope.getAbLen = function (jou, id) {
     let uJou = jou.filter(function (el) {
-      if(el.hasOwnProperty('acceptedBy') && el.acceptedBy == id)
+      if (el.hasOwnProperty('acceptedBy') && el.acceptedBy == id)
         return true;
       else return false;
       // return el.acceptedBy == id;

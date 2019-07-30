@@ -302,12 +302,8 @@
             <!-- Pagination Start -->
             <div class="w3-center" style="margin-top: 4px;">
                 <div class="w3-bar w3-border w3-round w3-white">
-                    <button class="w3-bar-item w3-button">&laquo;</button>
-                    <button class="w3-bar-item w3-button main-bg-color">1</button>
-                    <button class="w3-bar-item w3-button">2</button>
-                    <button class="w3-bar-item w3-button" ng-click="pageLoad($event)">3</button>
-                    <button class="w3-bar-item w3-button">Last</button>
-                    <button class="w3-bar-item w3-button">&raquo;</button>
+                    <button class="w3-button" name="pre" ng-click="pageLoad($event)">&#10094; Previous</button>
+                    <button class="w3-button w3-right" name="next" ng-click="pageLoad($event)">Next &#10095;</button>
                 </div>
             </div>
             <!-- Pagination End -->

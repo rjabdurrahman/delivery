@@ -669,26 +669,73 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
     }
   }
   // Serial
-  $scope.pageLoad = function(e){
-    let lastData = $scope.pJournal.pop();
-    $scope.pJournal = [];
-    fsDb.collection("JournalForm").where('flagPrejournal', '==', 1).orderBy("date", "desc").startAfter(lastData.date).limit(100).get()
-    .then(function (snapshot) {
-      //Added Line Start
-      if (snapshot.docs.length == 0) {
-        $scope.pNoData = true;
-        $scope.$applyAsync();
-        return;
-      }
-      //Added Line End
-      snapshot.docs.forEach(element => {
-        $scope.pJournal.push(element.data());
-        $scope.$applyAsync();
-      });
-    })
-    .catch(function (err) {
-      $print(err);
-    });
+  $scope.pageLoad = function (e) {
+    let lastData = '';
+    let firstData = '';
+    if ($scope.show == 'alljournal') {
+      lastData = $scope.journal.pop();
+      firstData = $scope.journal.shift();
+      $scope.journal = [];
+    }
+    else if ($scope.show == 'postjournal') {
+      lastData = $scope.poJournal.pop();
+      firstData = $scope.poJournal.shift();
+      $scope.poJournal = [];
+    }
+    else {
+      lastData = $scope.pJournal.pop();
+      firstData = $scope.pJournal.shift();
+      $scope.pJournal = [];
+    }
+    if (e.target.name == 'next') {
+      fsDb.collection("JournalForm").where('flagPrejournal', '==', 1).orderBy("date", "desc").startAfter(lastData.date).limit(100).get()
+        .then(function (snapshot) {
+          //Added Line Start
+          if (snapshot.docs.length == 0) {
+            if ($scope.show == 'alljournal')
+              $scope.noData = true;
+            else if ($scope.show == 'postjournal')
+              $scope.poNoData = true;
+            else
+              $scope.pNoData = true;
+
+            $scope.$applyAsync();
+            return;
+          }
+          //Added Line End
+          snapshot.docs.forEach(element => {
+            if ($scope.show == 'alljournal')
+              $scope.journal.push(element.data());
+            else if ($scope.show == 'postjournal')
+              $scope.poJournal.push(element.data());
+            else
+              $scope.pJournal.push(element.data());
+            $scope.$applyAsync();
+          });
+        })
+        .catch(function (err) {
+          $print(err);
+        });
+    }
+    if (e.target.name == 'pre') {
+      fsDb.collection("JournalForm").where('flagPrejournal', '==', 1).orderBy("date", "desc").endAt(firstData.date).limit(100).get()
+        .then(function (snapshot) {
+          //Added Line Start
+          if (snapshot.docs.length == 0) {
+            $scope.pNoData = true;
+            $scope.$applyAsync();
+            return;
+          }
+          //Added Line End
+          snapshot.docs.forEach(element => {
+            $scope.pJournal.push(element.data());
+            $scope.$applyAsync();
+          });
+        })
+        .catch(function (err) {
+          $print(err);
+        });
+    }
   }
   // Pagination End
   $scope.vData = [];

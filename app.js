@@ -538,7 +538,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
   // All Juournals
   $scope.noData = false;
   $scope.journal = [];
-  fsDb.collection("JournalForm").orderBy("entryNo").where("entryNo", ">", 1).limit(100).get()
+  fsDb.collection("JournalForm").orderBy("entryNo", "desc").limit(100).get()
     .then(function (snapshot) {
 
       //Added Line Start
@@ -559,9 +559,8 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
   // Pre Journal
   $scope.pNoData = false;
   $scope.pJournal = [];
-  fsDb.collection("JournalForm").orderBy("entryNo").where("entryNo", ">", 1).limit(100).where('flagPrejournal', '==', 0).get()
+  fsDb.collection("JournalForm").where('flagPrejournal', '==', 1).orderBy("date", "desc").limit(100).get()
     .then(function (snapshot) {
-
       //Added Line Start
       if (snapshot.docs.length == 0) {
         $scope.pNoData = true;
@@ -569,8 +568,6 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
         return;
       }
       //Added Line End
-
-
       snapshot.docs.forEach(element => {
         $scope.pJournal.push(element.data());
         $scope.$applyAsync();
@@ -582,9 +579,8 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
   // Post Journal
   $scope.poNoData = false;
   $scope.poJournal = [];
-  fsDb.collection("JournalForm").where("entryNo", ">", 1).orderBy("entryNo").limit(100).where('flagPrejournal', '==', 1).get()
+  fsDb.collection("JournalForm").where('flagPrejournal', '==', 0).orderBy("date", "desc").limit(100).get()
     .then(function (snapshot) {
-
       //Added Line Start
       if (snapshot.docs.length == 0) {
         $scope.poNoData = true;
@@ -672,6 +668,29 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
       // End If of journal show
     }
   }
+  // Serial
+  $scope.pageLoad = function(e){
+    let lastData = $scope.pJournal.pop();
+    $scope.pJournal = [];
+    fsDb.collection("JournalForm").where('flagPrejournal', '==', 1).orderBy("date", "desc").startAfter(lastData.date).limit(100).get()
+    .then(function (snapshot) {
+      //Added Line Start
+      if (snapshot.docs.length == 0) {
+        $scope.pNoData = true;
+        $scope.$applyAsync();
+        return;
+      }
+      //Added Line End
+      snapshot.docs.forEach(element => {
+        $scope.pJournal.push(element.data());
+        $scope.$applyAsync();
+      });
+    })
+    .catch(function (err) {
+      $print(err);
+    });
+  }
+  // Pagination End
   $scope.vData = [];
   $scope.viewData = function (e) {
     let allJour = [...$scope.journal, ...$scope.pJournal, ...$scope.poJournal];

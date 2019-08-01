@@ -396,7 +396,7 @@ input.addEventListener("keyup", function(event) {
         }
         let jorurnal = {
             entryNo: parseInt(lastEntryNo.$value),
-            voucherNo: parseInt(voucherNo.value),
+            voucherNo: voucherNo.value,
             date: dateToNum(date.value),
             ACCodes : ACCodes,
             partyCodes:partyCodes,
@@ -437,7 +437,7 @@ input.addEventListener("keyup", function(event) {
         }
         console.log(jorurnal);
         // Firestore Store
-        formDataToFire("JournalForm", entryNo.value, jorurnal, clearFields);
+        formDataToFire(jorurnal, clearFields);
         // let journalForm = lsExGJInit('journalForm', []);
         // journalForm.push(jorurnal);
         // lsSetJ('journalForm', journalForm);

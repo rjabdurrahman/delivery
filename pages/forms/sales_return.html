@@ -207,20 +207,21 @@
                             <input ng-model="vpackSizeSale" id="packSizeSale" class="w3-input w3-border" type="text" style="text-align: center"
                                 onkeypress="numValidate(event)" onkeyup="submitValid()">
                         </td>
-                        <td class="secondary">UNIT PRICE</td>
+                        <td class="secondary">PACKS</td>
                         <td >
-                            <input ng-model="SUnitPriceSale" class="w3-input w3-border" type="text" style="text-align: center"
-                                id="unitPrice" onkeyup="submitValid()" onkeypress="numValidate(event)">
+                            <input ng-model="SUnitQuantitySale" class="w3-input w3-border" type="text" 
+                                style="text-align: center" id="noOfPack" onkeyup="submitValid()" onkeypress="numValidate(event)">     
                         </td>
                         
                         <td colspan="2"></td>
                     </tr>
                     
                     <tr>
-                            <td colspan="2" class="secondary" style="padding:0; text-align: center;" >NO OF PACKS</td>
+                            <td colspan="2" class="secondary" style="padding:0; text-align: center;" >UNIT PRICE</td>
                             <td>
-                                <input ng-model="SUnitQuantitySale" class="w3-input w3-border" type="text" 
-                                    style="text-align: center" id="noOfPack" onkeyup="submitValid()" onkeypress="numValidate(event)">
+                                <input ng-model="SUnitPriceSale" class="w3-input w3-border" type="text" style="text-align: center"
+                                    id="unitPrice" onkeyup="submitValid()" onkeypress="numValidate(event)">
+                                
                             </td>
                         <td colspan="2" class="secondary" style="padding:0; text-align: center" >TOTAL QUANTITY</td>
                         <td>
@@ -344,20 +345,21 @@
                             <input ng-model="packSizeCost" id="packSize" class="w3-input w3-border" type="text" style="text-align: center"
                                 onkeypress="numValidate(event)" onkeyup="submitValid()">
                         </td>
-                        <td class="secondary">UNIT PRICE</td>
+                        <td class="secondary">PACKS </td>
                         <td >
-                            <input ng-model="SUnitPrice" class="w3-input w3-border" type="text" id="stdUnitPrice" style="text-align: center"
-                                onkeyup="submitValid()" onkeypress="numValidate(event)">
+                            <input ng-model="SUnitQuantityCost" class="w3-input w3-border" type="text" 
+                                style="text-align: center" id="noOfPackcost" onkeyup="submitValid()" onkeypress="numValidate(event)">
+                           
                         </td>
                         
                         <td colspan="2"></td>
                     </tr>
                     
                     <tr class="noprint">
-                            <td colspan="2" class="secondary" style="padding:0; text-align: center;" >NO OF PACKS</td>
+                            <td colspan="2" class="secondary" style="padding:0; text-align: center;" >UNIT PRICE </td>
                             <td>
-                                <input ng-model="SUnitQuantityCost" class="w3-input w3-border" type="text" 
-                                    style="text-align: center" id="noOfPackcost" onkeyup="submitValid()" onkeypress="numValidate(event)">
+                                <input ng-model="SUnitPrice" class="w3-input w3-border" type="text" id="stdUnitPrice" style="text-align: center"
+                                    onkeyup="submitValid()" onkeypress="numValidate(event)">      
                             </td>
                         <td colspan="2" class="secondary" style="padding:0;text-align: center" >TOTAL QUANTITY</td>
                         <td>
@@ -630,7 +632,7 @@ document.getElementById('voucherNo').focus();
                
                 let sales = {
                             entryNo: parseInt(entryNo.value),
-                            voucherNo: parseInt(voucherNo.value),
+                            voucherNo: voucherNo.value,
                             date: dateToNum(date.value),
                             debitCredit: debitCredit,
                             ACCodes: ACCodes,
@@ -728,6 +730,12 @@ document.getElementById('voucherNo').focus();
                     ACCode: ACCodeElCo.value,
                     ACName: ACNameElCo.value,
                     drAmount: commaToNum(drAmountCo.value),
+                    stdUnit:coststdunit.value,
+                    stdUnitPrice:CoststdUnitPrice,
+                    packType:packedornotCost,
+                    packs:CostnoOfPackcost,
+                    packSize:Costpacksiz,
+                    totalQuantity:costtotalQuantity,
                     totalPriceTK:totalPriceTKCost  
                 }
                 let ACCodesCOst=[];
@@ -746,12 +754,7 @@ document.getElementById('voucherNo').focus();
                     ACCode: ACCodeElCoCr.value,
                     ACName: ACNameElCoCr.value,
                     crAmount: commaToNum(crAmountCoCr.value),
-                    stdUnit:coststdunit.value,
-                    stdUnitPrice:CoststdUnitPrice,
-                    packType:packedornotCost,
-                    packs:CostnoOfPackcost,
-                    packSize:Costpacksiz,
-                    totalQuantity:costtotalQuantity,
+                    
                     totalPriceTK:totalPriceTKCost
                 }
                 //$print(CreditnCOst);
@@ -761,7 +764,7 @@ document.getElementById('voucherNo').focus();
 
         let CostofGood = {
             entryNo: parseInt(entryNo.value)+1,
-            voucherNo: parseInt(voucherNo.value),
+            voucherNo: voucherNo.value,
             date: dateToNum(date.value),
             debitCredit: debitCreditCost,
             ACCodes: ACCodesCOst,

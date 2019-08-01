@@ -279,8 +279,8 @@
     function submitValid() {
         let totalDebit = commaToNum($js('totalDebit').textContent);
         let totalCredit = commaToNum($js('totalCredit').textContent);
-        let totalPriceANum = parseFloat(totalPriceA.value);
-        let totalPriceTKNum = parseFloat(totalPriceTK.value)
+        let totalPriceANum = commaToNum(totalPriceA.value);
+        let totalPriceTKNum = commaToNum(totalPriceTK.value)
         if (totalDebit != 0 && totalCredit != 0 && totalDebit == totalCredit && totalPriceANum != 0 && totalPriceTKNum != 0 && totalPriceANum == totalPriceTKNum && totalPriceTKNum==totalDebit) {
             $js('submitBtn').disabled = false;
         }
@@ -461,7 +461,7 @@
         }
         let purshaseRet = {
             entryNo: parseInt(entryNo.value),
-            voucherNo: parseInt(voucherNo.value),
+            voucherNo: voucherNo.value,
             date: dateToNum(date.value),
             debitCredit: debitCredit,
             ACCodes: ACCodes,

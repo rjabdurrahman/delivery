@@ -210,7 +210,7 @@ fsDb.settings({
 // Last Entry for For Form Entry
 var lastEntryNo = null;
 
-function formDataToFire(cname, dname, data, cleardata) {
+function formDataToFire(data, cleardata) {
     fsDb.collection(cname).doc(dname).set(data)
         .then(function () {
             db.child('lastFormEntry').set(++lastEntryNo.$value);

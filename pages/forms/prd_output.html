@@ -112,15 +112,15 @@
                             </select>
                         </td>
                         <td>
-                            <input ng-model="packSize" id="packetSize1" class="w3-input w3-border" type="text" onkeypress="numValidate(event)" onkeyup="multiplicationResult(event)"
-                                style="text-align: center">
+                            <input ng-model="packSizeAm" id="packetSize1" class="w3-input w3-border" type="text" onkeypress="numValidate(event)" onkeyup="multiplicationResult(event)"
+                                style="text-align: center" >
                         </td>
                         <td>
-                            <input ng-model="packs" id="totalPackets1" class="w3-input w3-border" onkeypress="numValidate(event)" type="text" onkeyup="multiplicationResult(event)"
-                                style="text-align: center">
+                            <input ng-model="packsno" id="totalPackets1" class="w3-input w3-border" onkeypress="numValidate(event)" type="text" onkeyup="multiplicationResult(event)"
+                                style="text-align: center" >
                         </td>
                         <td>
-                                <input class="w3-input w3-border" type="text" style="text-align: center" value="{{packSize*packs|number}}" disabled>
+                                <input class="w3-input w3-border" id="TotalQuantity1" type="text" style="text-align: center"  disabled>
                         </td>
                         <td>
                             <input class="w3-input w3-border" type="text" id="UnitPricefromF1" type="number"
@@ -290,7 +290,7 @@ document.getElementById('voucherNo').focus();
         let totalDebit = commaToNum($js('totalDebit').textContent);
         let totalCredit = commaToNum(document.getElementById('totCredit').innerHTML);
        
-        if (totalDebit > 0 && totalCredit > 0 && totalDebit == totalCredit) {
+        if (totalDebit != 0 && totalCredit != 0 && totalDebit == totalCredit) {
             $js('submitBtn').disabled = false;
         }
         else $js('submitBtn').disabled = true;
@@ -408,7 +408,7 @@ document.getElementById('voucherNo').focus();
                     packType: packtype.value,
                     packSize: parseFloat(packSize.value),
                     packs: parseFloat(packs.value),
-                    totalQuantity:parseFloat(totalQuantity.value),
+                    totalQuantity:parseFloat(commaToNum(totalQuantity.value)),
                     unitPrice: parseFloat(unitPrice.value),
                     totalPriceTK: parseFloat(totalPrice.value.split(',').join("")),
                     ACCode: ACCodeEl.value,
@@ -471,7 +471,7 @@ document.getElementById('voucherNo').focus();
         }
         let prdOutput = {
             entryNo: parseInt(entryNo.value),
-            voucherNo: parseInt(voucherNo.value),
+            voucherNo: voucherNo.value,
             date: dateToNum(date.value),
             psNo: parseInt(psNo.value),
             seqNo: parseInt(seqNo.value),
@@ -515,6 +515,7 @@ document.getElementById('voucherNo').focus();
             $js('totalDebit').innerHTML = "";
             $js('totCredit').innerHTML = "";
             $js('submitBtn').disabled = true;
+            serial=1;
            
         }
         console.log(prdOutput);
@@ -566,6 +567,12 @@ var onepacketSize=onetotalPackets=oneUnitPricefromF=1;
     {
         var multiResult=0;
         var TotalUnitPrice=0;
+        console.log("Serial "+serial);
+        
+            onepacketSize=document.getElementById('packetSize1').value;
+            onetotalPackets=document.getElementById('totalPackets1').value;
+            console.log("its called");
+            document.getElementById('TotalQuantity1').value=(onepacketSize*onetotalPackets).toLocaleString('en');
         
    
         if(serial>1)
@@ -592,13 +599,14 @@ var onepacketSize=onetotalPackets=oneUnitPricefromF=1;
                 
                
                 psN=document.getElementById('psNo').value;
+                SequenceNo=document.getElementById('seqNo').value;
                 var dailyTotal = 0;
                 
                           
-                    
-                //$print(newvariable.length);
+                console.log('Inside newvariable');    
+                $print(newvariable);
                 for (j = 0; j < newvariable.length; j++) {
-                    if(newvariable[j].psNo==psN)
+                    if(newvariable[j].psNo==psN && newvariable[j].seqNo==SequenceNo)
                       dailyTotal += newvariable[j].debitCredit[0].drAmount;
                                         }
                    

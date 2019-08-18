@@ -58,7 +58,7 @@ function clearer(...fields) {
 var dateEx = /^\d{1,2}-(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-\d{2}$/i;
 
 function numValidate(event) {
-    if(event.target.value.length > 0 && event.key == '-') event.preventDefault();
+    if (event.target.value.length > 0 && event.key == '-') event.preventDefault();
     var theEvent = event || window.event;
 
     // Handle paste
@@ -152,46 +152,46 @@ if (lsGet('user')) {
 //   };
 //   firebase.initializeApp(config);
 
-  //Firebase for Company
-  var config = {
+//Firebase for Company
+var config = {
     apiKey: "AIzaSyDu8AG8ZoBeMToQSAbwxkIGMANP8t5RN4o",
     authDomain: "ishanagrolimited.firebaseapp.com",
     databaseURL: "https://ishanagrolimited.firebaseio.com",
     projectId: "ishanagrolimited",
     storageBucket: "ishanagrolimited.appspot.com",
     messagingSenderId: "12905357107"
-  };
-  firebase.initializeApp(config);
+};
+firebase.initializeApp(config);
 
 
 
-  const auth = firebase.auth();
-  auth.onAuthStateChanged(function (fuser) {
-      if (fuser) {
-          // $print(fuser);
-          var user = firebase.auth().currentUser;
-          getRef('users/' + user.uid).once('value').then(function (snapshot) {
-              let userIn = snapshot.val();
-              if (!localStorage.user.uc) {
-                  Object.assign(userInfo, userIn);
-                  $print(userInfo);
-                  lsSetJ('user', userInfo);
-              }
-              var $body = angular.element(document.body);
-              var $rootScope = $body.scope().$root;
-              $rootScope.$apply(function () {
-                  $rootScope.userInfo = userInfo;
-              });
-          });
-      }
-      else {
-          $print('You are not logged!');
-          let locURL = window.location.href.substring(window.location.href.indexOf('#'), window.location.href.length);
-          if(locURL != '#/'){
-              window.location.href = '#/';
-          }
-      }
-  });
+const auth = firebase.auth();
+auth.onAuthStateChanged(function (fuser) {
+    if (fuser) {
+        // $print(fuser);
+        var user = firebase.auth().currentUser;
+        getRef('users/' + user.uid).once('value').then(function (snapshot) {
+            let userIn = snapshot.val();
+            if (!localStorage.user.uc) {
+                Object.assign(userInfo, userIn);
+                $print(userInfo);
+                lsSetJ('user', userInfo);
+            }
+            var $body = angular.element(document.body);
+            var $rootScope = $body.scope().$root;
+            $rootScope.$apply(function () {
+                $rootScope.userInfo = userInfo;
+            });
+        });
+    }
+    else {
+        $print('You are not logged!');
+        let locURL = window.location.href.substring(window.location.href.indexOf('#'), window.location.href.length);
+        if (locURL != '#/') {
+            window.location.href = '#/';
+        }
+    }
+});
 
 var db = firebase.database().ref();
 
@@ -210,16 +210,27 @@ fsDb.settings({
 // Last Entry for For Form Entry
 var lastEntryNo = null;
 
-function formDataToFire(data, cleardata) {
-    fsDb.collection(cname).doc(dname).set(data)
-        .then(function () {
-            db.child('lastFormEntry').set(++lastEntryNo.$value);
-            $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
+function formDataToFire(data, cleardata, no) {
+    let url = 'https://us-central1-niaasho.cloudfunctions.net/api' + no;
+    axios.post(url, data, {
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(function (response) {
             cleardata();
+            notify('Added Sucessfully', 1);
         })
         .catch(function (error) {
-            $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
+            notify(error.message, 2);
         });
+    // fsDb.collection(cname).doc(dname).set(data)
+    //     .then(function () {
+    //         db.child('lastFormEntry').set(++lastEntryNo.$value);
+    //         $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
+    //         cleardata();
+    //     })
+    //     .catch(function (error) {
+    //         $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
+    //     });
 }
 // Date to Number function
 function dateToNum(dateStr) {

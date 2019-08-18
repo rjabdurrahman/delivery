@@ -311,8 +311,8 @@
         </div>
         <!-- Forms -->
         <div id="journalFormModal" class="w3-modal">
-            <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent;">
-                <header class="w3-container main-bg-color div-title">
+            <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent; width: 99%;">
+                <header class="w3-container main-bg-color">
                     <span onclick="$js('journalFormModal').style.display='none'" class="w3-button w3-display-topright"
                         style="z-index: 9999">&times;</span>
                 </header>
@@ -435,6 +435,121 @@
                 </div>
             </div>
         </div>
+        <!-- Journal Form End -->
+        <div id="purchaseFormModal" class="w3-modal">
+            <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent; width: 99%;">
+                <header class="w3-container main-bg-color">
+                    <span onclick="$js('purchaseFormModal').style.display='none'" class="w3-button w3-display-topright"
+                        style="z-index: 9999">&times;</span>
+                </header>
+                <div class="div-box w3-light-gray w3-card-4 margin-auto"
+                    style="width: 100%; border-top-left-radius: 8px;">
+                    <div class="w3-container main-bg-color div-title">
+                        <h2>Purchase</h2>
+                    </div>
+                    <div class="w3-container" style="margin-top: 20px;">
+                        <table class="w3-table chart-table" style="font-size: 16px;">
+                            <tr>
+                                <td class="secondary" style="width: 115px; padding-left: 5px; text-align: center;">
+                                    <span>ENTRY NO</span>
+                                </td>
+                                <td class="border">{{vData.entryNo}}</td>
+                                <td class="secondary" style="width: 215px; text-align: center;">VOUCHER NO</td>
+                                <td>{{vData.voucherNo}}</td>
+                                <td class="secondary" style="width: 125px; text-align: center;">DATE</td>
+                                <td style="width: 125px;">{{numToDate(vData.date)}}</td>
+                            </tr>
+                        </table>
+                        <table id="chartTable" class="w3-table chart-table" style="font-size: 16px;">
+                            <tr class="primary">
+                                <td style="width: 45px;"></td>
+                                <td colspan="8" style="text-align: center;">Debit Info</td>
+                                <td>Dr. Amount</td>
+                                <td>Cr. Amount</td>
+                            </tr>
+                            <tr class="secondary">
+                                <td></td>
+                                <td style="text-align:center;">RM CODE</td>
+                                <td colspan="3" style="text-align:center;">RAW MATERIALS</td>
+                                <td style="text-align:center;">A/C CODE</td>
+                                <td colspan="3" style="text-align:center;">A/C NAME</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>{{vData.debitCredit[0].partyCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[0].partyName}}</td>
+                                <td>{{vData.debitCredit[0].ACCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[0].ACName}}</td>
+                                <td>{{vData.debitCredit[0].drAmount}}</td>
+                                <td>------</td>
+                            </tr>
+                            <tr class="primary">
+                                <td></td>
+                                <td colspan="8" style="text-align: center;">Credit Info</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="secondary">
+                                <td></td>
+                                <td style="text-align:center;">PARTY CODE</td>
+                                <td colspan="3" style="text-align:center;">PARTY NAME</td>
+                                <td style="text-align:center;">A/C CODE</td>
+                                <td colspan="3" style="text-align:center;">A/C NAME</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>{{vData.debitCredit[1].partyCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[1].partyName}}</td>
+                                <td>{{vData.debitCredit[1].ACCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[1].ACName}}</td>
+                                <td>------</td>
+                                <td>{{vData.debitCredit[1].crAmount}}</td>
+                            </tr>
+                            <tr class="primary">
+                                <td></td>
+                                <td colspan="8" style="text-align: center;">Total</td>
+                                <td id="totalDebit" style="text-align: right">0</td>
+                                <td id="totalCredit" style="text-align: right">0</td>
+                            </tr>
+                            <tr>
+                                <td class="secondary" colspan="2" style="text-align:center;">PRIMARY UNIT</td>
+                                <td>{{vData.debitCredit[0].primaryUnit}}</td>
+                            </tr>
+                            <tr>
+                                <td class="secondary" colspan="2" style="text-align:center;">UNIT QUANTITY</td>
+                                <td>{{vData.debitCredit[0].primaryQuantity}}</td>
+                                <td class="secondary" style="text-align:center;">UNIT PRICE</td>
+                                <td>{{vData.debitCredit[0].primaryUnitPrice}}</td>
+                                <td class="secondary" colspan="2" style="text-align:center;">TOTAL PRICE</td>
+                                <td>{{vData.debitCredit[0].totalPriceTK}}</td>
+                            </tr>
+                            <tr>
+                                <td class="secondary" colspan="2" style="text-align:center;">STANDARD UNIT</td>
+                                <td>{{vData.debitCredit[0].stdUnit}}</td>
+                            </tr>
+                            <tr>
+                                <td class="secondary" colspan="2" style="text-align:center;">UNIT QUANTITY</td>
+                                <td>{{vData.debitCredit[0].totalQuantity}}</td>
+                                <td class="secondary" style="text-align:center;">UNIT PRICE</td>
+                                <td>{{vData.debitCredit[0].stdUnitPrice}}</td>
+                                <td class="secondary" colspan="2" style="text-align:center;">TOTAL PRICE</td>
+                                <td>{{vData.debitCredit[0].totalPriceTK}}</td>
+                            </tr>
+                            <tr>
+                                <td class="secondary" colspan="2" style="text-align:center;">DESCRIPTION</td>
+                                <td colspan="6">{{vData.description}}</td>
+                                <td colspan="3"></td>
+                            </tr>
+                        </table>
+                        <br style="clear: both;">
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Forms End -->
     </div>
 </div>
@@ -475,6 +590,8 @@
     function viewEntry(id, fName) {
         if (fName == 'Journal Form')
             $js('journalFormModal').style.display = 'block';
+        if (fName == 'Purchase Form')
+            $js('purchaseFormModal').style.display = 'block';
     }
 
 </script>

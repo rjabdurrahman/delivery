@@ -2,16 +2,13 @@
     <div class="overlay">
         <div class="margin-auto clearfix" style="width: 99.5%;">
             <section class="clearfix w3-btn-sec">
-                <button ng-click="show = 'prejournal'" class="w3-btn ex-font journal-top-btn" type="submit"
-                    ng-class="{'w3-white' : !(show == 'prejournal' || (show=='postjournal'==false && show=='alljournal'== false)), 'w3-blue' : show == 'prejournal' || (show=='postjournal'==false && show=='alljournal'== false)}"
+                <button ng-click="show = 'prejournal'" class="w3-btn ex-font journal-top-btn" type="submit" ng-class="{'w3-white' : !(show == 'prejournal' || (show=='postjournal'==false && show=='alljournal'== false)), 'w3-blue' : show == 'prejournal' || (show=='postjournal'==false && show=='alljournal'== false)}"
                     class="ex-font">PRE
                     JOURNAL
                 </button>
-                <button ng-click="show = 'postjournal'" class="w3-btn ex-font journal-top-btn" type="submit"
-                    ng-class="{'w3-white' : show != 'postjournal', 'w3-blue' : show=='postjournal'}">POST
+                <button ng-click="show = 'postjournal'" class="w3-btn ex-font journal-top-btn" type="submit" ng-class="{'w3-white' : show != 'postjournal', 'w3-blue' : show=='postjournal'}">POST
                     JOURNAL</button>
-                <button ng-click="show = 'alljournal'" class="w3-btn ex-font journal-top-btn" type="submit"
-                    ng-class="{'w3-white' : show != 'alljournal', 'w3-blue' : show=='alljournal'}">ALL IN
+                <button ng-click="show = 'alljournal'" class="w3-btn ex-font journal-top-btn" type="submit" ng-class="{'w3-white' : show != 'alljournal', 'w3-blue' : show=='alljournal'}">ALL IN
                     JOURNAL</button>
                 <input type="number" placeholder="Entry No" ng-keyup="dataPartLoad($event)" style="text-align: center;">
             </section>
@@ -20,27 +17,27 @@
                 .tableFixHead {
                     overflow-y: auto;
                 }
-
+                
                 .tableFixHead th {
                     position: sticky;
                     top: 0;
                 }
-
                 /* Just common table stuff. Really. */
+                
                 table {
                     border-collapse: collapse;
                     width: 100%;
                 }
-
+                
                 th,
                 td {
                     padding: 8px 16px;
                 }
-
+                
                 th {
                     background: #014387;
                 }
-
+                
                 .active-submenu {
                     border: #d6e2ee;
                 }
@@ -48,8 +45,7 @@
             <div class="w3-card-4 table-container" ng-show="show=='postjournal'">
                 <div class="ch-table-header">
 
-                    <div class="table table-striped tableFixHead"
-                        style="overflow-y:auto; max-height:calc(100vh - 170px);">
+                    <div class="table table-striped tableFixHead" style="overflow-y:auto; max-height:calc(100vh - 170px);">
                         <table class="w3-table-all " id="header-fixed">
                             <thead>
                                 <tr id="fixTr" class="main-bg-color">
@@ -114,22 +110,17 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div ng-show="poJournal.length == 0 && !poNoData" class="w3-pale-blue"
-                            style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..."
-                                style="height: 25px; width: 25px;"></div>
+                        <div ng-show="poJournal.length == 0 && !poNoData" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..." style="height: 25px; width: 25px;"></div>
                         <div ng-show="poNoData" class="w3-pale-blue" style="padding: 12px; text-align: center;">
-                            No
-                            Data Found!</div>
+                            No Data Found!</div>
                     </div>
                 </div>
             </div>
 
 
-            <div class="w3-card-4 table-container"
-                ng-if="show=='prejournal' || (show=='postjournal'==false && show=='alljournal'== false)">
+            <div class="w3-card-4 table-container" ng-if="show=='prejournal' || (show=='postjournal'==false && show=='alljournal'== false)">
                 <div class="ch-table-header">
-                    <div class=" table table-striped tableFixHead"
-                        style="overflow-y:auto; max-height: calc(100vh - 170px);">
+                    <div class=" table table-striped tableFixHead" style="overflow-y:auto; max-height: calc(100vh - 170px);">
                         <table class="w3-table-all " id="header-fixed">
                             <thead>
                                 <tr id="fixTr" class="main-bg-color">
@@ -196,25 +187,18 @@
                                     <td ng-show="deb.totalPrice">{{deb.totalPriceTK | number : fractionSize}}</td>
                                     <td>{{idToUsername(jor.uId)}}</td>
                                     <td>
-                                        <button id="{{jor.entryNo}}v" name="{{jor.formName}}"
-                                            onclick="viewEntry(this.id, this.name);" ng-click="viewData($event)"
-                                            class="w3-btn w3-blue journal-top-btn">View</button>
+                                        <button id="{{jor.entryNo}}v" name="{{jor.formName}}" onclick="viewEntry(this.id, this.name);" ng-click="viewData($event)" class="w3-btn w3-blue journal-top-btn">View</button>
                                     </td>
                                     <td>
-                                        <button id="{{jor.entryNo}}u" onclick="updateconfirm(this.id);"
-                                            class="w3-btn w3-blue journal-top-btn">Confirm Both (DR/CR)</button>&nbsp;
-                                        <button id="{{jor.entryNo}}d" onclick="deleteconfirm(this.id)"
-                                            class="w3-btn w3-red journal-top-btn">Reject</button>
+                                        <button id="{{jor.entryNo}}u" onclick="updateconfirm(this.id);" class="w3-btn w3-blue journal-top-btn">Confirm Both (DR/CR)</button>&nbsp;
+                                        <button id="{{jor.entryNo}}d" onclick="deleteconfirm(this.id)" class="w3-btn w3-red journal-top-btn">Reject</button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div ng-show="pJournal.length == 0 && !pNoData" class="w3-pale-blue"
-                            style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..."
-                                style="height: 25px; width: 25px;"></div>
+                        <div ng-show="pJournal.length == 0 && !pNoData" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..." style="height: 25px; width: 25px;"></div>
                         <div ng-show="pNoData" class="w3-pale-blue" style="padding: 12px; text-align: center;">
-                            No
-                            Data Found!</div>
+                            No Data Found!</div>
                     </div>
                 </div>
             </div>
@@ -224,8 +208,7 @@
             <div class="w3-card-4 table-container" ng-show="show=='alljournal'">
                 <div class="ch-table-header">
 
-                    <div class=" table table-striped tableFixHead"
-                        style="overflow-y:auto; max-height:calc(100vh - 170px);">
+                    <div class=" table table-striped tableFixHead" style="overflow-y:auto; max-height:calc(100vh - 170px);">
                         <table class="w3-table-all " id="header-fixed">
                             <thead>
                                 <tr id="fixTr" class="main-bg-color">
@@ -290,12 +273,9 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div ng-show="journal.length == 0 && !noData" class="w3-pale-blue"
-                            style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..."
-                                style="height: 25px; width: 25px;"></div>
+                        <div ng-show="journal.length == 0 && !noData" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..." style="height: 25px; width: 25px;"></div>
                         <div ng-show="noData" class="w3-pale-blue" style="padding: 12px; text-align: center;">
-                            No
-                            Data Found!</div>
+                            No Data Found!</div>
                     </div>
                 </div>
             </div>
@@ -313,11 +293,9 @@
         <div id="journalFormModal" class="w3-modal">
             <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent; width: 99%;">
                 <header class="w3-container main-bg-color">
-                    <span onclick="$js('journalFormModal').style.display='none'" class="w3-button w3-display-topright"
-                        style="z-index: 9999">&times;</span>
+                    <span onclick="$js('journalFormModal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 9999">&times;</span>
                 </header>
-                <div class="div-box w3-light-gray w3-card-4 margin-auto"
-                    style="width: 100%; border-top-left-radius: 8px;">
+                <div class="div-box w3-light-gray w3-card-4 margin-auto" style="width: 100%; border-top-left-radius: 8px;">
                     <div class="w3-container main-bg-color div-title">
                         <h2>Journal Form</h2>
                     </div>
@@ -361,12 +339,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <button class="main-bg-color w3-btn journal-csbtn" onclick="addField()"
-                                        tabindex="-1">+</button>
+                                    <button class="main-bg-color w3-btn journal-csbtn" onclick="addField()" tabindex="-1">+</button>
                                 </td>
                                 <td style="border-right: none;">
-                                    <button class="main-bg-color w3-btn journal-csbtn" style="margin-left: -8px;"
-                                        onclick="rmField()" tabindex="-1">-</button>
+                                    <button class="main-bg-color w3-btn journal-csbtn" style="margin-left: -8px;" onclick="rmField()" tabindex="-1">-</button>
                                 </td>
                                 <td class="tab-warn" style="border-left: none;" colspan="9"></td>
                             </tr>
@@ -396,16 +372,12 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <button class="main-bg-color w3-btn journal-csbtn" onclick="addField()"
-                                        tabindex="-1">+</button>
+                                    <button class="main-bg-color w3-btn journal-csbtn" onclick="addField()" tabindex="-1">+</button>
                                 </td>
                                 <td style="border-right: none;">
-                                    <button class="main-bg-color w3-btn journal-csbtn" style="margin-left: -8px;"
-                                        onclick="rmField()" tabindex="-1">-</button>
+                                    <button class="main-bg-color w3-btn journal-csbtn" style="margin-left: -8px;" onclick="rmField()" tabindex="-1">-</button>
                                 </td>
-                                <td style="border-left: none;" class="tab-warn" colspan="7">To Submit form debit &
-                                    credit
-                                    amount must be same.</td>
+                                <td style="border-left: none;" class="tab-warn" colspan="7">To Submit form debit & credit amount must be same.</td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -417,8 +389,8 @@
                             </tr>
                             <tr>
                                 <td class="secondary" colspan="2" style="text-transform:uppercase; text-align: center;">
-                                    Cost
-                                    Center</td>
+                                    Cost Center
+                                </td>
                                 <td colspan="5">{{vData.costCenter}}</td>
                                 <td colspan="4"></td>
                             </tr>
@@ -439,11 +411,9 @@
         <div id="purchaseFormModal" class="w3-modal">
             <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent; width: 99%;">
                 <header class="w3-container main-bg-color">
-                    <span onclick="$js('purchaseFormModal').style.display='none'" class="w3-button w3-display-topright"
-                        style="z-index: 9999">&times;</span>
+                    <span onclick="$js('purchaseFormModal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 9999">&times;</span>
                 </header>
-                <div class="div-box w3-light-gray w3-card-4 margin-auto"
-                    style="width: 100%; border-top-left-radius: 8px;">
+                <div class="div-box w3-light-gray w3-card-4 margin-auto" style="width: 100%; border-top-left-radius: 8px;">
                     <div class="w3-container main-bg-color div-title">
                         <h2>Purchase</h2>
                     </div>
@@ -554,11 +524,9 @@
         <div id="purchaseRetFormModal" class="w3-modal">
             <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent; width: 99%;">
                 <header class="w3-container main-bg-color">
-                    <span onclick="$js('purchaseRetFormModal').style.display='none'" class="w3-button w3-display-topright"
-                        style="z-index: 9999">&times;</span>
+                    <span onclick="$js('purchaseRetFormModal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 9999">&times;</span>
                 </header>
-                <div class="div-box w3-light-gray w3-card-4 margin-auto"
-                    style="width: 100%; border-top-left-radius: 8px;">
+                <div class="div-box w3-light-gray w3-card-4 margin-auto" style="width: 100%; border-top-left-radius: 8px;">
                     <div class="w3-container main-bg-color div-title">
                         <h2>Purchase Return</h2>
                     </div>
@@ -632,27 +600,27 @@
                             </tr>
                             <tr>
                                 <td class="secondary" colspan="2" style="text-align:center;">PRIMARY UNIT</td>
-                                <td>{{vData.debitCredit[0].primaryUnit}}</td>
+                                <td>{{vData.debitCredit[1].primaryUnit}}</td>
                             </tr>
                             <tr>
                                 <td class="secondary" colspan="2" style="text-align:center;">UNIT QUANTITY</td>
-                                <td>{{vData.debitCredit[0].primaryQuantity}}</td>
+                                <td>{{vData.debitCredit[1].primaryQuantity}}</td>
                                 <td class="secondary" style="text-align:center;">UNIT PRICE</td>
-                                <td>{{vData.debitCredit[0].primaryUnitPrice}}</td>
+                                <td>{{vData.debitCredit[1].primaryUnitPrice}}</td>
                                 <td class="secondary" colspan="2" style="text-align:center;">TOTAL PRICE</td>
-                                <td>{{vData.debitCredit[0].totalPriceTK}}</td>
+                                <td>{{vData.debitCredit[1].totalPriceTK}}</td>
                             </tr>
                             <tr>
                                 <td class="secondary" colspan="2" style="text-align:center;">STANDARD UNIT</td>
-                                <td>{{vData.debitCredit[0].stdUnit}}</td>
+                                <td>{{vData.debitCredit[1].stdUnit}}</td>
                             </tr>
                             <tr>
                                 <td class="secondary" colspan="2" style="text-align:center;">UNIT QUANTITY</td>
-                                <td>{{vData.debitCredit[0].totalQuantity}}</td>
+                                <td>{{vData.debitCredit[1].totalQuantity}}</td>
                                 <td class="secondary" style="text-align:center;">UNIT PRICE</td>
-                                <td>{{vData.debitCredit[0].stdUnitPrice}}</td>
+                                <td>{{vData.debitCredit[1].stdUnitPrice}}</td>
                                 <td class="secondary" colspan="2" style="text-align:center;">TOTAL PRICE</td>
-                                <td>{{vData.debitCredit[0].totalPriceTK}}</td>
+                                <td>{{vData.debitCredit[1].totalPriceTK}}</td>
                             </tr>
                             <tr>
                                 <td class="secondary" colspan="2" style="text-align:center;">DESCRIPTION</td>
@@ -670,20 +638,23 @@
 </div>
 <script>
     function updateAccept(id) {
-        fsDb.collection('JournalForm').doc(id.substring(0, id.length - 1)).update({ flagPrejournal: 1, acceptedBy: firebase.auth().currentUser.uid })
-            .then(function () {
+        fsDb.collection('JournalForm').doc(id.substring(0, id.length - 1)).update({
+                flagPrejournal: 1,
+                acceptedBy: firebase.auth().currentUser.uid
+            })
+            .then(function() {
                 notify('Updated Sucessfully', 1);
             })
-            .catch(function (error) {
+            .catch(function(error) {
                 console.log(error)
                 notify('Not Accepted!', 2);
             });
     }
 
     function deleteDocument(entry) {
-        fsDb.collection("JournalForm").doc(entry.substring(0, entry.length - 1)).delete().then(function () {
+        fsDb.collection("JournalForm").doc(entry.substring(0, entry.length - 1)).delete().then(function() {
             notify('Sucessfully Deleted', 1);
-        }).catch(function (error) {
+        }).catch(function(error) {
             console.error("Error removing document: ", error);
             notify('Deletion Not Accepted!', 2);
         });
@@ -710,5 +681,4 @@
         if (fName == 'Purchse Return Form')
             $js('purchaseRetFormModal').style.display = 'block';
     }
-
 </script>

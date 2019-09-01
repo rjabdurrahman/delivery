@@ -633,7 +633,142 @@
                 </div>
             </div>
         </div>
-        <!-- Forms End -->
+        <!-- Production Input -->
+        <div id="prdInputFormModal" class="w3-modal">
+            <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent; width: 99%;">
+                <header class="w3-container main-bg-color">
+                    <span onclick="$js('prdInputFormModal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 9999">&times;</span>
+                </header>
+                <div class="div-box w3-light-gray w3-card-4 margin-auto" style="width: 100%; border-top-left-radius: 8px;">
+                    <div class="w3-container main-bg-color div-title">
+                        <h2>Purchase Return</h2>
+                    </div>
+                    <div class="w3-container" style="margin-top: 20px;">
+                        <table class="w3-table chart-table" style="font-size: 16px;">
+                            <tr>
+                                <td class="secondary" style="width: 115px; padding-left: 5px; text-align: center;">
+                                    <span>ENTRY NO</span>
+                                </td>
+                                <td>
+                                    {{vData.entryNo}}
+                                </td>
+                                <td class="secondary" style="width: 215px; text-align: center;">VOUCHER NO</td>
+                                <td>
+                                    {{vData.voucherNo}}
+                                </td>
+                                <td class="secondary" style="width: 100px; text-align: center;">DATE</td>
+                                <td style="width: 125px;">
+                                    {{vData.date}}
+                                </td>
+                                <td class="secondary" style="text-align:center;">
+                                    <span>PS NO</span>
+                                </td>
+                                <td>
+                                    {{vData.psNo}}
+                                </td>
+                                <td class="secondary" style="text-align:center;">
+                                    <span>SEQ NO</span>
+                                </td>
+                                <td>
+                                    {{vData.seqNo}}
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="chartTable" class="w3-table chart-table" style="font-size: 16px;">
+                            <tr class="primary">
+                                <td style="width: 45px;"></td>
+                                <td colspan="10" style="text-align: center;">Debit Info</td>
+                                <td>Dr Amount</td>
+                                <td>Cr Amount</td>
+                            </tr>
+                            <tr class="secondary">
+                                <td></td>
+                                <td style="text-align:center">PRODUCT CODE</td>
+                                <td colspan="4" style="text-align:center">PRODUCT TITLE</td>
+                                <td style="text-align:center">A/C CODE</td>
+                                <td colspan="4" style="text-align:center">A/C TITLE</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>{{vData.debitCredit[0].partyCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[0].partyName}}</td>
+                                <td>{{vData.debitCredit[0].ACCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[0].ACName}}</td>
+                                <td>{{vData.debitCredit[0].drAmount}}</td>
+                                <td>------</td>
+                            </tr>
+                            <tr class="primary">
+                                <td></td>
+                                <td colspan="10" style="text-align: center;">Credit Info</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="secondary" style="text-align:center">
+                                <td style="text-align:center"></td>
+                                <td style="text-align:center">RM CODE</td>
+                                <td colspan="4" style="text-align:center">RAW MATERIAL</td>
+                                <td style="text-align:center">A/C CODE</td>
+                                <td colspan="4" style="text-align:center">A/C NAME</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>{{vData.debitCredit[1].partyCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[1].partyName}}</td>
+                                <td>{{vData.debitCredit[1].ACCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[1].ACName}}</td>
+                                <td>------</td>
+                                <td>{{vData.debitCredit[1].crAmount}}</td>
+                            </tr>
+                            <tr class="primary">
+                                <td></td>
+                                <td colspan="10" style="text-align: center;">Total</td>
+                                <td id="totalDebit" style="text-align: right">0</td>
+                                <td id="totalCredit" style="text-align: right">0</td>
+                            </tr>
+                            <tr>
+                                <td class="secondary" colspan="3" style="text-align:center;">PRIMARY UNIT</td>
+                                <td>
+                                    {{vData.debitCredit[1].primaryUnit}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="secondary" colspan="3" style="text-align:center;">PRIMARY UNIT QUANTITY</td>
+                                <td>{{vData.debitCredit[1].primaryQuantity}}</td>
+                                <td class="secondary" style="text-align:center;" colspan="2">PRIMARY UNIT PRICE</td>
+                                <td>{{vData.debitCredit[1].primaryUnitPrice}}</td>
+                                <td class="secondary" colspan="2" style="text-align:center;">TOTAL PRICE</td>
+                                <td>{{vData.debitCredit[1].totalPriceTK}}</td>
+                            </tr>
+                            <tr>
+                                <td class="secondary" colspan="3" style="text-align:center;">STANDARD UNIT</td>
+                                <td>{{vData.debitCredit[1].stdUnit}}</td>
+                            </tr>
+                            <tr>
+                                <td class="secondary" colspan="3" style="text-align:center;">STANDARD UNIT QUANTITY</td>
+                                <td>{{vData.debitCredit[1].totalQuantity}}</td>
+                                <td class="secondary" style="text-align:center;" colspan="2">STANDARD UNIT PRICE</td>
+                                <td>{{vData.debitCredit[1].stdUnitPrice}}</td>
+                                <td class="secondary" colspan="2" style="text-align:center;">TOTAL PRICE</td>
+                                <td>{{vData.debitCredit[1].totalPriceTK}}</td>
+                            </tr>
+                            <tr>
+                                <td class="secondary" colspan="2">DESCRIPTION</td>
+                                <td colspan="8">{{vData.description}}</td>
+                                <td colspan="2"></td>
+                                <td class="main-bg-color" style="text-align: center; cursor: pointer;">
+                                </td>
+                            </tr>
+                        </table>
+                        <br style="clear: both;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Production Input End -->
     </div>
 </div>
 <script>
@@ -680,5 +815,7 @@
             $js('purchaseFormModal').style.display = 'block';
         if (fName == 'Purchse Return Form')
             $js('purchaseRetFormModal').style.display = 'block';
+        if (fName == 'Product Input')
+            $js('prdInputFormModal').style.display = 'block';
     }
 </script>

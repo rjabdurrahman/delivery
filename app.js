@@ -742,9 +742,22 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
   $scope.viewData = function (e) {
     let allJour = [...$scope.journal, ...$scope.pJournal, ...$scope.poJournal];
     let vId = parseInt(e.target.id.slice(0, -1));
-    $scope.vData = allJour.find(function (el) {
-      return el.entryNo == vId;
-    });
+    let vName = e.target.name;
+    if(vName == 'Sales (Sales)'){
+      $scope.firstData = allJour.find(function (el) {
+        return el.entryNo == vId + 1;
+      });
+    }
+    else if(vName == 'Sales (Cost of Good Sold)'){
+      $scope.secData = allJour.find(function (el) {
+        return el.entryNo == vId - 1;
+      });
+    }
+    else{
+      $scope.vData = allJour.find(function (el) {
+        return el.entryNo == vId;
+      });
+    }
     $scope.$applyAsync();
   }
   $scope.changerDC = function (code) {

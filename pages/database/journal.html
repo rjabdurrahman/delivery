@@ -845,7 +845,7 @@
                                 <td>{{vData.debitCredit[0].unitPrice}}</td>
                                 <td>{{vData.debitCredit[0].totalPriceTK}}</td>
                                 <td>{{vData.debitCredit[0].ACCode}}</td>
-                                <td>{{vData.debitCredit[0].ACName}}</td>
+                                <td colspan="2">{{vData.debitCredit[0].ACName}}</td>
                                 <td>{{vData.debitCredit[0].drAmount}}</td>
                                 <td>------</td>
                             </tr>
@@ -896,6 +896,309 @@
             </div>
         </div>
         <!-- Production Output End -->
+        <!-- Sales(Sales Part) Start -->
+        <div id="prdOutputFormModal" class="w3-modal">
+            <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent; width: 99%;">
+                <header class="w3-container main-bg-color">
+                    <span onclick="$js('prdOutputFormModal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 9999">&times;</span>
+                </header>
+                <div class="div-box w3-light-gray w3-card-4 margin-auto" style="width: 100%; border-top-left-radius: 8px;">
+                    <div class="w3-container main-bg-color div-title">
+                        <h2>Sales(Sales Part)</h2>
+                    </div>
+                    <div class="w3-container" style="margin-top: 20px;">
+                        <table class="w3-table chart-table" style="font-size: 16px;">
+                            <tr>
+                                <td class="secondary" style="width: 115px; padding-left: 5px; text-align: center;">
+                                    <span>ENTRY NO</span>
+                                </td>
+                                <td class="border">{{vData.entryNo}} </td>
+                                <td class="secondary" style="width: 215px; text-align: center;">VOUCHER NO</td>
+                                <td>
+                                    {{vData.vouherNo}}
+                                </td>
+                                <td class="secondary" style="width: 125px; text-align: center;">DATE</td>
+                                <td style="width: 125px;">
+                                    {{vData.date}}
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="chartTable" class="w3-table chart-table" style="font-size: 16px;">
+                            <tr class="primary">
+                                <td colspan="11" style="text-align:center">SALES PART</td>
+                            </tr>
+                            <tr class="primary">
+
+                                <td colspan="9" style="text-align: center;">Debit Info</td>
+                                <td style="text-align: right;">Dr. Amount</td>
+                                <td style="text-align: right;">Cr. Amount</td>
+                            </tr>
+                            <tr class="secondary">
+
+                                <td style="text-align: center; padding:0;">PARTY CODE</td>
+                                <td style="text-align: center;" colspan="3">PARTY NAME</td>
+                                <td style="text-align: center;">A/C CODE</td>
+                                <td style="text-align: center;" colspan="4">A/C TITLE</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>{{vData.debitCredit[0].partyCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[0].partyName}}</td>
+                                <td>{{vData.debitCredit[0].ACCode}}</td>
+                                <td colspan="4">{{vData.debitCredit[0].ACName}}</td>
+                                <td>{{vData.debitCredit[0].drAmount}}</td>
+                                <td>------</td>
+                            </tr>
+                            <tr class="primary">
+                                <td colspan="9" style="text-align: center;">Credit Info</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="secondary">
+
+                                <td style="text-align: center;">FG CODE</td>
+                                <td style="text-align: center;" colspan="3">FINISHED GOOD</td>
+                                <td style="text-align: center;">A/C CODE</td>
+                                <td style="text-align: center;" colspan="4">A/C TITLE</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>{{vData.debitCredit[1].partyCode}}</td>
+                                <td colspan="3">{{vData.debitCredit[1].partyName}}</td>
+                                <td>{{vData.debitCredit[1].ACCode}}</td>
+                                <td colspan="4">{{vData.debitCredit[1].ACName}}</td>
+                                <td>------</td>
+                                <td>{{vData.debitCredit[1].drAmount}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="secondary" style="text-align:center;">STANDARD UNIT</td>
+                                <td>
+                                    <input id="stdUnitSale" class="w3-input w3-border" type="text" style="text-align: center">
+                                </td>
+                                <td class="secondary" style="padding:0;">PACKET TYPE</td>
+                                <td><select id="packtypeSale" style="width:80px;">
+                                                <option value="Packed" selected="selected">Packed</option>
+                                                <option value="Unpacked">Unpacked</option>
+                                                </select>
+                                </td>
+                                <td class="secondary" style="padding:0;">PACKET SIZE</td>
+                                <td>
+                                    <input ng-model="vpackSizeSale" id="packSizeSale" class="w3-input w3-border" type="text" style="text-align: center" onkeypress="numValidate(event)" onkeyup="submitValid()">
+                                </td>
+                                <td class="secondary">PACKS</td>
+                                <td>
+                                    <input ng-model="SUnitQuantitySale" class="w3-input w3-border" type="text" style="text-align: center" id="noOfPack" onkeyup="submitValid()" onkeypress="numValidate(event)">
+                                </td>
+
+                                <td colspan="2"></td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2" class="secondary" style="padding:0; text-align: center;">UNIT PRICE</td>
+                                <td>
+                                    <input ng-model="SUnitPriceSale" class="w3-input w3-border" type="text" style="text-align: center" id="unitPrice" onkeyup="submitValid()" onkeypress="numValidate(event)">
+                                </td>
+                                <td colspan="2" class="secondary" style="padding:0; text-align: center">TOTAL QUANTITY</td>
+                                <td>
+                                    <input class="w3-input w3-border" type="text" id="totalQuantitySale" style="text-align: center" id="unitQuantity" value="{{SUnitQuantitySale*vpackSizeSale | number}}" disabled>
+                                </td>
+                                <td class="secondary" style="padding:0;">TOTAL PRICE</td>
+                                <td colspan="2">
+                                    <input id="totalPriceASale" class="w3-input w3-border" type="text" style="text-align: center" value="{{SUnitPriceSale*SUnitQuantitySale*vpackSizeSale | number}}" disabled>
+                                </td>
+
+                            </tr>
+                            <tr class="primary">
+
+                                <td colspan="9" style="text-align: right;">Total</td>
+                                <td id="SalesTotalDrAmount" style="text-align: right">{{debit1}}</td>
+                                <td id="SalesTotalCrAmount" style="text-align: right">{{credit1}}</td>
+                            </tr>
+                            <tr class="primary noprint">
+                                <td colspan="11" style="text-align:center">COST OF GOODS SOLD PART</td>
+                            </tr>
+                            <tr class="primary noprint">
+
+                                <td colspan="9" style="text-align: center;">Debit Info</td>
+                                <td style="text-align: right;">Dr. Amount</td>
+                                <td style="text-align: right;">Cr. Amount</td>
+                            </tr>
+                            <tr class="secondary noprint">
+
+                                <td style="text-align: center; padding:0;">PARTY CODE</td>
+                                <td style="text-align: center;" colspan="3">PARTY NAME</td>
+                                <td style="text-align: center;">A/C CODE</td>
+                                <td style="text-align: center;" colspan="4">A/C TITLE</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="noprint">
+
+                                <td>
+                                    <input id="drPartyCodeSaleCo" class="w3-input w3-border" type="text" name="drPartyCode" onpaste="partyNameComplete(event)" onkeyup="partyNameComplete(event)" style="text-align: center">
+                                </td>
+                                <td colspan="3">
+                                    <input class="w3-input w3-border" type="text" style="text-align: center" value="-----" disabled>
+                                </td>
+                                <td>
+                                    <input class="w3-input w3-border" type="text" name="ACCode" onpaste="ACNameComplete(event)" onkeyup="ACNameComplete(event)" style="text-align: center">
+                                </td>
+                                <td colspan="4">
+                                    <input class="w3-input w3-border" type="text" style="text-align: center" value="-----" disabled>
+                                </td>
+                                <td>
+                                    <input ng-model="CostDrAmount" class="w3-input w3-border comma-num-minus" type="text" name="debitAmount" style="text-align: right" id="totalDebitCost" onkeyup="submitValid()">
+                                </td>
+                                <td>
+                                    <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center" value="x" disabled>
+                                </td>
+                            </tr>
+
+                            <tr class="primary noprint">
+
+                                <td colspan="9" style="text-align: center;">Credit Info</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="secondary noprint">
+
+                                <td style="text-align: center;">FG CODE</td>
+                                <td style="text-align: center;" colspan="3">FINISHED GOOD</td>
+                                <td style="text-align: center;">A/C CODE</td>
+                                <td style="text-align: center;" colspan="4">A/C TITLE</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="noprint">
+
+                                <td>
+                                    <input id="drPartyCodeSaleCoCr" class="w3-input w3-border" type="text" name="crPartyCode" onpaste="partyNameComplete(event)" onkeyup="partyNameComplete(event)" style="text-align: center">
+                                </td>
+                                <td colspan="3">
+                                    <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center" value="-----" disabled>
+                                </td>
+                                <td>
+                                    <input class="w3-input w3-border" type="text" name="ACCode" onpaste="ACNameComplete(event)" onkeyup="ACNameComplete(event)" style="text-align: center">
+                                </td>
+                                <td colspan="4">
+                                    <input class="w3-input w3-border" type="text" name="ACName" style="text-align: center" value="-----" disabled>
+                                </td>
+                                <td>
+                                    <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center" value="x" disabled>
+                                </td>
+                                <td>
+                                    <input ng-model="CostCrAmount" id="totalCreditCost" class="w3-input w3-border comma-num-minus" type="text" name="creditAmount" style="text-align: right" onkeyup="submitValid()">
+                                </td>
+                            </tr>
+                            <tr class="noprint">
+                                <td colspan="2" class="secondary" style="text-align: center">STANDARD UNIT</td>
+                                <td>
+                                    <input id="stdUnit" class="w3-input w3-border" type="text" style="text-align: center">
+                                </td>
+                                <td class="secondary" style="padding:0;">PACKET TYPE</td>
+                                <td><select id="packtypecost" style="width:80px;">
+                                                <option value="Packed" selected="selected">Packed</option>
+                                                <option value="Unpacked">Unpacked</option>
+                                                </select>
+                                </td>
+                                <td class="secondary" style="padding:0;">PACKET SIZE</td>
+                                <td>
+                                    <input ng-model="packSizeCost" id="packSize" class="w3-input w3-border" type="text" style="text-align: center" onkeypress="numValidate(event)" onkeyup="submitValid()">
+                                </td>
+                                <td class="secondary">PACKS</td>
+                                <td>
+                                    <input ng-model="SUnitQuantityCost" class="w3-input w3-border" type="text" style="text-align: center" id="noOfPackcost" onkeyup="submitValid()" onkeypress="numValidate(event)">
+
+                                </td>
+
+                                <td colspan="2"></td>
+                            </tr>
+
+                            <tr class="noprint">
+                                <td colspan="2" class="secondary" style="padding:0; text-align: center;">UNIT PRICE</td>
+                                <td>
+                                    <input ng-model="SUnitPrice" class="w3-input w3-border" type="text" id="stdUnitPrice" style="text-align: center" onkeyup="submitValid()" onkeypress="numValidate(event)">
+                                </td>
+                                <td colspan="2" class="secondary" style="padding:0;text-align: center">TOTAL QUANTITY</td>
+                                <td>
+                                    <input class="w3-input w3-border" type="text" id="totalQuantity" style="text-align: center" value="{{ packSizeCost*SUnitQuantityCost |number}}" disabled>
+                                </td>
+                                <td class="secondary" style="padding:0;">TOTAL PRICE</td>
+                                <td colspan="2">
+                                    <input id="totalPriceA" class="w3-input w3-border" type="text" style="text-align: center" value="{{ SUnitQuantityCost*packSizeCost*SUnitPrice |number}}" disabled>
+                                </td>
+
+                            </tr>
+                            <tr class="primary noprint">
+
+                                <td colspan="9" style="text-align: right;">Total</td>
+                                <td id="CostCostDrAmount" style="text-align: right">{{CostDrAmount}}</td>
+                                <td id="CostCostCrAmount" style="text-align: right">{{CostCrAmount}}</td>
+                            </tr>
+                            <tr class="noprint">
+                                <td class="secondary" colspan="2" style="text-align: center">DESCRIPTION</td>
+                                <td colspan="4">
+                                    <textarea class="w3-input" name="" id="description" rows="2"></textarea>
+                                </td>
+                                <td colspan="4"></td>
+                                <td class="main-bg-color" style="text-align: center; cursor: pointer;">
+                                    <button type="submit" onclick="window.print();" id="submitBtn" class="w3-btn" disabled>Submit</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <br style="clear: both;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sales(Sales Part) End -->
+        <!-- Sales(COGS) -->
+        <div id="prdOutputFormModal" class="w3-modal">
+            <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent; width: 99%;">
+                <header class="w3-container main-bg-color">
+                    <span onclick="$js('prdOutputFormModal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 9999">&times;</span>
+                </header>
+                <div class="div-box w3-light-gray w3-card-4 margin-auto" style="width: 100%; border-top-left-radius: 8px;">
+                    <div class="w3-container main-bg-color div-title">
+                        <h2>Sales(COGS Part)</h2>
+                    </div>
+                    <!-- Here -->
+                </div>
+            </div>
+        </div>
+        <!-- Sales(COGS) End -->
+        <!-- Sales(Sales Part) Start -->
+        <div id="prdOutputFormModal" class="w3-modal">
+            <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent; width: 99%;">
+                <header class="w3-container main-bg-color">
+                    <span onclick="$js('prdOutputFormModal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 9999">&times;</span>
+                </header>
+                <div class="div-box w3-light-gray w3-card-4 margin-auto" style="width: 100%; border-top-left-radius: 8px;">
+                    <div class="w3-container main-bg-color div-title">
+                        <h2>Sales(Sales Part)</h2>
+                    </div>
+                    <!-- Here -->
+                </div>
+            </div>
+        </div>
+        <!-- Sales(Sales Part) End -->
+        <!-- Sales Return(COGS) -->
+        <div id="prdOutputFormModal" class="w3-modal">
+            <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent; width: 99%;">
+                <header class="w3-container main-bg-color">
+                    <span onclick="$js('prdOutputFormModal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 9999">&times;</span>
+                </header>
+                <div class="div-box w3-light-gray w3-card-4 margin-auto" style="width: 100%; border-top-left-radius: 8px;">
+                    <div class="w3-container main-bg-color div-title">
+                        <h2>Sales(COGS Part)</h2>
+                    </div>
+                    <!-- Here -->
+                </div>
+            </div>
+        </div>
+        <!-- Sales Return(COGS) End -->
     </div>
 </div>
 <script>

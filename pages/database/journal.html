@@ -199,6 +199,8 @@
                         <div ng-show="pJournal.length == 0 && !pNoData" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..." style="height: 25px; width: 25px;"></div>
                         <div ng-show="pNoData" class="w3-pale-blue" style="padding: 12px; text-align: center;">
                             No Data Found!</div>
+                        <textarea cols="150" rows="20">{{pJournal}}</textarea>
+
                     </div>
                 </div>
             </div>
@@ -641,7 +643,7 @@
                 </header>
                 <div class="div-box w3-light-gray w3-card-4 margin-auto" style="width: 100%; border-top-left-radius: 8px;">
                     <div class="w3-container main-bg-color div-title">
-                        <h2>Purchase Return</h2>
+                        <h2>Production Input</h2>
                     </div>
                     <div class="w3-container" style="margin-top: 20px;">
                         <table class="w3-table chart-table" style="font-size: 16px;">
@@ -693,9 +695,9 @@
                             <tr>
                                 <td>1</td>
                                 <td>{{vData.debitCredit[0].partyCode}}</td>
-                                <td colspan="3">{{vData.debitCredit[0].partyName}}</td>
+                                <td colspan="4">{{vData.debitCredit[0].partyName}}</td>
                                 <td>{{vData.debitCredit[0].ACCode}}</td>
-                                <td colspan="3">{{vData.debitCredit[0].ACName}}</td>
+                                <td colspan="4">{{vData.debitCredit[0].ACName}}</td>
                                 <td>{{vData.debitCredit[0].drAmount}}</td>
                                 <td>------</td>
                             </tr>
@@ -717,9 +719,9 @@
                             <tr>
                                 <td>1</td>
                                 <td>{{vData.debitCredit[1].partyCode}}</td>
-                                <td colspan="3">{{vData.debitCredit[1].partyName}}</td>
+                                <td colspan="4">{{vData.debitCredit[1].partyName}}</td>
                                 <td>{{vData.debitCredit[1].ACCode}}</td>
-                                <td colspan="3">{{vData.debitCredit[1].ACName}}</td>
+                                <td colspan="4">{{vData.debitCredit[1].ACName}}</td>
                                 <td>------</td>
                                 <td>{{vData.debitCredit[1].crAmount}}</td>
                             </tr>

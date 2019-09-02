@@ -602,7 +602,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
       if ($scope.show == undefined || $scope.show == 'prejournal') {
         $scope.pJournal = [];
         let lim = parseInt(e.target.value);
-        fsDb.collection("JournalForm").orderBy("entryNo").where("entryNo", ">=", lim).limit(100).where('flagPrejournal', '==', 0).get()
+        fsDb.collection("JournalForm").orderBy("entryNo").where("entryNo", ">=", lim).limit(10).where('flagPrejournal', '==', 0).get()
           .then(function (snapshot) {
 
             //Added Line Start

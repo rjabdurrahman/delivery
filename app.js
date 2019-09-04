@@ -559,7 +559,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
   // Pre Journal
   $scope.pNoData = false;
   $scope.pJournal = [];
-  fsDb.collection("JournalForm").where('flagPrejournal', '==', 1).orderBy("date", "desc").limit(10).get()
+  fsDb.collection("JournalForm").where('flagPrejournal', '==', 1).orderBy("date", "desc").limit(100).get()
     .then(function (snapshot) {
       //Added Line Start
       if (snapshot.docs.length == 0) {
@@ -602,7 +602,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
       if ($scope.show == undefined || $scope.show == 'prejournal') {
         $scope.pJournal = [];
         let lim = parseInt(e.target.value);
-        fsDb.collection("JournalForm").orderBy("entryNo").where("entryNo", ">=", lim).limit(10).where('flagPrejournal', '==', 0).get()
+        fsDb.collection("JournalForm").orderBy("entryNo").where("entryNo", ">=", lim).limit(100).where('flagPrejournal', '==', 0).get()
           .then(function (snapshot) {
 
             //Added Line Start

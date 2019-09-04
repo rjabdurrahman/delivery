@@ -915,11 +915,11 @@
                                 <td class="border">{{firstData.entryNo}} </td>
                                 <td class="secondary" style="width: 215px; text-align: center;">VOUCHER NO</td>
                                 <td>
-                                    {{firstData.vouherNo}}
+                                    {{firstData.voucherNo}}
                                 </td>
                                 <td class="secondary" style="width: 125px; text-align: center;">DATE</td>
                                 <td style="width: 125px;">
-                                    {{firstData.date}}
+                                    {{numToDate(firstData.date)}}
                                 </td>
                             </tr>
                         </table>
@@ -974,47 +974,29 @@
                             </tr>
                             <tr>
                                 <td colspan="2" class="secondary" style="text-align:center;">STANDARD UNIT</td>
-                                <td>
-                                    <input id="stdUnitSale" class="w3-input w3-border" type="text" style="text-align: center">
-                                </td>
+                                <td>{{firstData.debitCredit[0].stdUnit}}</td>
                                 <td class="secondary" style="padding:0;">PACKET TYPE</td>
-                                <td><select id="packtypeSale" style="width:80px;">
-                                                <option value="Packed" selected="selected">Packed</option>
-                                                <option value="Unpacked">Unpacked</option>
-                                                </select>
-                                </td>
+                                <td>{{firstData.debitCredit[0].packType}}</td>
                                 <td class="secondary" style="padding:0;">PACKET SIZE</td>
-                                <td>
-                                    <input ng-model="vpackSizeSale" id="packSizeSale" class="w3-input w3-border" type="text" style="text-align: center" onkeypress="numValidate(event)" onkeyup="submitValid()">
-                                </td>
+                                <td>{{firstData.debitCredit[0].packSize}}</td>
                                 <td class="secondary">PACKS</td>
-                                <td>
-                                    <input ng-model="SUnitQuantitySale" class="w3-input w3-border" type="text" style="text-align: center" id="noOfPack" onkeyup="submitValid()" onkeypress="numValidate(event)">
-                                </td>
-
+                                <td>{{firstData.debitCredit[0].packs}}</td>
                                 <td colspan="2"></td>
                             </tr>
-
                             <tr>
                                 <td colspan="2" class="secondary" style="padding:0; text-align: center;">UNIT PRICE</td>
-                                <td>
-                                    <input ng-model="SUnitPriceSale" class="w3-input w3-border" type="text" style="text-align: center" id="unitPrice" onkeyup="submitValid()" onkeypress="numValidate(event)">
-                                </td>
+                                <td>{{firstData.debitCredit[0].stdUnitPrice}}</td>
                                 <td colspan="2" class="secondary" style="padding:0; text-align: center">TOTAL QUANTITY</td>
-                                <td>
-                                    <input class="w3-input w3-border" type="text" id="totalQuantitySale" style="text-align: center" id="unitQuantity" value="{{SUnitQuantitySale*vpackSizeSale | number}}" disabled>
-                                </td>
+                                <td>{{firstData.debitCredit[0].totalQuantity}}</td>
                                 <td class="secondary" style="padding:0;">TOTAL PRICE</td>
-                                <td colspan="2">
-                                    <input id="totalPriceASale" class="w3-input w3-border" type="text" style="text-align: center" value="{{SUnitPriceSale*SUnitQuantitySale*vpackSizeSale | number}}" disabled>
-                                </td>
+                                <td colspan="2">{{firstData.debitCredit[0].drAmount}}</td>
 
                             </tr>
                             <tr class="primary">
 
                                 <td colspan="9" style="text-align: right;">Total</td>
-                                <td id="SalesTotalDrAmount" style="text-align: right">{{firstData.debitCredit[0].drAmount}}</td>
-                                <td id="SalesTotalCrAmount" style="text-align: right">{{firstData.debitCredit[1].crAmount}}}</td>
+                                <td style="text-align: right">{{firstData.debitCredit[0].drAmount}}</td>
+                                <td style="text-align: right">{{firstData.debitCredit[1].crAmount}}</td>
                             </tr>
                             <tr class="primary noprint">
                                 <td colspan="11" style="text-align:center">COST OF GOODS SOLD PART</td>
@@ -1091,7 +1073,7 @@
                             <tr class="primary noprint">
 
                                 <td colspan="9" style="text-align: right;">Total</td>
-                                <td id="CostCostDrAmount" style="text-align: right">{{secData.debitCredit[0].drAmount}}</td>
+                                <td id="CostCostDrAmount" style="text-align: right">{{secData.debitCredit[0].totalPriceTK}}</td>
                                 <td id="CostCostCrAmount" style="text-align: right">{{secData.debitCredit[1].crAmount}}</td>
                             </tr>
                             <tr class="noprint">

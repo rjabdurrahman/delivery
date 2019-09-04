@@ -559,7 +559,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
   // Pre Journal
   $scope.pNoData = false;
   $scope.pJournal = [];
-  fsDb.collection("JournalForm").where('flagPrejournal', '==', 1).orderBy("date", "desc").limit(100).get()
+  fsDb.collection("JournalForm").where('flagPrejournal', '==', 1).orderBy("date", "desc").limit(10).get()
     .then(function (snapshot) {
       //Added Line Start
       if (snapshot.docs.length == 0) {
@@ -743,14 +743,22 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
     let allJour = [...$scope.journal, ...$scope.pJournal, ...$scope.poJournal];
     let vId = parseInt(e.target.id.slice(0, -1));
     let vName = e.target.name;
+    $scope.firstData = null;
+    $scope.secData = null;
     if(vName == 'Sales (Sales)'){
       $scope.firstData = allJour.find(function (el) {
+        return el.entryNo == vId;
+      });
+      $scope.secData = allJour.find(function (el) {
         return el.entryNo == vId + 1;
       });
     }
     else if(vName == 'Sales (Cost of Good Sold)'){
-      $scope.secData = allJour.find(function (el) {
+      $scope.firstData = allJour.find(function (el) {
         return el.entryNo == vId - 1;
+      });
+      $scope.secData = allJour.find(function (el) {
+        return el.entryNo == vId;
       });
     }
     else{

@@ -741,7 +741,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
   $scope.vData = [];
   $scope.viewData = function (e) {
     let allJour = [...$scope.journal, ...$scope.pJournal, ...$scope.poJournal];
-    let vId = parseInt(e.target.id.slice(0, -1));
+    let vId = parseInt(e.target.id.slice(0, -2));
     let vName = e.target.name;
     $scope.firstData = null;
     $scope.secData = null;

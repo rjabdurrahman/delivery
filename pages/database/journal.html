@@ -77,7 +77,10 @@
                             </thead>
                             <tbody id="genTr" ng-repeat="jor in poJournal | orderBy : 'entryNo' : true track by $index">
                                 <tr ng-repeat="deb in jor.debitCredit track by $index">
-                                    <td>{{jor.entryNo}}</td>
+                                    <td>
+                                        <button id="{{jor.entryNo}}bv" name="{{jor.formName}}" onclick="viewEntry(this.id, this.name);" ng-click="viewData($event)" class="w3-btn fa fa-eye" style="color: #2196F3"></button>
+                                        <span>{{jor.entryNo}}</span>
+                                    </td>
                                     <td>{{numToDate(jor.date)}}</td>
                                     <td>{{jor.voucherNo}}</td>
                                     <td>{{jor.psNo}}</td>
@@ -149,13 +152,15 @@
                                     <th>STANDARD UNIT PRICE (TK)</th>
                                     <th>TOTAL PRICE (TK)</th>
                                     <th>SUBMITTED BY</th>
-                                    <th>VIEW</th>
                                     <th>ALLOW/NOT</th>
                                 </tr>
                             </thead>
                             <tbody id="genTr" ng-repeat="jor in pJournal | orderBy : 'entryNo' : true track by $index">
                                 <tr ng-repeat="deb in jor.debitCredit track by $index">
-                                    <td>{{jor.entryNo}}</td>
+                                    <td>
+                                        <button id="{{jor.entryNo}}av" name="{{jor.formName}}" onclick="viewEntry(this.id, this.name);" ng-click="viewData($event)" class="w3-btn fa fa-eye" style="color: #2196F3"></button>
+                                        <span>{{jor.entryNo}}</span>
+                                    </td>
                                     <td>{{numToDate(jor.date)}}</td>
                                     <td>{{jor.voucherNo}}</td>
                                     <td>{{jor.psNo}}</td>
@@ -186,9 +191,6 @@
                                     <td ng-hide="deb.totalPrice">{{deb.totalPriceTK | number : fractionSize}}</td>
                                     <td ng-show="deb.totalPrice">{{deb.totalPriceTK | number : fractionSize}}</td>
                                     <td>{{idToUsername(jor.uId)}}</td>
-                                    <td>
-                                        <button id="{{jor.entryNo}}v" name="{{jor.formName}}" onclick="viewEntry(this.id, this.name);" ng-click="viewData($event)" class="w3-btn w3-blue journal-top-btn">View</button>
-                                    </td>
                                     <td>
                                         <button id="{{jor.entryNo}}u" onclick="updateconfirm(this.id);" class="w3-btn w3-blue journal-top-btn">Confirm Both (DR/CR)</button>&nbsp;
                                         <button id="{{jor.entryNo}}d" onclick="deleteconfirm(this.id)" class="w3-btn w3-red journal-top-btn">Reject</button>
@@ -242,7 +244,10 @@
                             </thead>
                             <tbody id="genTr" ng-repeat="jor in journal | orderBy : 'entryNo' : true track by $index">
                                 <tr ng-repeat="deb in jor.debitCredit track by $index">
-                                    <td>{{jor.entryNo}}</td>
+                                    <td>
+                                        <button id="{{jor.entryNo}}cv" name="{{jor.formName}}" onclick="viewEntry(this.id, this.name);" ng-click="viewData($event)" class="w3-btn fa fa-eye" style="color: #2196F3"></button>
+                                        <span>{{jor.entryNo}}</span>
+                                    </td>
                                     <td>{{numToDate(jor.date)}}</td>
                                     <td>{{jor.voucherNo}}</td>
                                     <td>{{jor.psNo}}</td>
@@ -1097,7 +1102,7 @@
                 </header>
                 <div class="div-box w3-light-gray w3-card-4 margin-auto" style="width: 100%; border-top-left-radius: 8px;">
                     <div class="w3-container main-bg-color div-title">
-                        <h2>Sales</h2>
+                        <h2>Sales Return</h2>
                     </div>
                     <div class="w3-container" style="margin-top: 20px;">
                         <table class="w3-table chart-table" style="font-size: 16px;">

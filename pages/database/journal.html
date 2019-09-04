@@ -1073,7 +1073,7 @@
                             <tr class="primary noprint">
 
                                 <td colspan="9" style="text-align: right;">Total</td>
-                                <td id="CostCostDrAmount" style="text-align: right">{{secData.debitCredit[0].totalPriceTK}}</td>
+                                <td id="CostCostDrAmount" style="text-align: right">{{secData.debitCredit[0].drAmount}}</td>
                                 <td id="CostCostCrAmount" style="text-align: right">{{secData.debitCredit[1].crAmount}}</td>
                             </tr>
                             <tr class="noprint">
@@ -1090,16 +1090,194 @@
         </div>
         <!-- Sales End -->
         <!-- Sales Return -->
-        <div id="prdOutputFormModal" class="w3-modal">
+        <div id="salesRetFormModal" class="w3-modal">
             <div class="w3-modal-content w3-animate-zoom" style="background-color: transparent; width: 99%;">
                 <header class="w3-container main-bg-color">
-                    <span onclick="$js('prdOutputFormModal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 9999">&times;</span>
+                    <span onclick="$js('salesRetFormModal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 9999">&times;</span>
                 </header>
                 <div class="div-box w3-light-gray w3-card-4 margin-auto" style="width: 100%; border-top-left-radius: 8px;">
                     <div class="w3-container main-bg-color div-title">
-                        <h2>Sales(COGS Part)</h2>
+                        <h2>Sales</h2>
                     </div>
-                    <!-- Here -->
+                    <div class="w3-container" style="margin-top: 20px;">
+                        <table class="w3-table chart-table" style="font-size: 16px;">
+                            <tr>
+                                <td class="secondary" style="width: 115px; padding-left: 5px; text-align: center;">
+                                    <span>ENTRY NO</span>
+                                </td>
+                                <td class="border">{{firstData.entryNo}} </td>
+                                <td class="secondary" style="width: 215px; text-align: center;">VOUCHER NO</td>
+                                <td>
+                                    {{firstData.voucherNo}}
+                                </td>
+                                <td class="secondary" style="width: 125px; text-align: center;">DATE</td>
+                                <td style="width: 125px;">
+                                    {{numToDate(firstData.date)}}
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="chartTable" class="w3-table chart-table" style="font-size: 16px;">
+                            <tr class="primary">
+                                <td colspan="11" style="text-align:center">SALES PART</td>
+                            </tr>
+                            <tr class="primary">
+
+                                <td colspan="9" style="text-align: center;">Debit Info</td>
+                                <td style="text-align: right;">Dr. Amount</td>
+                                <td style="text-align: right;">Cr. Amount</td>
+                            </tr>
+                            <tr class="secondary">
+
+                                <td style="text-align: center; padding:0;">FG CODE</td>
+                                <td style="text-align: center;" colspan="3">FINISHED GOOD</td>
+                                <td style="text-align: center;">A/C CODE</td>
+                                <td style="text-align: center;" colspan="4">A/C TITLE</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>{{firstData.debitCredit[0].partyCode}}</td>
+                                <td colspan="3">{{firstData.debitCredit[0].partyName}}</td>
+                                <td>{{firstData.debitCredit[0].ACCode}}</td>
+                                <td colspan="4">{{firstData.debitCredit[0].ACName}}</td>
+                                <td>{{firstData.debitCredit[0].drAmount}}</td>
+                                <td>------</td>
+                            </tr>
+                            <tr class="primary">
+                                <td colspan="9" style="text-align: center;">Credit Info</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="secondary">
+
+                                <td style="text-align: center;">PARTY CODE</td>
+                                <td style="text-align: center;" colspan="3">PARTY NAME</td>
+                                <td style="text-align: center;">A/C CODE</td>
+                                <td style="text-align: center;" colspan="4">A/C TITLE</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>{{firstData.debitCredit[1].partyCode}}</td>
+                                <td colspan="3">{{firstData.debitCredit[1].partyName}}</td>
+                                <td>{{firstData.debitCredit[1].ACCode}}</td>
+                                <td colspan="4">{{firstData.debitCredit[1].ACName}}</td>
+                                <td>------</td>
+                                <td>{{firstData.debitCredit[1].crAmount}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="secondary" style="text-align:center;">STANDARD UNIT</td>
+                                <td>{{firstData.debitCredit[0].stdUnit}}</td>
+                                <td class="secondary" style="padding:0;">PACKET TYPE</td>
+                                <td>{{firstData.debitCredit[0].packType}}</td>
+                                <td class="secondary" style="padding:0;">PACKET SIZE</td>
+                                <td>{{firstData.debitCredit[0].packSize}}</td>
+                                <td class="secondary">PACKS</td>
+                                <td>{{firstData.debitCredit[0].packs}}</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="secondary" style="padding:0; text-align: center;">UNIT PRICE</td>
+                                <td>{{firstData.debitCredit[0].stdUnitPrice}}</td>
+                                <td colspan="2" class="secondary" style="padding:0; text-align: center">TOTAL QUANTITY</td>
+                                <td>{{firstData.debitCredit[0].totalQuantity}}</td>
+                                <td class="secondary" style="padding:0;">TOTAL PRICE</td>
+                                <td colspan="2">{{firstData.debitCredit[0].drAmount}}</td>
+
+                            </tr>
+                            <tr class="primary">
+
+                                <td colspan="9" style="text-align: right;">Total</td>
+                                <td style="text-align: right">{{firstData.debitCredit[0].drAmount}}</td>
+                                <td style="text-align: right">{{firstData.debitCredit[1].crAmount}}</td>
+                            </tr>
+                            <tr class="primary noprint">
+                                <td colspan="11" style="text-align:center">COST OF GOODS SOLD PART</td>
+                            </tr>
+                            <tr class="primary noprint">
+
+                                <td colspan="9" style="text-align: center;">Debit Info</td>
+                                <td style="text-align: right;">Dr. Amount</td>
+                                <td style="text-align: right;">Cr. Amount</td>
+                            </tr>
+                            <tr class="secondary noprint">
+
+                                <td style="text-align: center; padding:0;">FG CODE</td>
+                                <td style="text-align: center;" colspan="3">FINISHED GOOD</td>
+                                <td style="text-align: center;">A/C CODE</td>
+                                <td style="text-align: center;" colspan="4">A/C TITLE</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="noprint">
+                                <td>{{secData.debitCredit[0].partyCode}}</td>
+                                <td colspan="3">{{secData.debitCredit[0].partyName}}</td>
+                                <td>{{secData.debitCredit[0].ACCode}}</td>
+                                <td colspan="4">{{secData.debitCredit[0].ACName}}</td>
+                                <td>{{secData.debitCredit[0].drAmount}}</td>
+                                <td>-----</td>
+                            </tr>
+
+                            <tr class="primary noprint">
+
+                                <td colspan="9" style="text-align: center;">Credit Info</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="secondary noprint">
+
+                                <td style="text-align: center;">PARTY CODE</td>
+                                <td style="text-align: center;" colspan="3">PARTY NAME</td>
+                                <td style="text-align: center;">A/C CODE</td>
+                                <td style="text-align: center;" colspan="4">A/C TITLE</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="noprint">
+                                <td>{{secData.debitCredit[1].partyCode}}</td>
+                                <td colspan="3">{{secData.debitCredit[1].partyName}}</td>
+                                <td>{{secData.debitCredit[1].ACCode}}</td>
+                                <td colspan="4">{{secData.debitCredit[1].ACName}}</td>
+                                <td>-----</td>
+                                <td>{{secData.debitCredit[1].crAmount}}</td>
+                            </tr>
+                            <tr class="noprint">
+                                <td colspan="2" class="secondary" style="text-align: center">STANDARD UNIT</td>
+                                <td>{{secData.debitCredit[1].stdUnit}}</td>
+                                <td class="secondary" style="padding:0;">PACKET TYPE</td>
+                                <td>{{secData.debitCredit[1].packType}}</td>
+                                <td class="secondary" style="padding:0;">PACKET SIZE</td>
+                                <td>{{secData.debitCredit[1].packSize}}</td>
+                                <td class="secondary">PACKS</td>
+                                <td>{{secData.debitCredit[1].packs}}</td>
+
+                                <td colspan="2"></td>
+                            </tr>
+
+                            <tr class="noprint">
+                                <td colspan="2" class="secondary" style="padding:0; text-align: center;">UNIT PRICE</td>
+                                <td>{{secData.debitCredit[1].stdUnitPrice}}</td>
+                                <td colspan="2" class="secondary" style="padding:0;text-align: center">TOTAL QUANTITY</td>
+                                <td>{{secData.debitCredit[1].totalQuantity}}</td>
+                                <td class="secondary" style="padding:0;">TOTAL PRICE</td>
+                                <td colspan="2">{{secData.debitCredit[1].totalPriceTK}}</td>
+
+                            </tr>
+                            <tr class="primary noprint">
+
+                                <td colspan="9" style="text-align: right;">Total</td>
+                                <td id="CostCostDrAmount" style="text-align: right">{{secData.debitCredit[0].drAmount}}</td>
+                                <td id="CostCostCrAmount" style="text-align: right">{{secData.debitCredit[1].crAmount}}</td>
+                            </tr>
+                            <tr class="noprint">
+                                <td class="secondary" colspan="2" style="text-align: center">DESCRIPTION</td>
+                                <td colspan="4">{{secData.description}}</td>
+                                <td colspan="4"></td>
+                                <td class="main-bg-color" style="text-align: center; cursor: pointer;"></td>
+                            </tr>
+                        </table>
+                        <br style="clear: both;">
+                    </div>
                 </div>
             </div>
         </div>
@@ -1156,5 +1334,7 @@
             $js('prdOutputFormModal').style.display = 'block';
         if (fName == 'Sales (Sales)' || fName == 'Sales (Cost of Good Sold)')
             $js('salesFormModal').style.display = 'block';
+        if (fName == 'Sales Return (Sales)' || fName == 'Sales Return (Cost of Good Sold)')
+            $js('salesRetFormModal').style.display = 'block';
     }
 </script>

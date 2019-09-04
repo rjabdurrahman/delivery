@@ -745,7 +745,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
     let vName = e.target.name;
     $scope.firstData = null;
     $scope.secData = null;
-    if(vName == 'Sales (Sales)'){
+    if(vName == 'Sales (Sales)' || vName == 'Sales Return (Sales)'){
       $scope.firstData = allJour.find(function (el) {
         return el.entryNo == vId;
       });
@@ -753,7 +753,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
         return el.entryNo == vId + 1;
       });
     }
-    else if(vName == 'Sales (Cost of Good Sold)'){
+    else if(vName == 'Sales (Cost of Good Sold)' || vName == 'Sales Return (Cost of Good Sold)'){
       $scope.firstData = allJour.find(function (el) {
         return el.entryNo == vId - 1;
       });

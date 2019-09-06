@@ -210,8 +210,8 @@ fsDb.settings({
 // Last Entry for For Form Entry
 var lastEntryNo = null;
 
-function formDataToFire(data, cleardata, no) {
-    let url = 'https://us-central1-niaasho.cloudfunctions.net/api' + no;
+function formDataToFire(data, cleardata, name) {
+    let url = 'http://localhost:3000/api/form/' + name;
     axios.post(url, data, {
         headers: { 'Content-Type': 'application/json' }
     })

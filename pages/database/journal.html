@@ -188,7 +188,7 @@
                                     <td ng-show="jor.unitQuantity">{{jor.unitQuantity}}</td>
                                     <td ng-hide="jor.unitPrice">{{jor.stdUnitPrice | number : fractionSize}}</td>
                                     <td ng-show="jor.unitPrice">{{jor.unitPrice | number : fractionSize}}</td>
-                                    <td ng-hide="jor.totalPrice">{{jor.totalPriceTK | number : fractionSize}}</td>
+                                    <td ng-hide="jor.totalPrice">{{(jor.totalPriceTK || jor.drAmount || jor.crAmount) | number : fractionSize}}</td>
                                     <td ng-show="jor.totalPrice">{{jor.totalPriceTK | number : fractionSize}}</td>
                                     <td>{{idToUsername(jor.uId)}}</td>
                                     <td>

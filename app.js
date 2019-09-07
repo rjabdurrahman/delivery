@@ -559,7 +559,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
   // Pre Journal
   $scope.pNoData = false;
   $scope.pJournal = [];
-  let url = 'http://localhost:3000/api/journal';
+  let url = apiUrl + 'journal';
   axios.get(url)
     .then(function (res) {
       console.log(res.data);

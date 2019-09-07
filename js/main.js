@@ -209,9 +209,10 @@ fsDb.settings({
 
 // Last Entry for For Form Entry
 var lastEntryNo = null;
-
+// var apiUrl = 'http://localhost:3000/api/';
+var apiUrl = 'https://radiant-island-72424.herokuapp.com/api/';
 function formDataToFire(data, cleardata, name) {
-    let url = 'http://localhost:3000/api/form/' + name;
+    let url = apiUrl + 'form/' + name;
     axios.post(url, data, {
         headers: { 'Content-Type': 'application/json' }
     })

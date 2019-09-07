@@ -210,6 +210,8 @@ fsDb.settings({
 // Last Entry for For Form Entry
 var lastEntryNo = null;
 // Online Status
+if(navigator.onLine) { $js('online').style.display = 'none'; };
+if(!navigator.onLine) { $js('online').style.display = 'block'; };
 window.addEventListener('offline', function(e) { $js('online').style.display = 'block'; });
 window.addEventListener('online', function(e) { $js('online').style.display = 'none'; });
 // var apiUrl = 'http://localhost:3000/api/';

@@ -48,6 +48,7 @@ function $html(tag, atts, text) {
 function exitModel() {
     document.getElementById('id01').style.display = 'none';
 }
+
 function clearer(...fields) {
     for (field in fields) {
         fields[field].value = "";
@@ -166,11 +167,11 @@ firebase.initializeApp(config);
 
 
 const auth = firebase.auth();
-auth.onAuthStateChanged(function (fuser) {
+auth.onAuthStateChanged(function(fuser) {
     if (fuser) {
         // $print(fuser);
         var user = firebase.auth().currentUser;
-        getRef('users/' + user.uid).once('value').then(function (snapshot) {
+        getRef('users/' + user.uid).once('value').then(function(snapshot) {
             let userIn = snapshot.val();
             if (!localStorage.user.uc) {
                 Object.assign(userInfo, userIn);
@@ -179,12 +180,11 @@ auth.onAuthStateChanged(function (fuser) {
             }
             var $body = angular.element(document.body);
             var $rootScope = $body.scope().$root;
-            $rootScope.$apply(function () {
+            $rootScope.$apply(function() {
                 $rootScope.userInfo = userInfo;
             });
         });
-    }
-    else {
+    } else {
         $print('You are not logged!');
         let locURL = window.location.href.substring(window.location.href.indexOf('#'), window.location.href.length);
         if (locURL != '#/') {
@@ -210,22 +210,23 @@ fsDb.settings({
 // Last Entry for For Form Entry
 var lastEntryNo = null;
 // Online Status
-if(navigator.onLine) { $js('online').style.display = 'none'; };
-if(!navigator.onLine) { $js('online').style.display = 'block'; };
+if (navigator.onLine) { $js('online').style.display = 'none'; };
+if (!navigator.onLine) { $js('online').style.display = 'block'; };
 window.addEventListener('offline', function(e) { $js('online').style.display = 'block'; });
 window.addEventListener('online', function(e) { $js('online').style.display = 'none'; });
 // var apiUrl = 'http://localhost:3000/api/';
 var apiUrl = 'https://radiant-island-72424.herokuapp.com/api/';
+
 function formDataToFire(data, cleardata, name) {
     let url = apiUrl + 'form/' + name;
     axios.post(url, data, {
-        headers: { 'Content-Type': 'application/json' }
-    })
-        .then(function (response) {
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(function(response) {
             cleardata();
             notify('Added Sucessfully', 1);
         })
-        .catch(function (error) {
+        .catch(function(error) {
             notify(error.message, 2);
         });
     // fsDb.collection(cname).doc(dname).set(data)
@@ -246,7 +247,7 @@ function dateToNum(dateStr) {
     return Date.parse(date);
 }
 
-var numToDateConv = function (num) {
+var numToDateConv = function(num) {
     let mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     let date = new Date(num);
     return date.getDate().toString() + '-' + mon[date.getMonth()] + '-' + date.getFullYear().toString().slice(-2);
@@ -400,7 +401,7 @@ function commaNumMaker(event) {
         return;
     }
     // format number
-    $(this).val(function (index, value) {
+    $(this).val(function(index, value) {
         return value
             .replace(/\D/g, "")
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -421,20 +422,18 @@ function commaNumMakerMinus(event) {
         if (min) {
             event.target.value = '-' + str[0].replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "." + str[1].replace(/\D/g, "");
             return;
-        }
-        else {
+        } else {
             event.target.value = str[0].replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "." + str[1].replace(/\D/g, "");
             return;
         }
     }
     // format number
-    $(this).val(function (index, value) {
+    $(this).val(function(index, value) {
         if (min) {
             return "-" + value
                 .replace(/\D/g, "")
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-        else {
+        } else {
             return value
                 .replace(/\D/g, "")
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");

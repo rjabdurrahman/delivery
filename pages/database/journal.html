@@ -156,7 +156,7 @@
                                 </tr>
                             </thead>
                             <tbody id="genTr" ng-repeat="jor in pJournal | orderBy : 'entryNo' : true track by $index">
-                                <tr ng-repeat="deb in jor.debitCredit track by $index">
+                                <tr>
                                     <td>
                                         <button id="{{jor.entryNo}}av" name="{{jor.formName}}" onclick="viewEntry(this.id, this.name);" ng-click="viewData($event)" class="w3-btn fa fa-eye" style="color: #2196F3"></button>
                                         <span>{{jor.entryNo}}</span>
@@ -165,31 +165,31 @@
                                     <td>{{jor.voucherNo}}</td>
                                     <td>{{jor.psNo}}</td>
                                     <td>{{jor.seqNo}}</td>
-                                    <td>{{deb.partyCode}}</td>
-                                    <td>{{deb.partyName}}</td>
-                                    <td>{{deb.ACCode}}</td>
-                                    <td>{{deb.ACName}}</td>
-                                    <td>{{changerDC(deb.type)}}</td>
-                                    <td>{{deb.drAmount | number : fractionSize}}</td>
-                                    <td>{{deb.crAmount | number : fractionSize}}</td>
+                                    <td>{{jor.partyCode}}</td>
+                                    <td>{{jor.partyName}}</td>
+                                    <td>{{jor.ACCode}}</td>
+                                    <td>{{jor.ACName}}</td>
+                                    <td>{{changerDC(jor.type)}}</td>
+                                    <td>{{jor.drAmount | number : fractionSize}}</td>
+                                    <td>{{jor.crAmount | number : fractionSize}}</td>
                                     <td>{{jor.costCenter}}</td>
                                     <td>{{jor.description}}</td>
-                                    <td>{{deb.primaryUnit}}</td>
-                                    <td>{{deb.primaryQuantity}}</td>
-                                    <td>{{deb.primaryUnitPrice | number : fractionSize}}</td>
-                                    <td ng-hide="deb.stdUnit">{{deb.stdUnit}}</td>
-                                    <td ng-show="deb.stdUnit">{{deb.stdUnit}}</td>
-                                    <td>{{deb.packType}}</td>
-                                    <td ng-hide="deb.packSize">{{deb.packSize}}</td>
-                                    <td ng-show="deb.packSize">{{deb.packSize}}</td>
-                                    <td ng-hide="deb.packs">{{deb.packs}}</td>
-                                    <td ng-show="deb.packs">{{deb.packs}}</td>
-                                    <td ng-hide="deb.unitQuantity">{{deb.totalQuantity}}</td>
-                                    <td ng-show="deb.unitQuantity">{{deb.unitQuantity}}</td>
-                                    <td ng-hide="deb.unitPrice">{{deb.stdUnitPrice | number : fractionSize}}</td>
-                                    <td ng-show="deb.unitPrice">{{deb.unitPrice | number : fractionSize}}</td>
-                                    <td ng-hide="deb.totalPrice">{{deb.totalPriceTK | number : fractionSize}}</td>
-                                    <td ng-show="deb.totalPrice">{{deb.totalPriceTK | number : fractionSize}}</td>
+                                    <td>{{jor.primaryUnit}}</td>
+                                    <td>{{jor.primaryQuantity}}</td>
+                                    <td>{{jor.primaryUnitPrice | number : fractionSize}}</td>
+                                    <td ng-hide="jor.stdUnit">{{jor.stdUnit}}</td>
+                                    <td ng-show="jor.stdUnit">{{jor.stdUnit}}</td>
+                                    <td>{{jor.packType}}</td>
+                                    <td ng-hide="jor.packSize">{{jor.packSize}}</td>
+                                    <td ng-show="jor.packSize">{{jor.packSize}}</td>
+                                    <td ng-hide="jor.packs">{{jor.packs}}</td>
+                                    <td ng-show="jor.packs">{{jor.packs}}</td>
+                                    <td ng-hide="jor.unitQuantity">{{jor.totalQuantity}}</td>
+                                    <td ng-show="jor.unitQuantity">{{jor.unitQuantity}}</td>
+                                    <td ng-hide="jor.unitPrice">{{jor.stdUnitPrice | number : fractionSize}}</td>
+                                    <td ng-show="jor.unitPrice">{{jor.unitPrice | number : fractionSize}}</td>
+                                    <td ng-hide="jor.totalPrice">{{jor.totalPriceTK | number : fractionSize}}</td>
+                                    <td ng-show="jor.totalPrice">{{jor.totalPriceTK | number : fractionSize}}</td>
                                     <td>{{idToUsername(jor.uId)}}</td>
                                     <td>
                                         <button id="{{jor.entryNo}}u" onclick="updateconfirm(this.id);" class="w3-btn w3-blue journal-top-btn">Confirm Both (DR/CR)</button>&nbsp;

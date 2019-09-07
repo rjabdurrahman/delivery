@@ -536,66 +536,59 @@ app.controller('JournalFormCntlr', function ($scope, $firebaseArray, $firebaseOb
 app.controller('JournalCntlr', function ($scope, $firebaseArray) {
   $scope.title = "Journal";
   // All Juournals
-  $scope.noData = false;
-  $scope.journal = [];
-  fsDb.collection("JournalForm").orderBy("entryNo", "desc").limit(100).get()
-    .then(function (snapshot) {
+  // $scope.noData = false;
+  // $scope.journal = [];
+  // fsDb.collection("JournalForm").orderBy("entryNo", "desc").limit(100).get()
+  //   .then(function (snapshot) {
 
-      //Added Line Start
-      if (snapshot.docs.length == 0) {
-        $scope.noData = true;
-        $scope.$applyAsync();
-        return;
-      }
-      //Added Line End
-      snapshot.docs.forEach(element => {
-        $scope.journal.push(element.data());
-        $scope.$applyAsync();
-      });
-    })
-    .catch(function (err) {
-      $print(err);
-    });
+  //     //Added Line Start
+  //     if (snapshot.docs.length == 0) {
+  //       $scope.noData = true;
+  //       $scope.$applyAsync();
+  //       return;
+  //     }
+  //     //Added Line End
+  //     snapshot.docs.forEach(element => {
+  //       $scope.journal.push(element.data());
+  //       $scope.$applyAsync();
+  //     });
+  //   })
+  //   .catch(function (err) {
+  //     $print(err);
+  //   });
   // Pre Journal
   $scope.pNoData = false;
   $scope.pJournal = [];
-  fsDb.collection("JournalForm").where('flagPrejournal', '==', 1).orderBy("date", "desc").limit(100).get()
-    .then(function (snapshot) {
-      //Added Line Start
-      if (snapshot.docs.length == 0) {
-        $scope.pNoData = true;
-        $scope.$applyAsync();
-        return;
-      }
-      //Added Line End
-      snapshot.docs.forEach(element => {
-        $scope.pJournal.push(element.data());
-        $scope.$applyAsync();
-      });
+  let url = 'http://localhost:3000/api/journal';
+  axios.get(url)
+    .then(function (res) {
+      console.log(res.data);
+      $scope.pJournal.push(...res.data);
+      $scope.$applyAsync();
     })
-    .catch(function (err) {
-      $print(err);
+    .catch(function (error) {
+      console.log(error.message);
     });
   // Post Journal
-  $scope.poNoData = false;
-  $scope.poJournal = [];
-  fsDb.collection("JournalForm").where('flagPrejournal', '==', 0).orderBy("date", "desc").limit(100).get()
-    .then(function (snapshot) {
-      //Added Line Start
-      if (snapshot.docs.length == 0) {
-        $scope.poNoData = true;
-        $scope.$applyAsync();
-        return;
-      }
-      //Added Line End
-      snapshot.docs.forEach(element => {
-        $scope.poJournal.push(element.data());
-        $scope.$applyAsync();
-      });
-    })
-    .catch(function (err) {
-      $print(err);
-    });
+  // $scope.poNoData = false;
+  // $scope.poJournal = [];
+  // fsDb.collection("JournalForm").where('flagPrejournal', '==', 0).orderBy("date", "desc").limit(100).get()
+  //   .then(function (snapshot) {
+  //     //Added Line Start
+  //     if (snapshot.docs.length == 0) {
+  //       $scope.poNoData = true;
+  //       $scope.$applyAsync();
+  //       return;
+  //     }
+  //     //Added Line End
+  //     snapshot.docs.forEach(element => {
+  //       $scope.poJournal.push(element.data());
+  //       $scope.$applyAsync();
+  //     });
+  //   })
+  //   .catch(function (err) {
+  //     $print(err);
+  //   });
   // Pagination
   $scope.dataPartLoad = function (e) {
     if (e.keyCode == 13) {
@@ -745,7 +738,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
     let vName = e.target.name;
     $scope.firstData = null;
     $scope.secData = null;
-    if(vName == 'Sales (Sales)' || vName == 'Sales Return (Sales)'){
+    if (vName == 'Sales (Sales)' || vName == 'Sales Return (Sales)') {
       $scope.firstData = allJour.find(function (el) {
         return el.entryNo == vId;
       });
@@ -753,7 +746,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
         return el.entryNo == vId + 1;
       });
     }
-    else if(vName == 'Sales (Cost of Good Sold)' || vName == 'Sales Return (Cost of Good Sold)'){
+    else if (vName == 'Sales (Cost of Good Sold)' || vName == 'Sales Return (Cost of Good Sold)') {
       $scope.firstData = allJour.find(function (el) {
         return el.entryNo == vId - 1;
       });
@@ -761,7 +754,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
         return el.entryNo == vId;
       });
     }
-    else{
+    else {
       $scope.vData = allJour.find(function (el) {
         return el.entryNo == vId;
       });

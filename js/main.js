@@ -209,6 +209,9 @@ fsDb.settings({
 
 // Last Entry for For Form Entry
 var lastEntryNo = null;
+// Online Status
+window.addEventListener('offline', function(e) { $js('online').style.display = 'block'; });
+window.addEventListener('online', function(e) { $js('online').style.display = 'none'; });
 // var apiUrl = 'http://localhost:3000/api/';
 var apiUrl = 'https://radiant-island-72424.herokuapp.com/api/';
 function formDataToFire(data, cleardata, name) {

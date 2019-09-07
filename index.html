@@ -35,18 +35,17 @@
             padding-top: 3px;
             padding-bottom: 3px;
         }
-
+        
         .nav-icon {
             display: none !important;
         }
-
+        
         @media screen and (max-width: 1100px) {
             .nav-icon {
                 display: block !important;
                 position: absolute;
                 right: 10px;
             }
-
             .nav-menus {
                 display: none;
             }
@@ -56,6 +55,9 @@
 
 <body>
     <header>
+        <div id="online" class="w3-container w3-red w3-center" style="position: fixed; z-index: 9999999; width: 100%; display: none;">
+            <p>You are in Offline. Please Check your Internet Connection.</p>
+        </div>
         <div class="header-nav">
             <section style="font-family: 'Pacifico', cursive; font-size: 25px;">
                 <a href="#/">
@@ -63,17 +65,14 @@
                     <lebel>ARM Solutions</lebel>
                 </a>
             </section>
-            <section style="margin-left: auto; font-size: 16px; box-sizing: border-box; font-family: 'Montserrat', sans-serif; font-weight: bold;"
-                class="top-nav">
+            <section style="margin-left: auto; font-size: 16px; box-sizing: border-box; font-family: 'Montserrat', sans-serif; font-weight: bold;" class="top-nav">
                 <!-- Top Small Screen Menu -->
                 <div class="w3-bar main-bg-color">
                     <div class="w3-dropdown-click">
-                        <button href="javascript:void(0);" class="nav-icon w3-bar-item w3-button"
-                            onclick="$('#mNav').toggle();$('#smallNavArea').hide();">
+                        <button href="javascript:void(0);" class="nav-icon w3-bar-item w3-button" onclick="$('#mNav').toggle();$('#smallNavArea').hide();">
                             <i style="font-size: 18px;" class="fa fa-bars"></i>
                         </button>
-                        <div id="mNav" class="w3-dropdown-content w3-bar-block w3-border"
-                            style="position: absolute; right: 5px; top: 40px;">
+                        <div id="mNav" class="w3-dropdown-content w3-bar-block w3-border" style="position: absolute; right: 5px; top: 40px;">
                             <button id="cNav" class="w3-bar-item w3-button">CHART</button>
                             <button id="feNav" class="w3-bar-item w3-button">FORM ENTRY</button>
                             <button id="dNav" class="w3-bar-item w3-button">DATABASE</button>
@@ -89,12 +88,10 @@
                         <span style="font-size: 15px;">Please login to get access.</span>
                     </section>
                     <section ng-show="logged()" class="nav-menus">
-                        <a href="#/" style="margin-right: 5px;" ng-class="{'active-menu' : $route.current.activetab == 'home'}"
-                            class="w3-bar-item w3-button w3-mobile">HOME</a>
+                        <a href="#/" style="margin-right: 5px;" ng-class="{'active-menu' : $route.current.activetab == 'home'}" class="w3-bar-item w3-button w3-mobile">HOME</a>
                         <!-- <a href="#newjournal" style="margin-right: 5px;" ng-class="{'active-menu' : $route.current.activetab == 'home12'}"
                             class="w3-bar-item w3-button w3-mobile">New Journal</a> -->
-                        <div ng-show="userInfo.c_1 || userInfo.c_2 || userInfo.c_3 || userInfo.c_4 || userInfo.c_5 || userInfo.c_6 || userInfo.c_7 || userInfo.c_8 || userInfo.c_9 || userInfo.c_10 || userInfo.c_11 || userInfo.c_12"
-                            class="w3-dropdown-hover w3-mobile">
+                        <div ng-show="userInfo.c_1 || userInfo.c_2 || userInfo.c_3 || userInfo.c_4 || userInfo.c_5 || userInfo.c_6 || userInfo.c_7 || userInfo.c_8 || userInfo.c_9 || userInfo.c_10 || userInfo.c_11 || userInfo.c_12" class="w3-dropdown-hover w3-mobile">
                             <button ng-class="{'active-menu' : $route.current.activetab == 'chart'}" class="w3-button">CHART&nbsp;&nbsp;
                                 <i class="fa fa-caret-down"></i>
                             </button>
@@ -162,37 +159,30 @@
                                 <a href="#ByPPrc" class="w3-bar-item w3-button w3-mobile">By Product Price</a>
                             </div>
                         </div>
-                        <div ng-show="userInfo.l_1 || userInfo.l_2 || userInfo.l_3 || userInfo.l_4 || userInfo.l_5 || userInfo.l_6|| userInfo.l_7|| userInfo.l_8"
-                            class="w3-dropdown-hover w3-mobile">
+                        <div ng-show="userInfo.l_1 || userInfo.l_2 || userInfo.l_3 || userInfo.l_4 || userInfo.l_5 || userInfo.l_6|| userInfo.l_7|| userInfo.l_8" class="w3-dropdown-hover w3-mobile">
                             <button ng-class="{'active-menu' : $route.current.activetab == 'ledger'}" class="w3-button">LEDGER&nbsp;&nbsp;
                                 <i class="fa fa-caret-down"></i>
                             </button>
                             <div class="w3-dropdown-content w3-bar-block w3-card-4">
-                                <a ng-show="userInfo.l_1" href="#debitledger"
-                                    class="w3-bar-item w3-button w3-mobile">Debit
+                                <a ng-show="userInfo.l_1" href="#debitledger" class="w3-bar-item w3-button w3-mobile">Debit
                                     Ledger</a>
-                                <a ng-show="userInfo.l_2" href="#creditledger"
-                                    class="w3-bar-item w3-button w3-mobile">Credit
+                                <a ng-show="userInfo.l_2" href="#creditledger" class="w3-bar-item w3-button w3-mobile">Credit
                                     Ledger</a>
-                                <a ng-show="userInfo.l_3" href="#expenseledger"
-                                    class="w3-bar-item w3-button w3-mobile">Expense
+                                <a ng-show="userInfo.l_3" href="#expenseledger" class="w3-bar-item w3-button w3-mobile">Expense
                                     Ledger</a>
-                                <a ng-show="userInfo.l_4" href="#revledger"
-                                    class="w3-bar-item w3-button w3-mobile">Revenue Ledger</a>
-                                <a ng-show="userInfo.l_5" href="#debitorledger"
-                                    class="w3-bar-item w3-button w3-mobile">Debtor
+                                <a ng-show="userInfo.l_4" href="#revledger" class="w3-bar-item w3-button w3-mobile">Revenue Ledger</a>
+                                <a ng-show="userInfo.l_5" href="#debitorledger" class="w3-bar-item w3-button w3-mobile">Debtor
                                     Ledger</a>
-                                <a ng-show="userInfo.l_6" href="#creditorledger"
-                                    class="w3-bar-item w3-button w3-mobile">Creditor
+                                <a ng-show="userInfo.l_6" href="#creditorledger" class="w3-bar-item w3-button w3-mobile">Creditor
                                     Ledger</a>
                                 <a ng-show="userInfo.l_7" href="#opld" class="w3-bar-item w3-button w3-mobile">Other
                                     Party Ledger Debit</a>
                                 <a ng-show="userInfo.l_8" href="#oplc" class="w3-bar-item w3-button w3-mobile">Other
                                     Party Ledger Credit</a>
-                                
 
-                                
-                                
+
+
+
                             </div>
                         </div>
                         <div ng-show="userInfo.d_9 || userInfo.d_10 || userInfo.d_11 || userInfo.d_12 || userInfo.d_13 || userInfo.d_14" class="w3-dropdown-hover w3-mobile">
@@ -208,10 +198,8 @@
                                     Expense</a>
                                 <a ng-show="userInfo.d_12" href="#drev" class="w3-bar-item w3-button w3-mobile">Daily
                                         Sales</a>
-                                <a ng-show="userInfo.d_13" href="#dpurchase"
-                                    class="w3-bar-item w3-button w3-mobile">Daily Purchase</a>
-                                <a ng-show="userInfo.d_14" href="#invoice"
-                                    class="w3-bar-item w3-button w3-mobile">Invoice</a>
+                                <a ng-show="userInfo.d_13" href="#dpurchase" class="w3-bar-item w3-button w3-mobile">Daily Purchase</a>
+                                <a ng-show="userInfo.d_14" href="#invoice" class="w3-bar-item w3-button w3-mobile">Invoice</a>
                             </div>
                         </div>
                         <!-- //Add all permissions and routing -->
@@ -222,26 +210,24 @@
                             <div class="w3-dropdown-content w3-bar-block w3-card-4">
                                 <a ng-show="userInfo.p_15" href="#TotProducRprt" class="w3-bar-item w3-button w3-mobile">Production Report</a>
                                 <a ng-show="userInfo.p_16" href="#proledger" class="w3-bar-item w3-button w3-mobile">Production Ledger</a>
-                                <a ng-show="userInfo.p_17" href="#rawmaterials"
-                                    class="w3-bar-item w3-button w3-mobile">Raw Materials</a>
-                                <a ng-show="userInfo.p_18" href="#finishedandby"
-                                    class="w3-bar-item w3-button w3-mobile">Finished Goods and By Products</a>
-                                
+                                <a ng-show="userInfo.p_17" href="#rawmaterials" class="w3-bar-item w3-button w3-mobile">Raw Materials</a>
+                                <a ng-show="userInfo.p_18" href="#finishedandby" class="w3-bar-item w3-button w3-mobile">Finished Goods and By Products</a>
+
                             </div>
                         </div>
                         <div ng-show="userInfo.s_19 || userInfo.s_20 || userInfo.s_21 || userInfo.s_22 || userInfo.s_23" class="w3-dropdown-hover w3-mobile">
-                                <button ng-class="{'active-menu' : $route.current.activetab == 'statements'}" class="w3-button">STATEMENTS&nbsp;
+                            <button ng-class="{'active-menu' : $route.current.activetab == 'statements'}" class="w3-button">STATEMENTS&nbsp;
                                     <i class="fa fa-caret-down"></i>
                                 </button>
-                                <div class="w3-dropdown-content w3-bar-block w3-card-4">
-                                    <a ng-show="userInfo.s_19" href="#assetRegister" class="w3-bar-item w3-button w3-mobile">Asset Register</a>
-                                    <a ng-show="userInfo.s_20" href="#trialbalance" class="w3-bar-item w3-button w3-mobile">Trial Balance</a>
-                                    <a ng-show="userInfo.s_21" href="#IncomeStatmnt" class="w3-bar-item w3-button w3-mobile">Income Statement</a>
-                                    <a ng-show="userInfo.s_22" href="#balancesheet" class="w3-bar-item w3-button w3-mobile">Balance Sheet</a>
-                                    <a ng-show="userInfo.s_23" href="#productperrep" class="w3-bar-item w3-button w3-mobile">Product Performance
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                <a ng-show="userInfo.s_19" href="#assetRegister" class="w3-bar-item w3-button w3-mobile">Asset Register</a>
+                                <a ng-show="userInfo.s_20" href="#trialbalance" class="w3-bar-item w3-button w3-mobile">Trial Balance</a>
+                                <a ng-show="userInfo.s_21" href="#IncomeStatmnt" class="w3-bar-item w3-button w3-mobile">Income Statement</a>
+                                <a ng-show="userInfo.s_22" href="#balancesheet" class="w3-bar-item w3-button w3-mobile">Balance Sheet</a>
+                                <a ng-show="userInfo.s_23" href="#productperrep" class="w3-bar-item w3-button w3-mobile">Product Performance
                                         Report</a>
-                                </div>
                             </div>
+                        </div>
                         <div class="w3-dropdown-hover w3-mobile">
                             <button ng-class="{'active-menu' : $route.current.activetab == 'user'}" class="w3-button"><i
                                     style="font-size: 16px;" class="fa fa-user"></i>&nbsp;&nbsp;<span style="text-transform: uppercase;">{{userInfo.name}}</span>&nbsp;
@@ -254,17 +240,15 @@
                                 <a onclick="logOut()" href="#/" class="w3-bar-item w3-button w3-mobile">Logout</a>
                             </div>
                     </section>
-                </div>
+                    </div>
             </section>
-        </div>
+            </div>
     </header>
     <!-- Small Screen Navigations -->
-    <div id="smallNavArea"
-        style="width: 100%; min-height: 100vh; background-color: white; position: absolute; display: none;">
+    <div id="smallNavArea" style="width: 100%; min-height: 100vh; background-color: white; position: absolute; display: none;">
         <div class="top-part w3-light-gray" style="height: 40px;">
             <h4 id="sNavTitle" style="padding: 4px 10px; margin: 0;">MENU</h4>
-            <button class="w3-btn w3-indigo" style="position: absolute; right: 8px; top: 2px; padding: 6px 10px;"
-                onclick="$('#smallNavArea').toggle();">&times;</button>
+            <button class="w3-btn w3-indigo" style="position: absolute; right: 8px; top: 2px; padding: 6px 10px;" onclick="$('#smallNavArea').toggle();">&times;</button>
         </div>
         <div class="s-menu-item menu-list w3-container">
             <a ng-show="userInfo.c_1" href="#account">Main
@@ -409,77 +393,79 @@
             $('.s-menu-item').eq(7).hide();
         }
         hideSmallMenu();
-        $('#cNav').click(function () {
+        $('#cNav').click(function() {
             $('#mNav').hide();
             $('#sNavTitle').html('CHART');
             hideSmallMenu();
             $('.s-menu-item').first().show();
             $('#smallNavArea').show();
         })
-        $('#feNav').click(function () {
+        $('#feNav').click(function() {
             $('#mNav').hide();
             $('#sNavTitle').html('FORM ENTRY');
             hideSmallMenu();
             $('.s-menu-item').eq(1).show();
             $('#smallNavArea').show();
         })
-        $('#dNav').click(function () {
+        $('#dNav').click(function() {
             $('#mNav').hide();
             $('#sNavTitle').html('DATABASE');
             hideSmallMenu();
             $('.s-menu-item').eq(2).show();
             $('#smallNavArea').show();
         })
-        $('#laNav').click(function () {
+        $('#laNav').click(function() {
             $('#mNav').hide();
             $('#sNavTitle').html('LEDGER');
             hideSmallMenu();
             $('.s-menu-item').eq(3).show();
             $('#smallNavArea').show();
         })
-        $('#lbNav').click(function () {
+        $('#lbNav').click(function() {
             $('#mNav').hide();
             $('#sNavTitle').html('DAILY');
             hideSmallMenu();
             $('.s-menu-item').eq(4).show();
             $('#smallNavArea').show();
         })
-        $('#lcNav').click(function () {
+        $('#lcNav').click(function() {
             $('#mNav').hide();
             $('#sNavTitle').html('PRODUCTION');
             hideSmallMenu();
             $('.s-menu-item').eq(5).show();
             $('#smallNavArea').show();
         })
-        $('#sNav').click(function () {
+        $('#sNav').click(function() {
             $('#mNav').hide();
             $('#sNavTitle').html('STATEMENT');
             hideSmallMenu();
             $('.s-menu-item').eq(6).show();
             $('#smallNavArea').show();
         })
-        $('#uNav').click(function () {
-            $('#mNav').hide();
-            $('#sNavTitle').html('USER MENU');
-            hideSmallMenu();
-            $('.s-menu-item').eq(7).show();
-            $('#smallNavArea').show();
-        })
-        // Click on Small nav link
-        $('.s-menu-item a').click(function () {
+        $('#uNav').click(function() {
+                $('#mNav').hide();
+                $('#sNavTitle').html('USER MENU');
+                hideSmallMenu();
+                $('.s-menu-item').eq(7).show();
+                $('#smallNavArea').show();
+            })
+            // Click on Small nav link
+        $('.s-menu-item a').click(function() {
             $('#smallNavArea').hide();
         })
+
         function logOut() {
             auth.signOut()
-                .then(function (success) {
+                .then(function(success) {
                     localStorage.removeItem('user');
                     localStorage.removeItem('mushfic'); //you need to change if it want to change company username
                     window.location.href = '#login';
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                     alert(error);
                 });
         }
+
         function dropDownShow(id) {
             var x = document.getElementById(id);
             if (x.className.indexOf("w3-show") == -1) {

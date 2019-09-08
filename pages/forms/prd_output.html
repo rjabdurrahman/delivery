@@ -1,71 +1,70 @@
-
 <style>
     @media print {
-        @page { size: landscape;}
-        body * {
-          visibility: hidden;
+        @page {
+            size: landscape;
         }
-        #printableArea, #printableArea * {
-          visibility: visible;
+        body * {
+            visibility: hidden;
+        }
+        #printableArea,
+        #printableArea * {
+            visibility: visible;
         }
         #printableArea {
-          position: absolute;
-          left: 0;
-          top: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
         }
-        #debitLine,#debitLine *
-        {
+        #debitLine,
+        #debitLine * {
             display: none !important;
         }
-        #creditline,#creditline *{
+        #creditline,
+        #creditline * {
             display: none !important;
         }
-            #submitBtn,#submitBtn *
-        {
+        #submitBtn,
+        #submitBtn * {
             display: none !important;
-    
         }
-      }
-    </style>
+    }
+</style>
 <div class="overlay-container" id="printableArea">
     <div class="overlay">
         <div class="div-box tbm w3-light-gray w3-card-4 margin-auto" style="width: 95%; border-top-left-radius: 8px;">
             <div class="w3-container main-bg-color div-title">
                 <h2>Production Output</h2>
             </div>
-            
-                        <div class="w3-container" style="margin-top: 20px;">
+
+            <div class="w3-container" style="margin-top: 20px;">
                 <table class="w3-table chart-table" style="font-size: 16px;">
                     <tr>
                         <td class="secondary" style="width: 115px; padding-left: 5px; text-align: center;">
                             <span>ENTRY NO</span>
                         </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" style="text-align: center" id="entryNo" value="{{lastEntry.$value}}"
-                                disabled>
+                            <input class="w3-input w3-border" type="text" style="text-align: center" id="entryNo" value="{{lastEntry}}" disabled>
                         </td>
                         <td class="secondary" style="width: 115px; text-align: center;">VOUCHER NO</td>
                         <td>
-                            <input class="w3-input w3-border" type="text" style="text-align: center" id="voucherNo"
-                                 autofocus>
+                            <input class="w3-input w3-border" type="text" style="text-align: center" id="voucherNo" autofocus>
                         </td>
                         <td class="secondary" style="width: 100px; text-align: center;">DATE</td>
                         <td style="width: 125px;">
-                            <input class="w3-input w3-border" type="text" id="date" style="text-align: center;"
-                                placeholder="DD-Mon-YY">
+                            <input class="w3-input w3-border" type="text" id="date" style="text-align: center;" placeholder="DD-Mon-YY">
                             <label>Ex: 12-Jan-18</label>
                         </td>
                         <td class="secondary" style="text-align:center;">
                             <span>PS NO</span>
-                                                </td>
+                        </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" style="text-align: center" id="psNo" >
+                            <input class="w3-input w3-border" type="text" style="text-align: center" id="psNo">
                         </td>
                         <td class="secondary" style="text-align:center;">
                             <span>SEQ NO</span>
                         </td>
                         <td>
-                                
+
                             <input ng-model="psNo" class="w3-input w3-border" type="text" style="text-align: center" id="seqNo">
                         </td>
                     </tr>
@@ -94,13 +93,12 @@
                         <td colspan="2" style="text-align:center;">A/C NAME</td>
                         <td></td>
                         <td></td>
-                        
+
                     </tr>
                     <tr>
                         <td>1</td>
                         <td>
-                            <input id="FGcode" class="w3-input w3-border" type="text" name="drPartyCode" onpaste="FGCodeComplete(event)" onchange="multiplicationResult(event)"
-                                onkeyup="FGCodeComplete(event)" style="text-align: center;">
+                            <input id="FGcode" class="w3-input w3-border" type="text" name="drPartyCode" onpaste="FGCodeComplete(event)" onchange="multiplicationResult(event)" onkeyup="FGCodeComplete(event)" style="text-align: center;">
                         </td>
                         <td colspan="2">
                             <input class="w3-input w3-border" type="text" style="text-align: center" disabled>
@@ -112,38 +110,31 @@
                             </select>
                         </td>
                         <td>
-                            <input ng-model="packSizeAm" id="packetSize1" class="w3-input w3-border" type="text" onkeypress="numValidate(event)" onkeyup="multiplicationResult(event)"
-                                style="text-align: center" >
+                            <input ng-model="packSizeAm" id="packetSize1" class="w3-input w3-border" type="text" onkeypress="numValidate(event)" onkeyup="multiplicationResult(event)" style="text-align: center">
                         </td>
                         <td>
-                            <input ng-model="packsno" id="totalPackets1" class="w3-input w3-border" onkeypress="numValidate(event)" type="text" onkeyup="multiplicationResult(event)"
-                                style="text-align: center" >
+                            <input ng-model="packsno" id="totalPackets1" class="w3-input w3-border" onkeypress="numValidate(event)" type="text" onkeyup="multiplicationResult(event)" style="text-align: center">
                         </td>
                         <td>
-                                <input class="w3-input w3-border" id="TotalQuantity1" type="text" style="text-align: center"  disabled>
+                            <input class="w3-input w3-border" id="TotalQuantity1" type="text" style="text-align: center" disabled>
                         </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" id="UnitPricefromF1" type="number"
-                                style="text-align: center" disabled >
+                            <input class="w3-input w3-border" type="text" id="UnitPricefromF1" type="number" style="text-align: center" disabled>
                         </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" id="MultiplicatinResult1"
-                                style="text-align: center" disabled>
+                            <input class="w3-input w3-border" type="text" id="MultiplicatinResult1" style="text-align: center" disabled>
                         </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" name="ACCode" onpaste="ACNameComplete(event)"
-                                onkeyup="ACNameComplete(event)" style="text-align: center">
+                            <input class="w3-input w3-border" type="text" name="ACCode" onpaste="ACNameComplete(event)" onkeyup="ACNameComplete(event)" style="text-align: center">
                         </td>
                         <td colspan="2">
-                            <input class="w3-input w3-border" type="text" style="text-align: center" value=""
-                                disabled>
+                            <input class="w3-input w3-border" type="text" style="text-align: center" value="" disabled>
                         </td>
                         <td>
                             <input ng-model="debam" class="w3-input w3-border comma-num-minus" type="text" name="debitAmount" onkeyup="findTotal(event);" onkeydown="numValidate(event)" style="text-align: right">
                         </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center"
-                                value="x" disabled>
+                            <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center" value="x" disabled>
                         </td>
                     </tr>
                     <tr id="debitLine">
@@ -158,7 +149,7 @@
                     <tr class="primary">
                         <td></td>
                         <td colspan="14" style="text-align: center;">Credit Info</td>
-                        
+
                     </tr>
                     <tr class="secondary">
                         <td></td>
@@ -172,27 +163,22 @@
                     <tr>
                         <td>1</td>
                         <td colspan="2">
-                            <input class="w3-input w3-border" type="text" name="crPartyCode" onpaste="partyNameComplete(event)"
-                                onkeyup="partyNameComplete(event)" style="text-align: center">
+                            <input class="w3-input w3-border" type="text" name="crPartyCode" onpaste="partyNameComplete(event)" onkeyup="partyNameComplete(event)" style="text-align: center">
                         </td>
                         <td colspan="4">
-                            <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center"
-                                value="-----" disabled>
+                            <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center" value="-----" disabled>
                         </td>
                         <td colspan="2">
-                            <input class="w3-input w3-border" type="text" name="ACCode" onpaste="ACNameComplete(event)"
-                                onkeyup="ACNameComplete(event)" style="text-align: center" value="WIP-9001" disabled>
+                            <input class="w3-input w3-border" type="text" name="ACCode" onpaste="ACNameComplete(event)" onkeyup="ACNameComplete(event)" style="text-align: center" value="WIP-9001" disabled>
                         </td>
                         <td colspan="4">
-                            <input class="w3-input w3-border" type="text" name="ACName" style="text-align: center"
-                                value="WORK IN PROCESS" disabled>
+                            <input class="w3-input w3-border" type="text" name="ACName" style="text-align: center" value="WORK IN PROCESS" disabled>
                         </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center"
-                                value="x" disabled>
+                            <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center" value="x" disabled>
                         </td>
                         <td>
-                            <input class="w3-input w3-border" id="autototal1" type="text" name="creditAmount" style="text-align: right" >
+                            <input class="w3-input w3-border" id="autototal1" type="text" name="creditAmount" style="text-align: right">
                         </td>
                     </tr>
                     <tr id="creditline">
@@ -202,15 +188,14 @@
                         <td style="border-right: none;">
                             <button class="main-bg-color w3-btn journal-csbtn" style="margin-left: -8px;" onclick="rmField()" tabindex="-1">-</button>
                         </td>
-                        <td style="border-left: none;" class="tab-warn" colspan="11">To Submit, debit & credit
-                            amount must be same.</td>
+                        <td style="border-left: none;" class="tab-warn" colspan="11">To Submit, debit & credit amount must be same.</td>
                     </tr>
                     <tr class="primary">
                         <td></td>
                         <td colspan="12" style="text-align: center;">Total</td>
                         <td id="totalDebit" style="text-align: right">0</td>
                         <td id="totCredit" style="text-align: right">0</td>
-                        
+
                     </tr>
                     <tr>
                         <td class="secondary" colspan="2" style="text-align:center;">DESCRIPTION</td>
@@ -218,9 +203,9 @@
                             <textarea class="w3-input" name="" id="description" rows="2"></textarea>
                         </td>
                         <td colspan="3"></td>
-                        
+
                         <td colspan="2" class="main-bg-color" style="text-align: center; cursor: pointer;">
-                            <button id="submitBtn" onclick="window.print();" class="w3-btn" disabled >Submit</button>
+                            <button id="submitBtn" onclick="window.print();" class="w3-btn" disabled>Submit</button>
                         </td>
                     </tr>
                 </table>
@@ -230,49 +215,184 @@
     </div>
 </div>
 <script>
-document.getElementById('voucherNo').focus();
+    document.getElementById('voucherNo').focus();
 
-    var serial=1;
-    var newvariable=[];
-    var journalPSNO= [];
+    var serial = 1;
+    var newvariable = [];
+    var journalPSNO = [];
+
     function addField() {
         let chartTable = $js('chartTable');
         let debitAdderRow = $js('addDebitField');
         let creditAdderRow = $js('addCreditField');
         // let adderRow = $js(field);
-        packSize=1;
-        packs=1;
+        packSize = 1;
+        packs = 1;
         serial = parseInt(debitAdderRow.parentElement.previousElementSibling.firstElementChild.innerHTML);
         let newDebitRow = document.createElement('tr');
         let newCreditRow = document.createElement('tr');
-        m.render(newDebitRow,
-            [
-                m("td", ++serial),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', name: 'drPartyCode', onpaste: FGCodeCompleteForRest, onkeyup:FGCodeCompleteForRest,onkeypress:multiplicationResult, onchange:multiplicationResult, style: 'text-align: center' })]),
-                m("td",{ colspan: "2" }, [m('input', { class: 'w3-input w3-border', type: 'text', style: 'text-align: center', value: '-----', disabled: true })]),
-                m("td", [m('select',{style:'width:70px'}, [m('option',{value: 'Packed',selected:'selected', textContent:'Packed'})],[m('option',{value: 'Unpacked',textContent:'Unpacked'})])]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', id:'packetSize'+serial, onkeypress: numValidate, onkeyup:multiplicationResult, style: 'text-align: center' })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', id:'totalPackets'+serial, onkeypress: numValidate, onkeyup:multiplicationResult, style: 'text-align: center' })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', id:'TotalQuantity'+serial, style: 'text-align: center',disabled: true  })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', id:'UnitPricefromF'+serial, style: 'text-align: center',value: '-----', disabled: true  })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', id:'MultiplicatinResult'+serial, onkeypress: numValidate, style: 'text-align: center',disabled:true })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', name: 'ACCode', onpaste: ACNameComplete, onkeyup: ACNameComplete, style: 'text-align: center' })]),
-                m("td",{ colspan: "2" }, [m('input', { class: 'w3-input w3-border', type: 'text', style: 'text-align: center', value: '-----', disabled: true })]),
-                m("td", [m('input', { class: 'w3-input w3-border comma-num-minus', type: 'text', name: 'debitAmount',ngmodel:'debam'+serial, onkeypress: numValidate, onkeyup: findTotal, style: 'text-align: right' })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', style: 'text-align: center', value: 'x', disabled: true })])
-            ]
-        );
-        m.render(newCreditRow,
-            [
-                m("td", serial),
-                m("td", { colspan: "2" }, [m('input', { class: 'w3-input w3-border', type: 'text', name: 'crPartyCode', onpaste: partyNameComplete, onkeyup: partyNameComplete, style: 'text-align: center' })]),
-                m("td", { colspan: "4" }, [m('input', { class: 'w3-input w3-border', type: 'text', style: 'text-align: center', value: '-----', disabled: true })]),
-                m("td", { colspan: "2" }, [m('input', { class: 'w3-input w3-border', type: 'text', name: 'ACCode',value:'WIP-9001', onpaste: ACNameComplete, onkeyup: ACNameComplete, style: 'text-align: center' })]),
-                m("td", { colspan: "4" }, [m('input', { class: 'w3-input w3-border', type: 'text', style: 'text-align: center', value: 'WORK IN PROCESS', disabled: true })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', style: 'text-align: center', value: 'x', disabled: true })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text',id:'autototal'+serial, name: 'creditAmount', onkeypress: numValidate, onkeyup: findTotal, style: 'text-align: right' })])
-            ]
-        );
+        m.render(newDebitRow, [
+            m("td", ++serial),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                name: 'drPartyCode',
+                onpaste: FGCodeCompleteForRest,
+                onkeyup: FGCodeCompleteForRest,
+                onkeypress: multiplicationResult,
+                onchange: multiplicationResult,
+                style: 'text-align: center'
+            })]),
+            m("td", {
+                colspan: "2"
+            }, [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                style: 'text-align: center',
+                value: '-----',
+                disabled: true
+            })]),
+            m("td", [m('select', {
+                style: 'width:70px'
+            }, [m('option', {
+                value: 'Packed',
+                selected: 'selected',
+                textContent: 'Packed'
+            })], [m('option', {
+                value: 'Unpacked',
+                textContent: 'Unpacked'
+            })])]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                id: 'packetSize' + serial,
+                onkeypress: numValidate,
+                onkeyup: multiplicationResult,
+                style: 'text-align: center'
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                id: 'totalPackets' + serial,
+                onkeypress: numValidate,
+                onkeyup: multiplicationResult,
+                style: 'text-align: center'
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                id: 'TotalQuantity' + serial,
+                style: 'text-align: center',
+                disabled: true
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                id: 'UnitPricefromF' + serial,
+                style: 'text-align: center',
+                value: '-----',
+                disabled: true
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                id: 'MultiplicatinResult' + serial,
+                onkeypress: numValidate,
+                style: 'text-align: center',
+                disabled: true
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                name: 'ACCode',
+                onpaste: ACNameComplete,
+                onkeyup: ACNameComplete,
+                style: 'text-align: center'
+            })]),
+            m("td", {
+                colspan: "2"
+            }, [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                style: 'text-align: center',
+                value: '-----',
+                disabled: true
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border comma-num-minus',
+                type: 'text',
+                name: 'debitAmount',
+                ngmodel: 'debam' + serial,
+                onkeypress: numValidate,
+                onkeyup: findTotal,
+                style: 'text-align: right'
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                style: 'text-align: center',
+                value: 'x',
+                disabled: true
+            })])
+        ]);
+        m.render(newCreditRow, [
+            m("td", serial),
+            m("td", {
+                colspan: "2"
+            }, [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                name: 'crPartyCode',
+                onpaste: partyNameComplete,
+                onkeyup: partyNameComplete,
+                style: 'text-align: center'
+            })]),
+            m("td", {
+                colspan: "4"
+            }, [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                style: 'text-align: center',
+                value: '-----',
+                disabled: true
+            })]),
+            m("td", {
+                colspan: "2"
+            }, [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                name: 'ACCode',
+                value: 'WIP-9001',
+                onpaste: ACNameComplete,
+                onkeyup: ACNameComplete,
+                style: 'text-align: center'
+            })]),
+            m("td", {
+                colspan: "4"
+            }, [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                style: 'text-align: center',
+                value: 'WORK IN PROCESS',
+                disabled: true
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                style: 'text-align: center',
+                value: 'x',
+                disabled: true
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                id: 'autototal' + serial,
+                name: 'creditAmount',
+                onkeypress: numValidate,
+                onkeyup: findTotal,
+                style: 'text-align: right'
+            })])
+        ]);
         chartTable.children[0].insertBefore(newDebitRow, debitAdderRow.parentElement);
         chartTable.children[0].insertBefore(newCreditRow, creditAdderRow.parentElement);
     }
@@ -289,14 +409,13 @@ document.getElementById('voucherNo').focus();
     function submitValid() {
         let totalDebit = commaToNum($js('totalDebit').textContent);
         let totalCredit = commaToNum(document.getElementById('totCredit').innerHTML);
-       
+
         if (totalDebit != 0 && totalCredit != 0 && totalDebit == totalCredit) {
             $js('submitBtn').disabled = false;
-        }
-        else $js('submitBtn').disabled = true;
+        } else $js('submitBtn').disabled = true;
     }
 
-    $js('submitBtn').addEventListener('click', function () {
+    $js('submitBtn').addEventListener('click', function() {
         let date = $js('date');
         let regEx = /^\d{1,2}-(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-\d{2}$/i;
         let entryNo = $js('entryNo');
@@ -306,38 +425,33 @@ document.getElementById('voucherNo').focus();
         let description = $js('description');
         let debitCredit = [];
         let ACCodes = [];
-        let partyCodes=[];
+        let partyCodes = [];
         var drPartyCodeEls = $sn('drPartyCode');
         var crPartyCodeEls = $sn('crPartyCode');
 
-        
+
         // Warning for Empty
         if (entryNo.value == "") {
             $('#notification').html("<h6>Entry No Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
             entryNo.focus();
             return;
-        }
-        else if (voucherNo.value == "") {
+        } else if (voucherNo.value == "") {
             $('#notification').html("<h6>Voucher No Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
             voucherNo.focus();
             return;
-        }
-        else if (date.value == "") {
+        } else if (date.value == "") {
             $('#notification').html("<h6>Date Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
             date.focus();
             return;
-        }
-        else if (!(date.value).match(regEx)) {
+        } else if (!(date.value).match(regEx)) {
             $('#notification').html("<h6>Error Date Format</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
             $js('date').focus();
             return;
-        }
-        else if (psNo.value == "") {
+        } else if (psNo.value == "") {
             $('#notification').html("<h6>PS No Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
             psNo.focus();
             return;
-        }
-        else if (seqNo.value == "") {
+        } else if (seqNo.value == "") {
             $('#notification').html("<h6>SEQ No Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
             seqNo.focus();
             return;
@@ -360,62 +474,54 @@ document.getElementById('voucherNo').focus();
                     $('#notification').html("<h6>FG Code Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     partyCodeEl.focus();
                     return;
-                }
-                else if (partyNameEl.value == "") {
+                } else if (partyNameEl.value == "") {
                     $('#notification').html("<h6>Finished Good Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     partyCodeEl.focus();
                     return;
-                }
-                else if (packSize.value == "") {
+                } else if (packSize.value == "") {
                     $('#notification').html("<h6>Pack Size Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     packSize.focus();
                     return;
-                }
-                else if (packs.value == "") {
+                } else if (packs.value == "") {
                     $('#notification').html("<h6>Packs Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     packs.focus();
                     return;
-                }
-                else if (unitPrice.value == "") {
+                } else if (unitPrice.value == "") {
                     $('#notification').html("<h6>Unit Price Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     unitPrice.focus();
                     return;
-                }
-                else if (totalPrice.value == "") {
+                } else if (totalPrice.value == "") {
                     $('#notification').html("<h6>Total Price Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     return;
-                }
-                else if (ACCodeEl.value == "") {
+                } else if (ACCodeEl.value == "") {
                     $('#notification').html("<h6>Account Code Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     ACCodeEl.focus();
                     return;
-                }
-                else if (ACNameEl.value == "") {
+                } else if (ACNameEl.value == "") {
                     $('#notification').html("<h6>Account Name Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     ACCodeEl.focus();
                     return;
-                }
-                else if (drAmount.value == "") {
+                } else if (drAmount.value == "") {
                     $('#notification').html("<h6>Debit Amount Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     ACCodeEl.focus();
                     return;
                 }
 
                 let debit = {
-                    type: 'Dr',
-                    partyCode: partyCodeEl.value,
-                    partyName: partyNameEl.value,
-                    packType: packtype.value,
-                    packSize: parseFloat(packSize.value),
-                    packs: parseFloat(packs.value),
-                    totalQuantity:parseFloat(commaToNum(totalQuantity.value)),
-                    unitPrice: parseFloat(unitPrice.value),
-                    totalPriceTK: parseFloat(totalPrice.value.split(',').join("")),
-                    ACCode: ACCodeEl.value,
-                    ACName: ACNameEl.value,
-                    drAmount: commaToNum(drAmount.value)
-                }
-                //$print(debit);
+                        type: 'Dr',
+                        partyCode: partyCodeEl.value,
+                        partyName: partyNameEl.value,
+                        packType: packtype.value,
+                        packSize: parseFloat(packSize.value),
+                        packs: parseFloat(packs.value),
+                        totalQuantity: parseFloat(commaToNum(totalQuantity.value)),
+                        unitPrice: parseFloat(unitPrice.value),
+                        totalPriceTK: parseFloat(totalPrice.value.split(',').join("")),
+                        ACCode: ACCodeEl.value,
+                        ACName: ACNameEl.value,
+                        drAmount: commaToNum(drAmount.value)
+                    }
+                    //$print(debit);
                 ACCodes.push(ACCodeEl.value);
                 debitCredit.push(debit);
                 partyCodes.push(partyCodeEl.value);
@@ -426,23 +532,20 @@ document.getElementById('voucherNo').focus();
                 let ACCodeEl = partyNameEl.parentElement.nextElementSibling.firstElementChild;
                 let ACNameEl = ACCodeEl.parentElement.nextElementSibling.firstElementChild;
                 let crAmount = ACNameEl.parentElement.nextElementSibling.nextElementSibling.firstElementChild;
-                
+
                 if (partyCodeEl.value == "") {
                     $('#notification').html("<h6>Product Code Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     partyCodeEl.focus();
                     return;
-                }
-                else if (partyNameEl.value == "") {
+                } else if (partyNameEl.value == "") {
                     $('#notification').html("<h6>Product Name Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     partyCodeEl.focus();
                     return;
-                }
-                else if (ACCodeEl.value == "") {
+                } else if (ACCodeEl.value == "") {
                     $('#notification').html("<h6>Account Code Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     ACCodeEl.focus();
                     return;
-                }
-                else if (ACNameEl.value == "") {
+                } else if (ACNameEl.value == "") {
                     $('#notification').html("<h6>Account Name Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     ACCodeEl.focus();
                     return;
@@ -461,7 +564,7 @@ document.getElementById('voucherNo').focus();
                 debitCredit.push(credit);
                 partyCodes.push(partyCodeEl.value);
                 //$print(crAmount.value);
-               // $print(credit);
+                // $print(credit);
             }
         }
         if (description.value == "") {
@@ -477,28 +580,29 @@ document.getElementById('voucherNo').focus();
             seqNo: parseInt(seqNo.value),
             debitCredit: debitCredit,
             ACCodes: ACCodes,
-            partyCodes:partyCodes,
+            partyCodes: partyCodes,
             description: description.value,
-            formName:'Product Output',
-            uId:firebase.auth().currentUser.uid,
-            flagPrejournal:0
+            formName: 'Product Output',
+            uId: firebase.auth().currentUser.uid,
+            flagPrejournal: 0
         }
+
         function clearFields() {
             for (index in drPartyCodeEls) {
                 if (drPartyCodeEls.hasOwnProperty(index)) {
                     let partyCodeEl = drPartyCodeEls[index];
-                let partyNameEl = partyCodeEl.parentElement.nextElementSibling.firstElementChild;
-                let packtype = partyNameEl.parentElement.nextElementSibling.firstElementChild;
-                let packSize = packtype.parentElement.nextElementSibling.firstElementChild;
-                let packs = packSize.parentElement.nextElementSibling.firstElementChild;
-                let totalQuantity = packs.parentElement.nextElementSibling.firstElementChild;
-                let unitPrice = totalQuantity.parentElement.nextElementSibling.firstElementChild;
-                let totalPrice = unitPrice.parentElement.nextElementSibling.firstElementChild;
-                let ACCodeEl = totalPrice.parentElement.nextElementSibling.firstElementChild;
-                let ACNameEl = ACCodeEl.parentElement.nextElementSibling.firstElementChild;
-                let drAmount = ACNameEl.parentElement.nextElementSibling.firstElementChild;
-                clearer(partyCodeEl, partyNameEl, packSize, packs, unitPrice, totalPrice, ACCodeEl, ACNameEl, drAmount,totalQuantity);
-                
+                    let partyNameEl = partyCodeEl.parentElement.nextElementSibling.firstElementChild;
+                    let packtype = partyNameEl.parentElement.nextElementSibling.firstElementChild;
+                    let packSize = packtype.parentElement.nextElementSibling.firstElementChild;
+                    let packs = packSize.parentElement.nextElementSibling.firstElementChild;
+                    let totalQuantity = packs.parentElement.nextElementSibling.firstElementChild;
+                    let unitPrice = totalQuantity.parentElement.nextElementSibling.firstElementChild;
+                    let totalPrice = unitPrice.parentElement.nextElementSibling.firstElementChild;
+                    let ACCodeEl = totalPrice.parentElement.nextElementSibling.firstElementChild;
+                    let ACNameEl = ACCodeEl.parentElement.nextElementSibling.firstElementChild;
+                    let drAmount = ACNameEl.parentElement.nextElementSibling.firstElementChild;
+                    clearer(partyCodeEl, partyNameEl, packSize, packs, unitPrice, totalPrice, ACCodeEl, ACNameEl, drAmount, totalQuantity);
+
                 }
                 if (crPartyCodeEls.hasOwnProperty(index)) {
                     let partyCodeEl = crPartyCodeEls[index];
@@ -515,112 +619,106 @@ document.getElementById('voucherNo').focus();
             $js('totalDebit').innerHTML = "";
             $js('totCredit').innerHTML = "";
             $js('submitBtn').disabled = true;
-            serial=1;
-           
+            serial = 1;
+
         }
         console.log(prdOutput);
         // Firestore Store
-       formDataToFire("JournalForm", entryNo.value, prdOutput, clearFields);
-        
+        formDataToFire("JournalForm", entryNo.value, prdOutput, clearFields);
+
     });
 
 
-    var fGArrayFirst=null;
-    var unitPrice=0;
-    
+    var fGArrayFirst = null;
+    var unitPrice = 0;
+
     function FGCodeComplete(event) {
         event.target.value = $.trim(event.target.value);
         //$print(fGArrayFirst);
-    let data = fGArrayFirst.find(function (el) {
-        return el.code == event.target.value;
-    });
-     //$print("COde == "+event.target.value);
-    if (data) {
-        event.target.parentElement.nextElementSibling.firstElementChild.value = data.name;
-        ps=$js('FGcode').value;
-    }
-    else event.target.parentElement.nextElementSibling.firstElementChild.value = '';
+        let data = fGArrayFirst.find(function(el) {
+            return el.code == event.target.value;
+        });
+        //$print("COde == "+event.target.value);
+        if (data) {
+            event.target.parentElement.nextElementSibling.firstElementChild.value = data.name;
+            ps = $js('FGcode').value;
+        } else event.target.parentElement.nextElementSibling.firstElementChild.value = '';
     }
 
     function FGCodeCompleteForRest(event) {
-        
+
         event.target.value = $.trim(event.target.value);
-        var dateofSpecific=$js('date').value;
+        var dateofSpecific = $js('date').value;
         //$print("FG array "+fGArrayAll);
-    let data = fGArrayAll.find(function (el) {
-        if(el.byProductCode== event.target.value && el.date==dateofSpecific)
-        return el.byProductCode;
-    });
-     //$print("Data is "+serial);
-    if (data) {
-        event.target.parentElement.nextElementSibling.firstElementChild.value = data.byProductName;
-        event.target.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.firstElementChild.value = parseInt(data.byProductPrice);
-        
-        unitPrice=parseInt(data.byProductPrice); 
-        //$print(unitPrice); 
+        let data = fGArrayAll.find(function(el) {
+            if (el.byProductCode == event.target.value && el.date == dateofSpecific)
+                return el.byProductCode;
+        });
+        //$print("Data is "+serial);
+        if (data) {
+            event.target.parentElement.nextElementSibling.firstElementChild.value = data.byProductName;
+            event.target.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.firstElementChild.value = parseInt(data.byProductPrice);
+
+            unitPrice = parseInt(data.byProductPrice);
+            //$print(unitPrice); 
+        } else event.target.parentElement.nextElementSibling.firstElementChild.value = '';
     }
-    else event.target.parentElement.nextElementSibling.firstElementChild.value = '';
-    }
 
-var onepacketSize=onetotalPackets=oneUnitPricefromF=1;
-    function multiplicationResult(event)
-    {
-        var multiResult=0;
-        var TotalUnitPrice=0;
-        console.log("Serial "+serial);
-        
-            onepacketSize=document.getElementById('packetSize1').value;
-            onetotalPackets=document.getElementById('totalPackets1').value;
-            console.log("its called");
-            document.getElementById('TotalQuantity1').value=(onepacketSize*onetotalPackets).toLocaleString('en');
-        
-   
-        if(serial>1)
-        {
-            for(i=2;i<=serial;i++)
-            { 
-                
-                onepacketSize=document.getElementById('packetSize'+i).value;
-                onetotalPackets=document.getElementById('totalPackets'+i).value;
-                oneUnitPricefromF=document.getElementById('UnitPricefromF'+i).value;
-                multiResult=onepacketSize*onetotalPackets*oneUnitPricefromF;
-                let one_total_quantity=onepacketSize*onetotalPackets;
-                document.getElementById('TotalQuantity'+i).value=one_total_quantity.toLocaleString('en');
-                
+    var onepacketSize = onetotalPackets = oneUnitPricefromF = 1;
 
-                multiResult=multiResult||0;
-                document.getElementById('MultiplicatinResult'+i).value=multiResult.toLocaleString('en');
-                document.getElementById('autototal'+i).value=multiResult.toLocaleString('en');
-                TotalUnitPrice=parseInt(TotalUnitPrice)+parseInt(multiResult);
+    function multiplicationResult(event) {
+        var multiResult = 0;
+        var TotalUnitPrice = 0;
+        console.log("Serial " + serial);
+
+        onepacketSize = document.getElementById('packetSize1').value;
+        onetotalPackets = document.getElementById('totalPackets1').value;
+        console.log("its called");
+        document.getElementById('TotalQuantity1').value = (onepacketSize * onetotalPackets).toLocaleString('en');
 
 
-                onepacketSize=document.getElementById('packetSize1').value;
-                onetotalPackets=document.getElementById('totalPackets1').value;
-                
-               
-                psN=document.getElementById('psNo').value;
-                SequenceNo=document.getElementById('seqNo').value;
+        if (serial > 1) {
+            for (i = 2; i <= serial; i++) {
+
+                onepacketSize = document.getElementById('packetSize' + i).value;
+                onetotalPackets = document.getElementById('totalPackets' + i).value;
+                oneUnitPricefromF = document.getElementById('UnitPricefromF' + i).value;
+                multiResult = onepacketSize * onetotalPackets * oneUnitPricefromF;
+                let one_total_quantity = onepacketSize * onetotalPackets;
+                document.getElementById('TotalQuantity' + i).value = one_total_quantity.toLocaleString('en');
+
+
+                multiResult = multiResult || 0;
+                document.getElementById('MultiplicatinResult' + i).value = multiResult.toLocaleString('en');
+                document.getElementById('autototal' + i).value = multiResult.toLocaleString('en');
+                TotalUnitPrice = parseInt(TotalUnitPrice) + parseInt(multiResult);
+
+
+                onepacketSize = document.getElementById('packetSize1').value;
+                onetotalPackets = document.getElementById('totalPackets1').value;
+
+
+                psN = document.getElementById('psNo').value;
+                SequenceNo = document.getElementById('seqNo').value;
                 var dailyTotal = 0;
-                
-                          
-                console.log('Inside newvariable');    
+
+
+                console.log('Inside newvariable');
                 $print(newvariable);
                 for (j = 0; j < newvariable.length; j++) {
-                    if(newvariable[j].psNo==psN && newvariable[j].seqNo==SequenceNo)
-                      dailyTotal += newvariable[j].debitCredit[0].drAmount;
-                                        }
-                   
-                   
-                document.getElementById('MultiplicatinResult1').value=(dailyTotal-TotalUnitPrice).toLocaleString('en');
-                document.getElementById('UnitPricefromF1').value=((dailyTotal-TotalUnitPrice)/(onepacketSize*onetotalPackets)).toLocaleString('en');
-                document.getElementById('autototal1').value=(dailyTotal-TotalUnitPrice).toLocaleString('en');
-                                
-                DCredit=parseInt(dailyTotal-TotalUnitPrice)+parseInt(TotalUnitPrice);
+                    if (newvariable[j].psNo == psN && newvariable[j].seqNo == SequenceNo)
+                        dailyTotal += newvariable[j].debitCredit[0].drAmount;
+                }
+
+
+                document.getElementById('MultiplicatinResult1').value = (dailyTotal - TotalUnitPrice).toLocaleString('en');
+                document.getElementById('UnitPricefromF1').value = ((dailyTotal - TotalUnitPrice) / (onepacketSize * onetotalPackets)).toLocaleString('en');
+                document.getElementById('autototal1').value = (dailyTotal - TotalUnitPrice).toLocaleString('en');
+
+                DCredit = parseInt(dailyTotal - TotalUnitPrice) + parseInt(TotalUnitPrice);
                 //$print("Credit "+DCredit);
-                document.getElementById('totCredit').innerHTML=DCredit.toLocaleString('en');
+                document.getElementById('totCredit').innerHTML = DCredit.toLocaleString('en');
             }
         }
     }
-
-
 </script>

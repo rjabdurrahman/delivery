@@ -481,7 +481,18 @@ app.controller('loanOneCntlr', function($scope, $firebaseArray) {
 });
 
 app.controller('JournalFormCntlr', function($scope, $firebaseArray, $firebaseObject) {
-    lastEntryNo = $scope.lastEntry = $firebaseObject(getRef('lastFormEntry'));
+    $scope.lastEntry = undefined;
+    lastEntryNo = undefined;
+    axios.get(apiUrl + 'journal/last_entry')
+        .then(function(res) {
+            console.log(res.data[0]['lastEntry']);
+            lastEntryNo = res.data[0]['lastEntry'];
+            $scope.lastEntry = res.data[0]['lastEntry'];
+            $scope.$applyAsync();
+        })
+        .catch(function(error) {
+            console.log(error.message);
+        });
     // For Product Output form to create Product Output table
 
     fGArrayFirst = $firebaseArray(getRef('rice'));

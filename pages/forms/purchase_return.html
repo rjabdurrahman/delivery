@@ -1,31 +1,34 @@
 <style>
     @media print {
-        @page { size: landscape;}
-        body * {
-          visibility: hidden;
+        @page {
+            size: landscape;
         }
-        #printableArea, #printableArea * {
-          visibility: visible;
+        body * {
+            visibility: hidden;
+        }
+        #printableArea,
+        #printableArea * {
+            visibility: visible;
         }
         #printableArea {
-          position: absolute;
-          left: 0;
-          top: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
         }
-        #debitLine,#debitLine *
-        {
+        #debitLine,
+        #debitLine * {
             display: none !important;
         }
-        #creditline,#creditline *{
+        #creditline,
+        #creditline * {
             display: none !important;
         }
-            #submitBtn,#submitBtn *
-        {
+        #submitBtn,
+        #submitBtn * {
             display: none !important;
-    
         }
-      }
-    </style>
+    }
+</style>
 
 <div class="overlay-container" id="printableArea">
     <div class="overlay">
@@ -40,18 +43,15 @@
                             <span>ENTRY NO</span>
                         </td>
                         <td class="border">
-                            <input class="w3-input w3-border" type="text" style="text-align: center" id="entryNo" value="{{lastEntry.$value}}"
-                                disabled>
+                            <input class="w3-input w3-border" type="text" style="text-align: center" id="entryNo" value="{{lastEntry}}" disabled>
                         </td>
                         <td class="secondary" style="width: 215px; text-align: center;">VOUCHER NO</td>
                         <td>
-                            <input class="w3-input w3-border" type="text" style="text-align: center" id="voucherNo"
-                                 autofocus>
+                            <input class="w3-input w3-border" type="text" style="text-align: center" id="voucherNo" autofocus>
                         </td>
                         <td class="secondary" style="width: 125px; text-align: center;">DATE</td>
                         <td style="width: 125px;">
-                            <input class="w3-input w3-border" type="text" id="date" style="text-align: center;"
-                                placeholder="DD-Mon-YY">
+                            <input class="w3-input w3-border" type="text" id="date" style="text-align: center;" placeholder="DD-Mon-YY">
                             <label>Ex: 12-Jan-18</label>
                         </td>
                     </tr>
@@ -75,28 +75,22 @@
                     <tr>
                         <td>1</td>
                         <td>
-                            <input class="w3-input w3-border" type="text" name="drPartyCode" onpaste="partyNameComplete(event)"
-                                onkeyup="partyNameComplete(event)" style="text-align: center">
+                            <input class="w3-input w3-border" type="text" name="drPartyCode" onpaste="partyNameComplete(event)" onkeyup="partyNameComplete(event)" style="text-align: center">
                         </td>
                         <td colspan="3">
-                            <input class="w3-input w3-border" type="text" style="text-align: center" value="-----"
-                                disabled>
+                            <input class="w3-input w3-border" type="text" style="text-align: center" value="-----" disabled>
                         </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" name="ACCode" onpaste="ACNameComplete(event)"
-                                onkeyup="ACNameComplete(event)" style="text-align: center">
+                            <input class="w3-input w3-border" type="text" name="ACCode" onpaste="ACNameComplete(event)" onkeyup="ACNameComplete(event)" style="text-align: center">
                         </td>
                         <td colspan="3">
-                            <input class="w3-input w3-border" type="text" style="text-align: center" value="-----"
-                                disabled>
+                            <input class="w3-input w3-border" type="text" style="text-align: center" value="-----" disabled>
                         </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" name="debitAmount" onkeydown="numValidate(event)"
-                                onkeyup="findTotal(event)" style="text-align: right">
+                            <input class="w3-input w3-border" type="text" name="debitAmount" onkeydown="numValidate(event)" onkeyup="findTotal(event)" style="text-align: right">
                         </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center"
-                                value="x" disabled>
+                            <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center" value="x" disabled>
                         </td>
                     </tr>
                     <tr id="debitLine">
@@ -126,28 +120,22 @@
                     <tr>
                         <td>1</td>
                         <td>
-                            <input class="w3-input w3-border" type="text" name="crPartyCode" onpaste="partyNameComplete(event)"
-                                onkeyup="partyNameComplete(event)" style="text-align: center">
+                            <input class="w3-input w3-border" type="text" name="crPartyCode" onpaste="partyNameComplete(event)" onkeyup="partyNameComplete(event)" style="text-align: center">
                         </td>
                         <td colspan="3">
-                            <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center"
-                                value="-----" disabled>
+                            <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center" value="-----" disabled>
                         </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" name="ACCode" onpaste="ACNameComplete(event)"
-                                onkeyup="ACNameComplete(event)" style="text-align: center">
+                            <input class="w3-input w3-border" type="text" name="ACCode" onpaste="ACNameComplete(event)" onkeyup="ACNameComplete(event)" style="text-align: center">
                         </td>
                         <td colspan="3">
-                            <input class="w3-input w3-border" type="text" name="ACName" style="text-align: center"
-                                value="-----" disabled>
+                            <input class="w3-input w3-border" type="text" name="ACName" style="text-align: center" value="-----" disabled>
                         </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center"
-                                value="x" disabled>
+                            <input class="w3-input w3-border" type="text" name="partyName" style="text-align: center" value="x" disabled>
                         </td>
                         <td>
-                            <input class="w3-input w3-border" type="text" name="creditAmount" onkeydown="numValidate(event)"
-                                onkeyup="findTotal(event)" style="text-align: right">
+                            <input class="w3-input w3-border" type="text" name="creditAmount" onkeydown="numValidate(event)" onkeyup="findTotal(event)" style="text-align: right">
                         </td>
                     </tr>
                     <tr id="creditline">
@@ -157,8 +145,7 @@
                         <td style="border-right: none;">
                             <button class="main-bg-color w3-btn journal-csbtn" style="margin-left: -8px;" onclick="rmField()" tabindex="-1">-</button>
                         </td>
-                        <td style="border-left: none;" class="tab-warn" colspan="7">To Submit form debit & credit
-                            amount must be same.</td>
+                        <td style="border-left: none;" class="tab-warn" colspan="7">To Submit form debit & credit amount must be same.</td>
                     </tr>
                     <tr class="primary">
                         <td></td>
@@ -175,18 +162,15 @@
                     <tr>
                         <td class="secondary" colspan="2" style="text-align:center;">UNIT QUANTITY</td>
                         <td>
-                            <input ng-model="unitQuantity" class="w3-input w3-border" type="text" style="text-align: center"
-                                id="primaryQuantity" onkeyup="submitValid()" onkeypress="numValidate(event)">
+                            <input ng-model="unitQuantity" class="w3-input w3-border" type="text" style="text-align: center" id="primaryQuantity" onkeyup="submitValid()" onkeypress="numValidate(event)">
                         </td>
                         <td class="secondary" style="text-align:center;">UNIT PRICE</td>
                         <td>
-                            <input ng-model="unitPrice" class="w3-input w3-border" type="text" style="text-align: center"
-                                id="primaryUnitPrice" onkeyup="submitValid()" onkeypress="numValidate(event)">
+                            <input ng-model="unitPrice" class="w3-input w3-border" type="text" style="text-align: center" id="primaryUnitPrice" onkeyup="submitValid()" onkeypress="numValidate(event)">
                         </td>
                         <td class="secondary" colspan="2" style="text-align:center;">TOTAL PRICE</td>
                         <td>
-                            <input class="w3-input w3-border" type="text" style="text-align: center" id="totalPriceTK"
-                                value="{{unitPrice*unitQuantity | number}}" disabled>
+                            <input class="w3-input w3-border" type="text" style="text-align: center" id="totalPriceTK" value="{{unitPrice*unitQuantity | number}}" disabled>
                         </td>
                     </tr>
                     <tr>
@@ -198,18 +182,15 @@
                     <tr>
                         <td class="secondary" colspan="2" style="text-align:center;">UNIT QUANTITY</td>
                         <td>
-                            <input ng-model="SUnitQuantity" class="w3-input w3-border" type="text" id="totalQuantity"
-                                style="text-align: center" id="unitQuantity" onkeyup="submitValid()" onkeypress="numValidate(event)">
+                            <input ng-model="SUnitQuantity" class="w3-input w3-border" type="text" id="totalQuantity" style="text-align: center" id="unitQuantity" onkeyup="submitValid()" onkeypress="numValidate(event)">
                         </td>
                         <td class="secondary" style="text-align:center;">UNIT PRICE</td>
                         <td>
-                            <input ng-model="SUnitPrice" class="w3-input w3-border" type="text" id="stdUnitPrice" style="text-align: center"
-                                id="unitPrice" onkeyup="submitValid()" onkeypress="numValidate(event)">
+                            <input ng-model="SUnitPrice" class="w3-input w3-border" type="text" id="stdUnitPrice" style="text-align: center" id="unitPrice" onkeyup="submitValid()" onkeypress="numValidate(event)">
                         </td>
                         <td class="secondary" colspan="2" style="text-align:center;">TOTAL PRICE</td>
                         <td>
-                            <input class="w3-input w3-border" type="text" id="totalPriceA" style="text-align: center"
-                                value="{{SUnitPrice*SUnitQuantity | number}}" disabled>
+                            <input class="w3-input w3-border" type="text" id="totalPriceA" style="text-align: center" value="{{SUnitPrice*SUnitQuantity | number}}" disabled>
                         </td>
                     </tr>
                     <tr>
@@ -230,6 +211,7 @@
 </div>
 <script>
     document.getElementById('voucherNo').focus();
+
     function addField() {
         let chartTable = $js('chartTable');
         let debitAdderRow = $js('addDebitField');
@@ -238,28 +220,110 @@
         let serial = parseInt(debitAdderRow.parentElement.previousElementSibling.firstElementChild.innerHTML);
         let newDebitRow = document.createElement('tr');
         let newCreditRow = document.createElement('tr');
-        m.render(newDebitRow,
-            [
-                m("td", ++serial),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', name: 'drPartyCode', onpaste: partyNameComplete, onkeyup: partyNameComplete, style: 'text-align: center' })]),
-                m("td",{colspan:3}, [m('input', { class: 'w3-input w3-border', type: 'text', style: 'text-align: center', value: '-----', disabled: true })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', name: 'ACCode', onpaste: ACNameComplete, onkeyup: ACNameComplete, style: 'text-align: center' })]),
-                m("td",{colspan:3}, [m('input', { class: 'w3-input w3-border', type: 'text', style: 'text-align: center', value: '-----', disabled: true })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', name: 'debitAmount', onkeypress: numValidate, onkeyup: findTotal, style: 'text-align: right' })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', style: 'text-align: center', value: 'x', disabled: true })])
-            ]
-        );
-        m.render(newCreditRow,
-            [
-                m("td", serial),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', name: 'crPartyCode', onpaste: partyNameComplete, onkeyup: partyNameComplete, style: 'text-align: center' })]),
-                m("td", {colspan:3},[m('input', { class: 'w3-input w3-border', type: 'text', style: 'text-align: center', value: '-----', disabled: true })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', name: 'ACCode', onpaste: ACNameComplete, onkeyup: ACNameComplete, style: 'text-align: center' })]),
-                m("td",{colspan:3}, [m('input', { class: 'w3-input w3-border', type: 'text', style: 'text-align: center', value: '-----', disabled: true })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', style: 'text-align: center', value: 'x', disabled: true })]),
-                m("td", [m('input', { class: 'w3-input w3-border', type: 'text', name: 'creditAmount', onkeypress: numValidate, onkeyup: findTotal, style: 'text-align: right' })])
-            ]
-        );
+        m.render(newDebitRow, [
+            m("td", ++serial),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                name: 'drPartyCode',
+                onpaste: partyNameComplete,
+                onkeyup: partyNameComplete,
+                style: 'text-align: center'
+            })]),
+            m("td", {
+                colspan: 3
+            }, [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                style: 'text-align: center',
+                value: '-----',
+                disabled: true
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                name: 'ACCode',
+                onpaste: ACNameComplete,
+                onkeyup: ACNameComplete,
+                style: 'text-align: center'
+            })]),
+            m("td", {
+                colspan: 3
+            }, [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                style: 'text-align: center',
+                value: '-----',
+                disabled: true
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                name: 'debitAmount',
+                onkeypress: numValidate,
+                onkeyup: findTotal,
+                style: 'text-align: right'
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                style: 'text-align: center',
+                value: 'x',
+                disabled: true
+            })])
+        ]);
+        m.render(newCreditRow, [
+            m("td", serial),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                name: 'crPartyCode',
+                onpaste: partyNameComplete,
+                onkeyup: partyNameComplete,
+                style: 'text-align: center'
+            })]),
+            m("td", {
+                colspan: 3
+            }, [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                style: 'text-align: center',
+                value: '-----',
+                disabled: true
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                name: 'ACCode',
+                onpaste: ACNameComplete,
+                onkeyup: ACNameComplete,
+                style: 'text-align: center'
+            })]),
+            m("td", {
+                colspan: 3
+            }, [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                style: 'text-align: center',
+                value: '-----',
+                disabled: true
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                style: 'text-align: center',
+                value: 'x',
+                disabled: true
+            })]),
+            m("td", [m('input', {
+                class: 'w3-input w3-border',
+                type: 'text',
+                name: 'creditAmount',
+                onkeypress: numValidate,
+                onkeyup: findTotal,
+                style: 'text-align: right'
+            })])
+        ]);
         chartTable.children[0].insertBefore(newDebitRow, debitAdderRow.parentElement);
         chartTable.children[0].insertBefore(newCreditRow, creditAdderRow.parentElement);
         // autoCompleteAC();
@@ -276,18 +340,18 @@
 
     var totalPriceTK = $js('totalPriceTK');
     var totalPriceA = $js('totalPriceA');
+
     function submitValid() {
         let totalDebit = commaToNum($js('totalDebit').textContent);
         let totalCredit = commaToNum($js('totalCredit').textContent);
         let totalPriceANum = commaToNum(totalPriceA.value);
         let totalPriceTKNum = commaToNum(totalPriceTK.value)
-        if (totalDebit != 0 && totalCredit != 0 && totalDebit == totalCredit && totalPriceANum != 0 && totalPriceTKNum != 0 && totalPriceANum == totalPriceTKNum && totalPriceTKNum==totalDebit) {
+        if (totalDebit != 0 && totalCredit != 0 && totalDebit == totalCredit && totalPriceANum != 0 && totalPriceTKNum != 0 && totalPriceANum == totalPriceTKNum && totalPriceTKNum == totalDebit) {
             $js('submitBtn').disabled = false;
-        }
-        else $js('submitBtn').disabled = true;
+        } else $js('submitBtn').disabled = true;
     }
 
-    $js('submitBtn').addEventListener('click', function () {
+    $js('submitBtn').addEventListener('click', function() {
         let date = $js('date');
         let regEx = /^\d{1,2}-(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-\d{2}$/i;
         let entryNo = $js('entryNo');
@@ -301,29 +365,26 @@
         let description = $js('description');
         let debitCredit = [];
         let ACCodes = [];
-        let partyCodes=[];
+        let partyCodes = [];
         var drPartyCodeEls = $sn('drPartyCode');
         var crPartyCodeEls = $sn('crPartyCode');
 
-                let newDBCredit=[];    //For New Database (Purchase And Disbursement)
+        let newDBCredit = []; //For New Database (Purchase And Disbursement)
 
         // Warning for Empty
         if (entryNo.value == "") {
             $('#notification').html("<h6>Entry No Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
             entryNo.focus();
             return;
-        }
-        else if (voucherNo.value == "") {
+        } else if (voucherNo.value == "") {
             $('#notification').html("<h6>Voucher No Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
             voucherNo.focus();
             return;
-        }
-        else if (date.value == "") {
+        } else if (date.value == "") {
             $('#notification').html("<h6>Date Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
             date.focus();
             return;
-        }
-        else if (!(date.value).match(regEx)) {
+        } else if (!(date.value).match(regEx)) {
             $('#notification').html("<h6>Error Date Format</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
             $js('date').focus();
             return;
@@ -340,18 +401,15 @@
                     $('#notification').html("<h6>Party Code Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     partyCodeEl.focus();
                     return;
-                }
-                else if (partyNameEl.value == "") {
+                } else if (partyNameEl.value == "") {
                     $('#notification').html("<h6>Party Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     partyCodeEl.focus();
                     return;
-                }
-                else if (ACCodeEl.value == "") {
+                } else if (ACCodeEl.value == "") {
                     $('#notification').html("<h6>Account Code Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     ACCodeEl.focus();
                     return;
-                }
-                else if (ACNameEl.value == "") {
+                } else if (ACNameEl.value == "") {
                     $('#notification').html("<h6>Account Name Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     ACCodeEl.focus();
                     return;
@@ -363,7 +421,7 @@
                     ACCode: ACCodeEl.value,
                     ACName: ACNameEl.value,
                     drAmount: commaToNum(drAmount.value),
-                    totalPriceTK:commaToNum(drAmount.value)
+                    totalPriceTK: commaToNum(drAmount.value)
                 }
                 ACCodes.push(ACCodeEl.value);
                 debitCredit.push(debit);
@@ -380,57 +438,47 @@
                     $('#notification').html("<h6>RM Code Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     partyCodeEl.focus();
                     return;
-                }
-                else if (partyNameEl.value == "") {
+                } else if (partyNameEl.value == "") {
                     $('#notification').html("<h6>Raw Materials Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     partyCodeEl.focus();
                     return;
-                }
-                else if (ACCodeEl.value == "") {
+                } else if (ACCodeEl.value == "") {
                     $('#notification').html("<h6>Account Code Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     ACCodeEl.focus();
                     return;
-                }
-                else if (ACNameEl.value == "") {
+                } else if (ACNameEl.value == "") {
                     $('#notification').html("<h6>Account Name Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
                     ACCodeEl.focus();
                     return;
+                } else if (primaryUnit.value == "") {
+                    $('#notification').html("<h6>Primary Unit Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
+                    primaryUnit.focus();
+                    return;
+                } else if (primaryQuantity.value == "") {
+                    $('#notification').html("<h6>Primary Quantity Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
+                    primaryQuantity.focus();
+                    return;
+                } else if (primaryUnitPrice.value == "") {
+                    $('#notification').html("<h6>Primary Unit Price Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
+                    primaryUnitPrice.focus();
+                    return;
+                } else if (stdUnit.value == "") {
+                    $('#notification').html("<h6>Standard Unit Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
+                    stdUnit.focus();
+                    return;
+                } else if (totalQuantity.value == "") {
+                    $('#notification').html("<h6>Total Quantity Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
+                    totalQuantity.focus();
+                    return;
+                } else if (stdUnitPrice.value == "") {
+                    $('#notification').html("<h6>Standard Unit Price Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
+                    stdUnitPrice.focus();
+                    return;
+                } else if (totalPriceTK.value == "") {
+                    $('#notification').html("<h6>Total Pirce Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
+                    totalPriceTK.focus();
+                    return;
                 }
-                else if (primaryUnit.value == "") {
-            $('#notification').html("<h6>Primary Unit Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
-            primaryUnit.focus();
-            return;
-        }
-        else if (primaryQuantity.value == "") {
-            $('#notification').html("<h6>Primary Quantity Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
-            primaryQuantity.focus();
-            return;
-        }
-        else if (primaryUnitPrice.value == "") {
-            $('#notification').html("<h6>Primary Unit Price Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
-            primaryUnitPrice.focus();
-            return;
-        }
-        else if (stdUnit.value == "") {
-            $('#notification').html("<h6>Standard Unit Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
-            stdUnit.focus();
-            return;
-        }
-        else if (totalQuantity.value == "") {
-            $('#notification').html("<h6>Total Quantity Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
-            totalQuantity.focus();
-            return;
-        }
-        else if (stdUnitPrice.value == "") {
-            $('#notification').html("<h6>Standard Unit Price Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
-            stdUnitPrice.focus();
-            return;
-        }
-        else if (totalPriceTK.value == "") {
-            $('#notification').html("<h6>Total Pirce Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
-            totalPriceTK.focus();
-            return;
-        }
                 let credit = {
                     type: 'Cr',
                     partyCode: partyCodeEl.value,
@@ -449,11 +497,11 @@
                 ACCodes.push(ACCodeEl.value);
                 debitCredit.push(credit);
                 partyCodes.push(partyCodeEl.value);
-                 
-                
+
+
             }
         }
-        
+
         if (description.value == "") {
             $('#notification').html("<h6>Description Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
             description.focus();
@@ -465,15 +513,15 @@
             date: dateToNum(date.value),
             debitCredit: debitCredit,
             ACCodes: ACCodes,
-            partyCodes:partyCodes,
+            partyCodes: partyCodes,
             description: description.value,
-            formName:'Purchse Return Form',
-            uId:firebase.auth().currentUser.uid,
-            flagPrejournal:0
+            formName: 'Purchse Return Form',
+            uId: firebase.auth().currentUser.uid,
+            flagPrejournal: 0
         }
 
 
- 
+
 
         function clearFields() {
             for (index in drPartyCodeEls) {
@@ -500,14 +548,14 @@
             $js('totalDebit').innerHTML = "";
             $js('totalCredit').innerHTML = "";
             $js('submitBtn').disabled = true;
-           
+
             document.getElementById('voucherNo').focus();
         }
         console.log(purshaseRet);
         // Firestore Store
         formDataToFire("JournalForm", entryNo.value, purshaseRet, clearFields);
 
-       
+
         // let purchaseReturnForm = lsExGJInit('purchaseReturnForm', []);
         // purchaseReturnForm.push(purshaseRet);
         // lsSetJ('purchaseReturnForm', purchaseReturnForm);

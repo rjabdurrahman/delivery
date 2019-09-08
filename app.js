@@ -485,14 +485,14 @@ app.controller('JournalFormCntlr', function ($scope, $firebaseArray, $firebaseOb
     lastEntryNo = undefined;
     axios.get(apiUrl + 'journal/last_entry')
         .then(function (res) {
-            lastEntryNo = res.data[0]['lastEntry'];
-            $scope.lastEntry = res.data[0]['lastEntry'];
+            lastEntryNo = res.data[0]['lastEntry'] + 1;
+            $scope.lastEntry = res.data[0]['lastEntry'] + 1;
             $scope.$applyAsync();
         })
         .catch(function (error) {
             console.log(error.message);
         });
-    var socket = io('http://localhost:3000');
+    var socket = io(apiUrl.replace('/api/', ''));
     socket.on('form', function (data) {
         console.log(data);
         lastEntryNo = data['lastEntry'];

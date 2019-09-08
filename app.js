@@ -492,7 +492,6 @@ app.controller('JournalFormCntlr', function ($scope, $firebaseArray, $firebaseOb
         .catch(function (error) {
             console.log(error.message);
         });
-    var socket = io(apiUrl.replace('/api/', ''));
     socket.on('form', function (data) {
         console.log(data);
         lastEntryNo = data['lastEntry'];

@@ -580,6 +580,13 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
         .catch(function (error) {
             console.log(error.message);
         });
+    // Pagination
+    let n = 900;
+    let max = 900;
+    $scope.list = [1, 900];
+    if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
+    else if (n == max) $scope.list.splice(1, 0, '----', max - 2, max - 1)
+    else if (n < 900 - 3) $scope.list.splice(1, 0, '----', n - 1, n, n + 1, '----')
     // Post Journal
     // $scope.poNoData = false;
     // $scope.poJournal = [];

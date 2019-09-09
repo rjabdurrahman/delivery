@@ -569,7 +569,8 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
         .then(function (res) {
             $scope.maxPage = Math.ceil(res.data[0]['total'] / dataPerPage);
             $scope.list.push(Math.ceil(res.data[0]['total'] / dataPerPage));
-            if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
+            if ($scope.maxPage <= 3) $scope.list.splice(1, 0, 2)
+            else if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
             else if (n == $scope.maxPage) $scope.list.splice(1, 0, '----', $scope.maxPage - 2, $scope.maxPage - 1)
             else if (n < 900 - 3) $scope.list.splice(1, 0, '----', n - 1, n, n + 1, '----')
             $scope.$applyAsync();
@@ -654,11 +655,14 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
     }
     // Serial
     $scope.pageLoad = function (e) {
-        let pageNo = e.target.innerHTML;
+        let pageNo = undefined;
+        if(e.target.name == 'go') pageNo = e.target.previousElementSibling.value;
+        else pageNo = e.target.innerHTML;
         let n = parseInt(pageNo) + 1;
         if (n > $scope.maxPage) n = $scope.maxPage;
         $scope.list = [1, $scope.maxPage];
-        if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
+        if ($scope.maxPage <= 3) $scope.list.splice(1, 0, 2)
+        else if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
         else if (n == $scope.maxPage) $scope.list.splice(1, 0, '----', $scope.maxPage - 2, $scope.maxPage - 1)
         else if (n < 900 - 3) $scope.list.splice(1, 0, '----', n - 1, n, n + 1, '----')
         if ($scope.show == 'alljournal') {

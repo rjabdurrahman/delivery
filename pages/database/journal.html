@@ -286,9 +286,13 @@
                 </div>
             </div>
             <!-- Pagination Start -->
-            <div class="w3-center" style="margin-top: 4px;">
+            <div class="w3-center flex" style="margin-top: 4px; justify-content: center;">
                 <div class="w3-bar w3-border w3-round w3-white">
                     <button ng-repeat="l in list track by $index" ng-disabled="l=='----'" ng-click="pageLoad($event)" class="w3-bar-item w3-button">{{l}}</button>
+                </div>
+                <div class="w3-center flex" style="margin-left: 12px;">
+                    <input type="text" class="w3-input w3-border w3-round" style="width: 50px;text-align: center;">
+                    <button name="go" ng-click="pageLoad($event)" class="w3-bar-item w3-button w3-blue">GO</button>
                 </div>
             </div>
             <!-- Pagination End -->

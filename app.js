@@ -562,11 +562,20 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
         });
     // Pagination
     let n = 1;
-    let max = 900;
-    $scope.list = [1, 900];
-    if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
-    else if (n == max) $scope.list.splice(1, 0, '----', max - 2, max - 1)
-    else if (n < 900 - 3) $scope.list.splice(1, 0, '----', n - 1, n, n + 1, '----')
+    $scope.maxPage = 900;
+    $scope.list = [1];
+    axios.get(apiUrl + 'journal/total')
+        .then(function (res) {
+            $scope.maxPage = Math.ceil(res.data[0]['total'] / 2);
+            $scope.list.push(Math.ceil(res.data[0]['total'] / 2));
+            if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
+            else if (n == $scope.maxPage) $scope.list.splice(1, 0, '----', $scope.maxPage - 2, $scope.maxPage - 1)
+            else if (n < 900 - 3) $scope.list.splice(1, 0, '----', n - 1, n, n + 1, '----')
+            $scope.$applyAsync();
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
     // Post Journal
     // $scope.poNoData = false;
     // $scope.poJournal = [];
@@ -645,6 +654,11 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
     // Serial
     $scope.pageLoad = function (e) {
         let pageNo = e.target.innerHTML;
+        let n = parseInt(pageNo) + 1;
+        $scope.list = [1, $scope.maxPage];
+        if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
+        else if (n == $scope.maxPage) $scope.list.splice(1, 0, '----', $scope.maxPage - 2, $scope.maxPage - 1)
+        else if (n < 900 - 3) $scope.list.splice(1, 0, '----', n - 1, n, n + 1, '----')
         if ($scope.show == 'alljournal') {
             $scope.journal = [];
         } else if ($scope.show == 'postjournal') {

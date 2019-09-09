@@ -562,7 +562,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
             console.log(error.message);
         });
     // Pagination
-    let n = 1;
+    $scope.currentPage = 1;
     $scope.maxPage = 900;
     $scope.list = [1];
     axios.get(apiUrl + 'journal/total')
@@ -570,9 +570,9 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
             $scope.maxPage = Math.ceil(res.data[0]['total'] / dataPerPage);
             $scope.list.push(Math.ceil(res.data[0]['total'] / dataPerPage));
             if ($scope.maxPage <= 3) $scope.list.splice(1, 0, 2)
-            else if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
-            else if (n == $scope.maxPage) $scope.list.splice(1, 0, '----', $scope.maxPage - 2, $scope.maxPage - 1)
-            else if (n < 900 - 3) $scope.list.splice(1, 0, '----', n - 1, n, n + 1, '----')
+            else if ($scope.currentPage < 3) $scope.list.splice(1, 0, 2, 3, '----')
+            else if ($scope.currentPage == $scope.maxPage) $scope.list.splice(1, 0, '----', $scope.maxPage - 2, $scope.maxPage - 1)
+            else if ($scope.currentPage < 900 - 3) $scope.list.splice(1, 0, '----', $scope.currentPage - 1, n, $scope.currentPage + 1, '----')
             $scope.$applyAsync();
         })
         .catch(function (error) {
@@ -658,13 +658,13 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
         let pageNo = undefined;
         if(e.target.name == 'go') pageNo = e.target.previousElementSibling.value;
         else pageNo = e.target.innerHTML;
-        let n = parseInt(pageNo) + 1;
-        if (n > $scope.maxPage) n = $scope.maxPage;
+        $scope.currentPage = parseInt(pageNo) + 1;
+        if ($scope.currentPage > $scope.maxPage) $scope.currentPage = $scope.maxPage;
         $scope.list = [1, $scope.maxPage];
         if ($scope.maxPage <= 3) $scope.list.splice(1, 0, 2)
-        else if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
-        else if (n == $scope.maxPage) $scope.list.splice(1, 0, '----', $scope.maxPage - 2, $scope.maxPage - 1)
-        else if (n < 900 - 3) $scope.list.splice(1, 0, '----', n - 1, n, n + 1, '----')
+        else if ($scope.currentPage < 3) $scope.list.splice(1, 0, 2, 3, '----')
+        else if ($scope.currentPage == $scope.maxPage) $scope.list.splice(1, 0, '----', $scope.maxPage - 2, $scope.maxPage - 1)
+        else if ($scope.currentPage < 900 - 3) $scope.list.splice(1, 0, '----', $scope.currentPage - 1, $scope.currentPage, $scope.currentPage + 1, '----')
         if ($scope.show == 'alljournal') {
             $scope.journal = [];
         } else if ($scope.show == 'postjournal') {

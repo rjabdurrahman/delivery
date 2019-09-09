@@ -658,8 +658,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
         let pageNo = undefined;
         if(e.target.name == 'go') pageNo = e.target.previousElementSibling.value;
         else pageNo = e.target.innerHTML;
-        $scope.currentPage = parseInt(pageNo) + 1;
-        if ($scope.currentPage > $scope.maxPage) $scope.currentPage = $scope.maxPage;
+        $scope.currentPage = parseInt(pageNo);
         $scope.list = [1, $scope.maxPage];
         if ($scope.maxPage <= 3) $scope.list.splice(1, 0, 2)
         else if ($scope.currentPage < 3) $scope.list.splice(1, 0, 2, 3, '----')

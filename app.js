@@ -655,6 +655,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
     $scope.pageLoad = function (e) {
         let pageNo = e.target.innerHTML;
         let n = parseInt(pageNo) + 1;
+        if(n > $scope.maxPage) n = $scope.maxPage;
         $scope.list = [1, $scope.maxPage];
         if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
         else if (n == $scope.maxPage) $scope.list.splice(1, 0, '----', $scope.maxPage - 2, $scope.maxPage - 1)

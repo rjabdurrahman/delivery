@@ -288,7 +288,7 @@
             <!-- Pagination Start -->
             <div class="w3-center" style="margin-top: 4px;">
                 <div class="w3-bar w3-border w3-round w3-white">
-                    <button ng-repeat="l in list track by $index" ng-disabled="l=='----'" class="w3-bar-item w3-button">{{l}}</button>
+                    <button ng-repeat="l in list track by $index" ng-disabled="l=='----'" ng-click="pageLoad($event)" class="w3-bar-item w3-button">{{l}}</button>
                 </div>
             </div>
             <!-- Pagination End -->

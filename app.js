@@ -546,13 +546,14 @@ app.controller('JournalFormCntlr', function ($scope, $firebaseArray, $firebaseOb
 
 app.controller('JournalCntlr', function ($scope, $firebaseArray) {
     $scope.title = "Journal";
+    let dataPerPage = 2;
     // All Juournals
     // $scope.noData = false;
     // $scope.journal = [];
     // Pre Journal
     $scope.pNoData = false;
     $scope.pJournal = [];
-    axios.get(apiUrl + 'journal/2-1')
+    axios.get(apiUrl + 'journal/' + dataPerPage + '-1')
         .then(function (res) {
             $scope.pJournal.push(...res.data);
             $scope.$applyAsync();
@@ -566,8 +567,8 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
     $scope.list = [1];
     axios.get(apiUrl + 'journal/total')
         .then(function (res) {
-            $scope.maxPage = Math.ceil(res.data[0]['total'] / 2);
-            $scope.list.push(Math.ceil(res.data[0]['total'] / 2));
+            $scope.maxPage = Math.ceil(res.data[0]['total'] / dataPerPage);
+            $scope.list.push(Math.ceil(res.data[0]['total'] / dataPerPage));
             if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
             else if (n == $scope.maxPage) $scope.list.splice(1, 0, '----', $scope.maxPage - 2, $scope.maxPage - 1)
             else if (n < 900 - 3) $scope.list.splice(1, 0, '----', n - 1, n, n + 1, '----')
@@ -655,7 +656,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
     $scope.pageLoad = function (e) {
         let pageNo = e.target.innerHTML;
         let n = parseInt(pageNo) + 1;
-        if(n > $scope.maxPage) n = $scope.maxPage;
+        if (n > $scope.maxPage) n = $scope.maxPage;
         $scope.list = [1, $scope.maxPage];
         if (n < 3) $scope.list.splice(1, 0, 2, 3, '----')
         else if (n == $scope.maxPage) $scope.list.splice(1, 0, '----', $scope.maxPage - 2, $scope.maxPage - 1)
@@ -666,7 +667,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
             $scope.poJournal = [];
         } else {
             $scope.pJournal = [];
-            axios.get(apiUrl + 'journal/2-' + pageNo)
+            axios.get(apiUrl + 'journal/' + dataPerPage + '-' + pageNo)
                 .then(function (res) {
                     $scope.pJournal.push(...res.data);
                     $scope.$applyAsync();

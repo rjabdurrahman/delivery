@@ -3,10 +3,9 @@
         <div class="margin-auto chart-box">
             <section class="clearfix">
                 <label class="ch-title mian-color w3-large ex-font" style="float: left; margin-top: 8px;">{{title}}s</label>
-                <button id="plusBtn" onclick="document.getElementById('id01').style.display='block';$js('submitRiceBtn').innerHTML = 'Submit';$js('riceCode').focus();"
-                    class="w3-xlarge w3-circle w3-white circle-btn" style="float: right;">+</button>
+                <button id="plusBtn" onclick="document.getElementById('id01').style.display='block';$js('submitRiceBtn').innerHTML = 'Submit';$js('riceCode').focus();" class="w3-xlarge w3-circle w3-white circle-btn" style="float: right;">+</button>
                 <!-- <button class="w3-btn w3-xlarge w3-circle w3-white circle-btn"><i class="fa fa-edit"></i></button> -->
-                <button ng-show="load" style="margin-left: 12px;" class="w3-xlarge w3-circle w3-white circle-btn PDF_Btn"><i class="fa fa-print"></i></button>                
+                <button ng-show="load" style="margin-left: 12px;" class="w3-xlarge w3-circle w3-white circle-btn PDF_Btn"><i class="fa fa-print"></i></button>
             </section>
             <div class="w3-card-4 table-container">
                 <div class="ch-table-content">
@@ -47,10 +46,8 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div ng-show="!load" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif"
-                                alt="Loading..." style="height: 25px; width: 25px;"></div>
-                        <div id="nodata" ng-show="nodata" class="w3-pale-blue" style="padding: 12px; text-align: center;">No
-                            Data Found!</div>
+                        <div ng-show="!load" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..." style="height: 25px; width: 25px;"></div>
+                        <div id="nodata" ng-show="nodata" class="w3-pale-blue" style="padding: 12px; text-align: center;">No Data Found!</div>
                     </div>
                 </div>
             </div>
@@ -114,8 +111,7 @@
                                     <label class="w3-medium">Pack Size</label>
                                 </div>
                                 <div class="w3-rest">
-                                    <input class="w3-input w3-border commanum" type="text" name="" id="packSize"
-                                        required>
+                                    <input class="w3-input w3-border commanum" type="text" name="" id="packSize" required>
                                 </div>
                             </div>
                             <div class="w3-row w3-section">
@@ -131,8 +127,7 @@
                                     <label class="w3-medium">Total Quantity</label>
                                 </div>
                                 <div class="w3-rest">
-                                    <input class="w3-input w3-border commanum" type="text" name="" id="totalQu"
-                                        disabled>
+                                    <input class="w3-input w3-border commanum" type="text" name="" id="totalQu" disabled>
                                 </div>
                             </div>
                             <div class="w3-row w3-section">
@@ -140,8 +135,7 @@
                                     <label class="w3-medium">Standard Unit Price</label>
                                 </div>
                                 <div class="w3-rest">
-                                    <input class="w3-input w3-border commanum" type="text" name="" id="stdUnitPri"
-                                        required>
+                                    <input class="w3-input w3-border commanum" type="text" name="" id="stdUnitPri" required>
                                 </div>
                             </div>
                             <div class="w3-row w3-section">
@@ -149,8 +143,7 @@
                                     <label class="w3-medium">Total Price</label>
                                 </div>
                                 <div class="w3-rest">
-                                    <input class="w3-input w3-border commanum" type="text" name="" id="totalPri"
-                                        disabled>
+                                    <input class="w3-input w3-border commanum" type="text" name="" id="totalPri" disabled>
                                 </div>
                             </div>
                             <p class="clearfix">
@@ -170,8 +163,7 @@
     <table border="1" cellspacing="0" style="visibility: hidden;" id="PdfTable">
         <thead>
             <tr>
-                <td colspan="9" style="text-align: center; height: 50px; font-size: 25px;"><span>FINISHED GOODS</span><img
-                        style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                <td colspan="9" style="text-align: center; height: 50px; font-size: 25px;"><span>FINISHED GOODS</span><img style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
             </tr>
             <tr class="main-bg-color">
                 <th>ID</th>
@@ -204,18 +196,18 @@
 <script>
     var dbRices = null;
 
-    $(document).keypress(function (event) {
+    $(document).keypress(function(event) {
         if (event.shiftKey && event.which == 43) {
             event.preventDefault();
             $('#plusBtn').click();
         }
     });
-    $js("form1").addEventListener("submit", function (event) {
+    $js("form1").addEventListener("submit", function(event) {
         event.preventDefault();
     });
 
     //Total Cal
-    $js('packSize').onkeyup = function (event) {
+    $js('packSize').onkeyup = function(event) {
         let priTP = $js('noPack').value;
         // $print(priTP);
         if (priTP != "") {
@@ -226,7 +218,7 @@
             }
         }
     }
-    $js('noPack').onkeyup = function (event) {
+    $js('noPack').onkeyup = function(event) {
         let priTP = $js('packSize').value;
         // $print(priTP);
         if (priTP != "") {
@@ -237,7 +229,7 @@
             }
         }
     }
-    $js('stdUnitPri').onkeyup = function (event) {
+    $js('stdUnitPri').onkeyup = function(event) {
         let priTP = $js('totalQu').value;
         // $print(priTP);
         if (priTP != "") {
@@ -247,11 +239,11 @@
 
     // // Total Cal End
 
-    $js('submitRiceBtn').addEventListener('click', function () {
+    $js('submitRiceBtn').addEventListener('click', function() {
         submitRiceBtn();
     });
 
-    $('input.commanum').keyup(function (event) {
+    $('input.commanum').keyup(function(event) {
         if (event.target.value.includes(".")) {
             let str = event.target.value.split('.');
             event.target.value = str[0] + "." + str[1].replace(/\D/g, "");
@@ -261,7 +253,7 @@
         if ((event.which >= 37 && event.which <= 40) || event.which == 190) return;
 
         // format number
-        $(this).val(function (index, value) {
+        $(this).val(function(index, value) {
             return value
                 .replace(/\D/g, "")
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -280,11 +272,11 @@
         dbID = ID.slice(0, -1);
         editTriget = 1;
         console.log(id, editTriget);
-        getRef('rice/' + id).on('value', function (snapshot) {
+        getRef('rice/' + id).on('value', function(snapshot) {
             let dbData = snapshot.val();
             console.log(dbData);
 
-            dbDataCode = dbData.code;   ///   from database code grip to control notification...............
+            dbDataCode = dbData.code; ///   from database code grip to control notification...............
 
             $js('riceCode').value = dbData.code;
             $js('riceName').value = dbData.name;
@@ -315,32 +307,25 @@
         if (riceCode == "") {
             $('#notification').html("<h6>Code Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
-        }
-        else if (riceName == "") {
+        } else if (riceName == "") {
             $('#notification').html("<h6>Name Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
-        }
-        else if (stdUnit == "") {
+        } else if (stdUnit == "") {
             $('#notification').html("<h6>Standard Unit Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
-        }
-        else if (packSize == "") {
+        } else if (packSize == "") {
             $('#notification').html("<h6>Pack Size Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
-        }
-        else if (noPack == "") {
+        } else if (noPack == "") {
             $('#notification').html("<h6>Number Of Pack Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
-        }
-        else if (totalQu == "") {
+        } else if (totalQu == "") {
             $('#notification').html("<h6>Total Qunantity Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
-        }
-        else if (stdUnitPri == "") {
+        } else if (stdUnitPri == "") {
             $('#notification').html("<h6>Standard Unit Price Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
-        }
-        else if (totalPri == "") {
+        } else if (totalPri == "") {
             $('#notification').html("<h6>Total Price Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
         }
@@ -359,7 +344,7 @@
 
         if (editTriget == 1 && dbDataCode == riceCode) {
             editTriget = 0;
-            db.child('rice/' + dbID).update(rice, function (error) {
+            db.child('rice/' + dbID).update(rice, function(error) {
                 if (error) {
                     $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
                 } else {
@@ -369,8 +354,7 @@
 
                 }
             });
-        }
-        else if (editTriget == 1 && dbDataCode != riceCode) {
+        } else if (editTriget == 1 && dbDataCode != riceCode) {
 
             for (i = 0; i < dbRices.length; i++) {
                 if (riceCode == dbRices[i].code) {
@@ -380,7 +364,7 @@
                 }
             }
             editTriget = 0;
-            db.child('rice/' + dbID).update(rice, function (error) {
+            db.child('rice/' + dbID).update(rice, function(error) {
                 if (error) {
                     $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
                 } else {
@@ -399,7 +383,7 @@
                     return;
                 }
             }
-            db.child('rice').push(rice, function (error) {
+            db.child('rice').push(rice, function(error) {
                 if (error) {
                     $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
                 } else {
@@ -423,7 +407,9 @@
 
     function printRice() {
         $print("print");
-        var ws = XLSX.utils.table_to_sheet(document.getElementById('riceTable'), { cellDates: true });
+        var ws = XLSX.utils.table_to_sheet(document.getElementById('riceTable'), {
+            cellDates: true
+        });
         // var wscols = [
         //     { wch: 4 },
         //     { wch: 12 },
@@ -441,50 +427,59 @@
         // ws['!cols'] = wscols;
         // ws['!rows'] = wsrows;
         XLSX.utils.book_append_sheet(wb, ws, 'Rice');
-        var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+        var wbout = XLSX.write(wb, {
+            bookType: 'xlsx',
+            bookSST: true,
+            type: 'binary'
+        });
+
         function s2ab(s) {
             var buf = new ArrayBuffer(s.length);
             var view = new Uint8Array(buf);
             for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
             return buf;
         }
-        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Rice.xlsx');
+        saveAs(new Blob([s2ab(wbout)], {
+            type: "application/octet-stream"
+        }), 'Rice.xlsx');
     }
     // Delete data start......................
     var onDel = '';
+
     function getDbId(e) {
         console.log("ok click");
         $js('confirmDel').style.display = 'block';
         onDel = e.target.id;
     }
+
     function rmItem(dbId) {
         getRef('rice').child(dbId).remove()
-            .then(function (sucess) {
+            .then(function(sucess) {
                 $js('confirmDel').style.display = 'none';
                 notify('Deleted Sucessfully', 1);
             })
-            .catch(function (err) {
+            .catch(function(err) {
                 notify(err, 2);
             });
     }
     // Delete data end......................
 
     //pdf making and save............................Start....................
-    $('.PDF_Btn').click(function () {
-        location.reload();
-        $js('PdfTable').style.visibility = "visible";
-        var printme = document.getElementById('PdfTable');
-        var wme = window.open("", "", "width=900,height=900");
-        wme.document.write(printme.outerHTML);
-        wme.document.close();
-        wme.focus();
-        wme.print();
-        wme.close();
-        $js('PdfTable').style.visibility = "hidden";
+    $('.PDF_Btn').click(function() {
+            location.reload();
+            $js('PdfTable').style.visibility = "visible";
+            var printme = document.getElementById('PdfTable');
+            var wme = window.open("", "", "width=900,height=900");
+            wme.document.write(printme.outerHTML);
+            wme.document.close();
+            wme.focus();
+            wme.print();
+            wme.close();
+            $js('PdfTable').style.visibility = "hidden";
 
-    })
-    //pdf making and save............................End......................
-    //Print in Landscape...........start........
+        })
+        //pdf making and save............................End......................
+        //Print in Landscape...........start........
     var css = '@page { size: landscape; }',
         head = document.head || document.getElementsByTagName('head')[0],
         style = document.createElement('style');

@@ -3,10 +3,9 @@
         <div class="margin-auto chart-box">
             <section class="clearfix">
                 <label class="ch-title mian-color w3-large ex-font" style="float: left; margin-top: 8px;">{{title}}s</label>
-                <button id="plusBtn" onclick="document.getElementById('id01').style.display='block';$js('submitChBtn').innerHTML = 'Submit';$js('chACCode').focus();"
-                    class="w3-xlarge w3-circle w3-white circle-btn" style="float: right;">+</button>
+                <button id="plusBtn" onclick="document.getElementById('id01').style.display='block';$js('submitChBtn').innerHTML = 'Submit';$js('chACCode').focus();" class="w3-xlarge w3-circle w3-white circle-btn" style="float: right;">+</button>
                 <!-- <button class="w3-btn w3-xlarge w3-circle w3-white circle-btn"><i class="fa fa-edit"></i></button> -->
-                <button ng-show="load" style="margin-left: 12px;" class="w3-xlarge w3-circle w3-white circle-btn PDF_Btn"><i class="fa fa-print"></i></button>                
+                <button ng-show="load" style="margin-left: 12px;" class="w3-xlarge w3-circle w3-white circle-btn PDF_Btn"><i class="fa fa-print"></i></button>
             </section>
             <div class="w3-card-4 table-container">
                 <div class="ch-table-content">
@@ -35,10 +34,8 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div ng-show="!load" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif"
-                                alt="Loading..." style="height: 25px; width: 25px;"></div>
-                        <div id="nodata" ng-show="nodata" class="w3-pale-blue" style="padding: 12px; text-align: center;">No
-                            Data Found!</div>
+                        <div ng-show="!load" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..." style="height: 25px; width: 25px;"></div>
+                        <div id="nodata" ng-show="nodata" class="w3-pale-blue" style="padding: 12px; text-align: center;">No Data Found!</div>
                     </div>
                 </div>
             </div>
@@ -107,8 +104,7 @@
     <table border="1" cellspacing="0" style="visibility: hidden;" id="PdfTable">
         <thead>
             <tr>
-                <td colspan="3" style="text-align: center; height: 50px; font-size: 25px;"><span>COMPANY HEADS</span><img
-                        style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+                <td colspan="3" style="text-align: center; height: 50px; font-size: 25px;"><span>COMPANY HEADS</span><img style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
             </tr>
             <tr class="main-bg-color">
                 <th>ID</th>
@@ -128,17 +124,17 @@
 <!-- Pdf print hide table...........end.................. -->
 <script>
     var dbCh = null;
-    $(document).keypress(function (event) {
+    $(document).keypress(function(event) {
         if (event.shiftKey && event.which == 43) {
             event.preventDefault();
             $('#plusBtn').click();
         }
     });
 
-    $js("form1").addEventListener("submit", function (event) {
+    $js("form1").addEventListener("submit", function(event) {
         event.preventDefault();
     });
-    $js('submitChBtn').addEventListener('click', function () {
+    $js('submitChBtn').addEventListener('click', function() {
         submitChBtn();
     });
     /// edit data show in field start........................
@@ -154,11 +150,11 @@
         dbID = ID.slice(0, -1);
         editTriget = 1;
         console.log(id, editTriget);
-        getRef('companyHeads/' + id).on('value', function (snapshot) {
+        getRef('companyHeads/' + id).on('value', function(snapshot) {
             let dbData = snapshot.val();
             console.log(dbData);
 
-            dbDataCode = dbData.code;   ///   from database code grip to control notification...............
+            dbDataCode = dbData.code; ///   from database code grip to control notification...............
             $js('chACCode').value = dbData.code;
             $js('chPartyName').value = dbData.name;
 
@@ -172,8 +168,7 @@
         if (chACCode == "") {
             $('#notification').html("<h6>Account Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
-        }
-        else if (chPartyName == "") {
+        } else if (chPartyName == "") {
             $('#notification').html("<h6>Party Name Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
         }
@@ -186,7 +181,7 @@
 
         if (editTriget == 1 && dbDataCode == chACCode) {
             editTriget = 0;
-            db.child('companyHeads/' + dbID).update(ch, function (error) {
+            db.child('companyHeads/' + dbID).update(ch, function(error) {
                 if (error) {
                     $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
                 } else {
@@ -196,8 +191,7 @@
 
                 }
             });
-        }
-        else if (editTriget == 1 && dbDataCode != chACCode) {
+        } else if (editTriget == 1 && dbDataCode != chACCode) {
 
             for (i = 0; i < dbCh.length; i++) {
                 if (chACCode == dbCh[i].code) {
@@ -207,7 +201,7 @@
                 }
             }
             editTriget = 0;
-            db.child('companyHeads/' + dbID).update(ch, function (error) {
+            db.child('companyHeads/' + dbID).update(ch, function(error) {
                 if (error) {
                     $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
                 } else {
@@ -226,7 +220,7 @@
                     return;
                 }
             }
-            db.child('companyHeads').push(ch, function (error) {
+            db.child('companyHeads').push(ch, function(error) {
                 if (error) {
                     $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
                 } else {
@@ -247,7 +241,9 @@
 
     function printCh() {
         $print("print");
-        var ws = XLSX.utils.table_to_sheet(document.getElementById('comHeadTable'), { cellDates: true });
+        var ws = XLSX.utils.table_to_sheet(document.getElementById('comHeadTable'), {
+            cellDates: true
+        });
         // var wscols = [
         //     { wch: 4 },
         //     { wch: 12 },
@@ -265,50 +261,59 @@
         // ws['!cols'] = wscols;
         // ws['!rows'] = wsrows;
         XLSX.utils.book_append_sheet(wb, ws, 'Company Heads');
-        var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+        var wbout = XLSX.write(wb, {
+            bookType: 'xlsx',
+            bookSST: true,
+            type: 'binary'
+        });
+
         function s2ab(s) {
             var buf = new ArrayBuffer(s.length);
             var view = new Uint8Array(buf);
             for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
             return buf;
         }
-        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Company_Heads.xlsx');
+        saveAs(new Blob([s2ab(wbout)], {
+            type: "application/octet-stream"
+        }), 'Company_Heads.xlsx');
     }
 
     // Delete data start......................
     var onDel = '';
+
     function getDbId(e) {
         console.log("ok click");
         $js('confirmDel').style.display = 'block';
         onDel = e.target.id;
     }
+
     function rmItem(dbId) {
         getRef('companyHeads').child(dbId).remove()
-            .then(function (sucess) {
+            .then(function(sucess) {
                 $js('confirmDel').style.display = 'none';
                 notify('Deleted Sucessfully', 1);
             })
-            .catch(function (err) {
+            .catch(function(err) {
                 notify(err, 2);
             });
     }
     // Delete data end......................
     //pdf making and save............................Start....................
-    $('.PDF_Btn').click(function () {
-        location.reload();
-        $js('PdfTable').style.visibility = "visible";
-        var printme = document.getElementById('PdfTable');
-        var wme = window.open("", "", "width=900,height=900");
-        wme.document.write(printme.outerHTML);
-        wme.document.close();
-        wme.focus();
-        wme.print();
-        wme.close();
-        $js('PdfTable').style.visibility = "hidden";
+    $('.PDF_Btn').click(function() {
+            location.reload();
+            $js('PdfTable').style.visibility = "visible";
+            var printme = document.getElementById('PdfTable');
+            var wme = window.open("", "", "width=900,height=900");
+            wme.document.write(printme.outerHTML);
+            wme.document.close();
+            wme.focus();
+            wme.print();
+            wme.close();
+            $js('PdfTable').style.visibility = "hidden";
 
-    })
-    //pdf making and save............................End......................
-    //Print in Landscape...........start........
+        })
+        //pdf making and save............................End......................
+        //Print in Landscape...........start........
     var css = '@page { size: landscape; }',
         head = document.head || document.getElementsByTagName('head')[0],
         style = document.createElement('style');

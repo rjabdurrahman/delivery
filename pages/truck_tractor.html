@@ -3,10 +3,9 @@
         <div class="margin-auto chart-box">
             <section class="clearfix">
                 <label class="ch-title mian-color w3-large ex-font" style="float: left; margin-top: 8px;">{{title}}s</label>
-                <button id="plusBtn" onclick="document.getElementById('id01').style.display='block';$js('submitTrBtn').innerHTML = 'Submit';$js('trCode').focus();"
-                    class="w3-xlarge w3-circle w3-white circle-btn" style="float: right;">+</button>
+                <button id="plusBtn" onclick="document.getElementById('id01').style.display='block';$js('submitTrBtn').innerHTML = 'Submit';$js('trCode').focus();" class="w3-xlarge w3-circle w3-white circle-btn" style="float: right;">+</button>
                 <!--<button class="w3-btn w3-xlarge w3-circle w3-white circle-btn"><i class="fa fa-edit"></i></button> -->
-                <button ng-show="load" style="margin-left: 12px;" class="w3-xlarge w3-circle w3-white circle-btn PDF_Btn"><i class="fa fa-print"></i></button>                
+                <button ng-show="load" style="margin-left: 12px;" class="w3-xlarge w3-circle w3-white circle-btn PDF_Btn"><i class="fa fa-print"></i></button>
             </section>
             <div class="w3-card-4 table-container">
                 <div class="ch-table-content">
@@ -39,10 +38,8 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div ng-show="!load" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif"
-                                alt="Loading..." style="height: 25px; width: 25px;"></div>
-                        <div id="nodata" ng-show="nodata" class="w3-pale-blue" style="padding: 12px; text-align: center;">No
-                            Data Found!</div>
+                        <div ng-show="!load" class="w3-pale-blue" style="padding: 12px; text-align: center;"><img src="img/loader.gif" alt="Loading..." style="height: 25px; width: 25px;"></div>
+                        <div id="nodata" ng-show="nodata" class="w3-pale-blue" style="padding: 12px; text-align: center;">No Data Found!</div>
                     </div>
                 </div>
             </div>
@@ -107,8 +104,7 @@
                                     <label class="w3-medium">Beginning Balance</label>
                                 </div>
                                 <div class="w3-rest">
-                                    <input class="w3-input w3-border comma-num-minus" type="text" name="" id="begBal"
-                                        required>
+                                    <input class="w3-input w3-border comma-num-minus" type="text" name="" id="begBal" required>
                                 </div>
                             </div>
                             <p class="clearfix">
@@ -126,43 +122,42 @@
 <!-- Pdf print hide table...........start.................. -->
 <div style="display: none;">
     <table border="1" cellspacing="0" style="visibility: hidden;" id="PdfTable">
-            <thead>
-                    <tr>
-                            <td colspan="5" style="text-align: center; height: 50px; font-size: 25px;"><span>VEHICLES</span><img
-                                    style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
-                        </tr>
-                    <tr class="main-bg-color">
-                        <th>ID</th>
-                        <th>Code</th>
-                        <th>Vehicle Type</th>
-                        <th>Vehicle No</th>
-                        <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="Tr in comTrs | orderBy : 'code' track by $index">
-                        <td>{{$index + 1}}</td>
-                        <td>{{Tr.code}}</td>
-                        <td>{{Tr.type}}</td>
-                        <td>{{Tr.name}}</td>
-                        <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(Tr.balance)}}</td>
-                    </tr>
-                </tbody>
+        <thead>
+            <tr>
+                <td colspan="5" style="text-align: center; height: 50px; font-size: 25px;"><span>VEHICLES</span><img style="width: 50px; height: 50px; float: right;" src="/img/logo3.png"></td>
+            </tr>
+            <tr class="main-bg-color">
+                <th>ID</th>
+                <th>Code</th>
+                <th>Vehicle Type</th>
+                <th>Vehicle No</th>
+                <th ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">Beginning Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="Tr in comTrs | orderBy : 'code' track by $index">
+                <td>{{$index + 1}}</td>
+                <td>{{Tr.code}}</td>
+                <td>{{Tr.type}}</td>
+                <td>{{Tr.name}}</td>
+                <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(Tr.balance)}}</td>
+            </tr>
+        </tbody>
     </table>
 </div>
 <!-- Pdf print hide table...........end.................. -->
 <script>
     var dbTrs = null;
-    $(document).keypress(function (event) {
+    $(document).keypress(function(event) {
         if (event.shiftKey && event.which == 43) {
             event.preventDefault();
             $('#plusBtn').click();
         }
     });
-    $js("form1").addEventListener("submit", function (event) {
+    $js("form1").addEventListener("submit", function(event) {
         event.preventDefault();
     });
-    $js('submitTrBtn').addEventListener('click', function () {
+    $js('submitTrBtn').addEventListener('click', function() {
         submitTrBtn();
     });
 
@@ -178,11 +173,11 @@
         dbID = ID.slice(0, -1);
         editTriget = 1;
         console.log(id, editTriget);
-        getRef('truckTrackors/' + id).on('value', function (snapshot) {
+        getRef('truckTrackors/' + id).on('value', function(snapshot) {
             let dbData = snapshot.val();
             console.log(dbData);
 
-            dbDataCode = dbData.code;   ///   from database code grip to control notification...............
+            dbDataCode = dbData.code; ///   from database code grip to control notification...............
 
             $js('trCode').value = dbData.code;
             $js('trNo').value = dbData.name;
@@ -201,16 +196,13 @@
         if (trCode == "") {
             $('#notification').html("<h6>Account Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
-        }
-        else if (trNo == "") {
+        } else if (trNo == "") {
             $('#notification').html("<h6>Number Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
-        }
-        else if (begBal == "") {
+        } else if (begBal == "") {
             $('#notification').html("<h6>Beginning Balance Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
-        }
-        else if (vType == "") {
+        } else if (vType == "") {
             $('#notification').html("<h6>Type Empty</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
             return;
         }
@@ -224,7 +216,7 @@
         };
         if (editTriget == 1 && dbDataCode == trCode) {
             editTriget = 0;
-            db.child('truckTrackors/' + dbID).update(tr, function (error) {
+            db.child('truckTrackors/' + dbID).update(tr, function(error) {
                 if (error) {
                     $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
                 } else {
@@ -234,8 +226,7 @@
 
                 }
             });
-        }
-        else if (editTriget == 1 && dbDataCode != trCode) {
+        } else if (editTriget == 1 && dbDataCode != trCode) {
 
             for (i = 0; i < dbTrs.length; i++) {
                 if (trCode == dbTrs[i].code) {
@@ -245,7 +236,7 @@
                 }
             }
             editTriget = 0;
-            db.child('truckTrackors/' + dbID).update(tr, function (error) {
+            db.child('truckTrackors/' + dbID).update(tr, function(error) {
                 if (error) {
                     $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
                 } else {
@@ -264,7 +255,7 @@
                     return;
                 }
             }
-            db.child('truckTrackors/').push(tr, function (error) {
+            db.child('truckTrackors/').push(tr, function(error) {
                 if (error) {
                     $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
                 } else {
@@ -300,7 +291,9 @@
 
     function printTr() {
         $print("print");
-        var ws = XLSX.utils.table_to_sheet(document.getElementById('TruckTable'), { cellDates: true });
+        var ws = XLSX.utils.table_to_sheet(document.getElementById('TruckTable'), {
+            cellDates: true
+        });
         // var wscols = [
         //     { wch: 4 },
         //     { wch: 12 },
@@ -318,50 +311,59 @@
         // ws['!cols'] = wscols;
         // ws['!rows'] = wsrows;
         XLSX.utils.book_append_sheet(wb, ws, 'Truck and Tractor');
-        var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+        var wbout = XLSX.write(wb, {
+            bookType: 'xlsx',
+            bookSST: true,
+            type: 'binary'
+        });
+
         function s2ab(s) {
             var buf = new ArrayBuffer(s.length);
             var view = new Uint8Array(buf);
             for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
             return buf;
         }
-        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Truck_Tractor.xlsx');
+        saveAs(new Blob([s2ab(wbout)], {
+            type: "application/octet-stream"
+        }), 'Truck_Tractor.xlsx');
     }
     // Delete data start......................
     var onDel = '';
+
     function getDbId(e) {
         console.log("ok click");
         $js('confirmDel').style.display = 'block';
         onDel = e.target.id;
     }
+
     function rmItem(dbId) {
         getRef('truckTrackors').child(dbId).remove()
-            .then(function (sucess) {
+            .then(function(sucess) {
                 $js('confirmDel').style.display = 'none';
                 notify('Deleted Sucessfully', 1);
             })
-            .catch(function (err) {
+            .catch(function(err) {
                 notify(err, 2);
             });
     }
     // Delete data end......................
 
     //pdf making and save............................Start....................
-    $('.PDF_Btn').click(function () {
-        location.reload();
-        $js('PdfTable').style.visibility = "visible";
-        var printme = document.getElementById('PdfTable');
-        var wme = window.open("", "", "width=900,height=900");
-        wme.document.write(printme.outerHTML);
-        wme.document.close();
-        wme.focus();
-        wme.print();
-        wme.close();
-        $js('PdfTable').style.visibility = "hidden";
+    $('.PDF_Btn').click(function() {
+            location.reload();
+            $js('PdfTable').style.visibility = "visible";
+            var printme = document.getElementById('PdfTable');
+            var wme = window.open("", "", "width=900,height=900");
+            wme.document.write(printme.outerHTML);
+            wme.document.close();
+            wme.focus();
+            wme.print();
+            wme.close();
+            $js('PdfTable').style.visibility = "hidden";
 
-    })
-    //pdf making and save............................End......................
-    //Print in Landscape...........start........
+        })
+        //pdf making and save............................End......................
+        //Print in Landscape...........start........
     var css = '@page { size: landscape; }',
         head = document.head || document.getElementsByTagName('head')[0],
         style = document.createElement('style');

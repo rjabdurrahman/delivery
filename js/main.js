@@ -244,7 +244,6 @@ function formDataToFire(data, cleardata, name) {
 
 // Insert Chart
 function insertChart(route, data, clearF) {
-    console.log(apiUrl + 'chart/' + route)
     axios.post(apiUrl + 'chart/' + route, data, {
         headers: { 'Content-Type': 'application/json' }
     })
@@ -254,6 +253,24 @@ function insertChart(route, data, clearF) {
                 notify(res.data.err, 2);
             else {
                 notify("Added Successfully!", 1);
+                location.reload();
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
+}
+
+// Reove Chart 
+function removeChart(route, code) {
+    axios.post(apiUrl + 'chart/remove/' + route, { code }, {
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(function (res) {
+            if (res.data.err)
+                notify(res.data.err, 2);
+            else {
+                notify("Removed Successfully!", 1);
                 location.reload();
             }
         })

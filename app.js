@@ -312,25 +312,33 @@ app.controller('LoginCntlr', function ($scope, $firebaseObject) {
 });
 app.controller('PayableCntlr', function ($scope, $firebaseArray) {
     $scope.title = "Creditor";
-    var ref = firebase.database().ref().child('payables');
-    dbPayables = $scope.comPayables = $firebaseArray(ref);
-    $scope.comPayables.$loaded().then(function () {
-        $scope.load = true;
-        if ($scope.comPayables.length == 0) {
-            $scope.nodata = true;
-        }
-    });
+    axios.get(apiUrl + 'chart/creditors')
+        .then(function (res) {
+            dbReceivables = $scope.comPayables = res.data;
+            $scope.$applyAsync();
+            $scope.load = true;
+            if ($scope.comPayables.length == 0) {
+                $scope.nodata = true;
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
 });
 app.controller('CompanyHeadsCntlr', function ($scope, $firebaseArray) {
     $scope.title = "Company Head";
-    var ref = firebase.database().ref().child('companyHeads');
-    dbCh = $scope.comCh = $firebaseArray(ref);
-    $scope.comCh.$loaded().then(function () {
-        $scope.load = true;
-        if ($scope.comCh.length == 0) {
-            $scope.nodata = true;
-        }
-    });
+    axios.get(apiUrl + 'chart/creditors')
+        .then(function (res) {
+            dbReceivables = $scope.companyHeads = res.data;
+            $scope.$applyAsync();
+            $scope.load = true;
+            if ($scope.companyHeads.length == 0) {
+                $scope.nodata = true;
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
 });
 app.controller('CostCenterCntlr', function ($scope, $firebaseArray) {
     $scope.title = "Cost Center";
@@ -347,90 +355,138 @@ app.controller('TruckTractorCntlr', function ($scope, $firebaseArray) {
     $scope.title = "Vehicle";
     var ref = firebase.database().ref().child('truckTrackors');
     dbTrs = $scope.comTrs = $firebaseArray(ref);
-    $scope.comTrs.$loaded().then(function () {
-        $scope.load = true;
-        if ($scope.comTrs.length == 0) {
-            $scope.nodata = true;
-        }
-    });
+    axios.get(apiUrl + 'chart/creditors')
+        .then(function (res) {
+            dbReceivables = $scope.companyHeads = res.data;
+            $scope.$applyAsync();
+            $scope.load = true;
+            if ($scope.companyHeads.length == 0) {
+                $scope.nodata = true;
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
 });
 app.controller('EmployeesCntlr', function ($scope, $firebaseArray) {
     $scope.title = "Employee";
     var ref = firebase.database().ref().child('employees');
     dbEmps = $scope.comEmps = $firebaseArray(ref);
-    $scope.comEmps.$loaded().then(function () {
-        $scope.load = true;
-        if ($scope.comEmps.length == 0) {
-            $scope.nodata = true;
-        }
-    });
+    axios.get(apiUrl + 'chart/creditors')
+        .then(function (res) {
+            dbReceivables = $scope.companyHeads = res.data;
+            $scope.$applyAsync();
+            $scope.load = true;
+            if ($scope.companyHeads.length == 0) {
+                $scope.nodata = true;
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
 });
 app.controller('BankCntlr', function ($scope, $firebaseArray) {
     $scope.title = "Bank";
     var ref = firebase.database().ref().child('banks');
     dbBanks = $scope.comBanks = $firebaseArray(ref);
-    $scope.comBanks.$loaded().then(function () {
-        $scope.load = true;
-        if ($scope.comBanks.length == 0) {
-            $scope.nodata = true;
-        }
-    });
+    axios.get(apiUrl + 'chart/creditors')
+        .then(function (res) {
+            dbReceivables = $scope.companyHeads = res.data;
+            $scope.$applyAsync();
+            $scope.load = true;
+            if ($scope.companyHeads.length == 0) {
+                $scope.nodata = true;
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
 });
 app.controller('ContractorsCntlr', function ($scope, $firebaseArray) {
     $scope.title = "Contractor";
     var ref = firebase.database().ref().child('contractors');
     dbContractors = $scope.comContractors = $firebaseArray(ref);
-    $scope.comContractors.$loaded().then(function () {
-        $scope.load = true;
-        if ($scope.comContractors.length == 0) {
-            $scope.nodata = true;
-        }
-    });
+    axios.get(apiUrl + 'chart/creditors')
+        .then(function (res) {
+            dbReceivables = $scope.companyHeads = res.data;
+            $scope.$applyAsync();
+            $scope.load = true;
+            if ($scope.companyHeads.length == 0) {
+                $scope.nodata = true;
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
 });
 app.controller('PaddyRawCntlr', function ($scope, $firebaseArray) {
     $scope.title = "Raw Material";
     var ref = firebase.database().ref().child('paddyRaw');
     dbPaddyRaws = $scope.comPaddyRaws = $firebaseArray(ref);
-    $scope.comPaddyRaws.$loaded().then(function () {
-        $scope.load = true;
-        if ($scope.comPaddyRaws.length == 0) {
-            $scope.nodata = true;
-        }
-    });
+    axios.get(apiUrl + 'chart/creditors')
+        .then(function (res) {
+            dbReceivables = $scope.companyHeads = res.data;
+            $scope.$applyAsync();
+            $scope.load = true;
+            if ($scope.companyHeads.length == 0) {
+                $scope.nodata = true;
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
 });
 app.controller('PaddyDryCntlr', function ($scope, $firebaseArray) {
     $scope.title = "Loan";
     $scope.comPaddyDrys = lsExGJInit('comPaddyDrys', []);
     var ref = firebase.database().ref().child('paddyDry');
     dbPaddyDrys = $scope.comPaddyDrys = $firebaseArray(ref);
-    $scope.comPaddyDrys.$loaded().then(function () {
-        $scope.load = true;
-        if ($scope.comPaddyDrys.length == 0) {
-            $scope.nodata = true;
-        }
-    });
+    axios.get(apiUrl + 'chart/creditors')
+        .then(function (res) {
+            dbReceivables = $scope.companyHeads = res.data;
+            $scope.$applyAsync();
+            $scope.load = true;
+            if ($scope.companyHeads.length == 0) {
+                $scope.nodata = true;
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
 });
 app.controller('RiceCntlr', function ($scope, $firebaseArray) {
     $scope.title = "Finished Good";
     var ref = firebase.database().ref().child('rice');
     dbRices = $scope.comRices = $firebaseArray(ref);
-    $scope.comRices.$loaded().then(function () {
-        $scope.load = true;
-        if ($scope.comRices.length == 0) {
-            $scope.nodata = true;
-        }
-    });
+    axios.get(apiUrl + 'chart/creditors')
+        .then(function (res) {
+            dbReceivables = $scope.companyHeads = res.data;
+            $scope.$applyAsync();
+            $scope.load = true;
+            if ($scope.companyHeads.length == 0) {
+                $scope.nodata = true;
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
 });
 app.controller('ByProductsCntlr', function ($scope, $firebaseArray) {
     $scope.title = "By Product";
     var ref = firebase.database().ref().child('buyProducts');
     dbByProducts = $scope.comByProducts = $firebaseArray(ref);
-    $scope.comByProducts.$loaded().then(function () {
-        $scope.load = true;
-        if ($scope.comByProducts.length == 0) {
-            $scope.nodata = true;
-        }
-    });
+    axios.get(apiUrl + 'chart/creditors')
+        .then(function (res) {
+            dbReceivables = $scope.companyHeads = res.data;
+            $scope.$applyAsync();
+            $scope.load = true;
+            if ($scope.companyHeads.length == 0) {
+                $scope.nodata = true;
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
 });
 
 app.controller('ByProdCntlr', function ($scope, $firebaseArray) {
@@ -656,7 +712,7 @@ app.controller('JournalCntlr', function ($scope, $firebaseArray) {
     // Serial
     $scope.pageLoad = function (e) {
         let pageNo = undefined;
-        if(e.target.name == 'go') pageNo = e.target.previousElementSibling.value;
+        if (e.target.name == 'go') pageNo = e.target.previousElementSibling.value;
         else pageNo = e.target.innerHTML;
         $scope.currentPage = parseInt(pageNo);
         $scope.list = [1, $scope.maxPage];

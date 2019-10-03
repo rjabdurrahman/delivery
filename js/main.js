@@ -224,7 +224,7 @@ function formDataToFire(data, cleardata, name) {
     axios.post(url, data, {
             headers: { 'Content-Type': 'application/json' }
         })
-        .then(function(response) {
+        .then(function(res) {
             cleardata();
             notify('Added Sucessfully', 1);
         })

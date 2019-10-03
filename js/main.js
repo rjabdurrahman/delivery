@@ -265,11 +265,11 @@ function jsx(html) {
 // Notifer
 function notify(msg, t) {
     if (t == 1) {
-        $('#notification').html("<h6>" + msg + "</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
+        $('#notification').html("<h6>" + msg + "</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(1000).fadeOut(200);
     }
 
     if (t == 2) {
-        $('#notification').html("<h6>" + msg + "</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
+        $('#notification').html("<h6>" + msg + "</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
     }
 }
 

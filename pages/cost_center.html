@@ -22,7 +22,7 @@
                             <tbody>
                                 <tr ng-repeat="costCenter in comCostCenters | orderBy : 'code' track by $index">
                                     <td>{{$index + 1}}</td>
-                                    <td>{{costCenter.$value}}</td>
+                                    <td>{{costCenter.value}}</td>
                                     <td ng-if="userInfo.cs_e">
                                         <button id="{{costCenter.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
                                     </td>

@@ -368,19 +368,7 @@
             });
         } else {
             editTriget = 0;
-            axios.post(apiUrl + 'chart/debtors', receive, {
-                headers: { 'Content-Type': 'application/json' }
-            })
-                .then(function (res) {
-                    clearFields();
-                    if (res.data.err)
-                        notify(res.data.err, 2);
-                    else
-                        notify("Added Successfully!", 1);
-                })
-                .catch(function (error) {
-                    notify(error.message, 2);
-                });
+            insertChart('debtors', receive, clearFields);
         }
         exitModel();
     }

@@ -346,23 +346,7 @@
             });
         } else {
             editTriget = 0;
-            for (i = 0; i < dbPayables.length; i++) {
-                if (payACCode == dbPayables[i].code) {
-                    $('#notification').html("<h6>Code Already Used in Another Account!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                    $js('payACCode').focus();
-                    return;
-                }
-            }
-            axios.post(apiUrl + 'chart/creditors', pay, {
-                headers: { 'Content-Type': 'application/json' }
-            })
-                .then(function (res) {
-                    clearFields();
-                    notify('Added Sucessfully', 1);
-                })
-                .catch(function (error) {
-                    notify(error.message, 2);
-                });
+            insertChart('creditors', pay, clearFields);
         }
         exitModel();
     }

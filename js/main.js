@@ -167,11 +167,11 @@ firebase.initializeApp(config);
 
 
 const auth = firebase.auth();
-auth.onAuthStateChanged(function(fuser) {
+auth.onAuthStateChanged(function (fuser) {
     if (fuser) {
         // $print(fuser);
         var user = firebase.auth().currentUser;
-        getRef('users/' + user.uid).once('value').then(function(snapshot) {
+        getRef('users/' + user.uid).once('value').then(function (snapshot) {
             let userIn = snapshot.val();
             if (!localStorage.user.uc) {
                 Object.assign(userInfo, userIn);
@@ -180,7 +180,7 @@ auth.onAuthStateChanged(function(fuser) {
             }
             var $body = angular.element(document.body);
             var $rootScope = $body.scope().$root;
-            $rootScope.$apply(function() {
+            $rootScope.$apply(function () {
                 $rootScope.userInfo = userInfo;
             });
         });
@@ -212,8 +212,8 @@ var lastEntryNo = null;
 // Online Status
 if (navigator.onLine) { $js('online').style.display = 'none'; };
 if (!navigator.onLine) { $js('online').style.display = 'block'; };
-window.addEventListener('offline', function(e) { $js('online').style.display = 'block'; });
-window.addEventListener('online', function(e) { $js('online').style.display = 'none'; });
+window.addEventListener('offline', function (e) { $js('online').style.display = 'block'; });
+window.addEventListener('online', function (e) { $js('online').style.display = 'none'; });
 // Api Url and Socket
 var apiUrl = 'http://localhost:3000/api/';
 // var apiUrl = 'https://radiant-island-72424.herokuapp.com/api/';
@@ -222,13 +222,13 @@ var socket = io(apiUrl.replace('/api/', ''));
 function formDataToFire(data, cleardata, name) {
     let url = apiUrl + 'form/' + name;
     axios.post(url, data, {
-            headers: { 'Content-Type': 'application/json' }
-        })
-        .then(function(res) {
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(function (res) {
             cleardata();
             notify('Added Sucessfully', 1);
         })
-        .catch(function(error) {
+        .catch(function (error) {
             notify(error.message, 2);
         });
     // fsDb.collection(cname).doc(dname).set(data)
@@ -241,6 +241,27 @@ function formDataToFire(data, cleardata, name) {
     //         $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
     //     });
 }
+
+// Insert Chart
+function insertChart(route, data, clearF) {
+    console.log(apiUrl + 'chart/' + route)
+    axios.post(apiUrl + 'chart/' + route, data, {
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(function (res) {
+            clearF()
+            if (res.data.err)
+                notify(res.data.err, 2);
+            else {
+                notify("Added Successfully!", 1);
+                location.reload();
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
+}
+
 // Date to Number function
 function dateToNum(dateStr) {
     let dateArr = dateStr.split('-');
@@ -249,7 +270,7 @@ function dateToNum(dateStr) {
     return Date.parse(date);
 }
 
-var numToDateConv = function(num) {
+var numToDateConv = function (num) {
     let mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     let date = new Date(num);
     return date.getDate().toString() + '-' + mon[date.getMonth()] + '-' + date.getFullYear().toString().slice(-2);
@@ -403,7 +424,7 @@ function commaNumMaker(event) {
         return;
     }
     // format number
-    $(this).val(function(index, value) {
+    $(this).val(function (index, value) {
         return value
             .replace(/\D/g, "")
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -430,7 +451,7 @@ function commaNumMakerMinus(event) {
         }
     }
     // format number
-    $(this).val(function(index, value) {
+    $(this).val(function (index, value) {
         if (min) {
             return "-" + value
                 .replace(/\D/g, "")

@@ -421,23 +421,7 @@
             });
         } else {
             editTriget = 0;
-            for (i = 0; i < dbPaddyRaws.length; i++) {
-                if (paddyRawCode == dbPaddyRaws[i].code) {
-                    $('#notification').html("<h6>Code Already Used in Another Account!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                    $js('paddyRawCode').focus();
-                    return;
-                }
-            }
-            db.child('paddyRaw').push(paddyRaw, function (error) {
-                if (error) {
-                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                } else {
-                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-                    $js('nodata').style.display = "none";
-                    clearFields();
-
-                }
-            });
+            insertChart('raw_materials', paddyRaw, clearFields);
         }
 
         exitModel();

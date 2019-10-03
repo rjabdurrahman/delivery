@@ -36,7 +36,7 @@
                                             class="w3-btn w3-blue">Edit</button>
                                     </td>
                                     <td ng-if="userInfo.c_8_d">
-                                        <button id="{{con.$id}}" onclick="getDbId(event)"
+                                        <button id="{{con.code}}" onclick="getDbId(event)"
                                             class="w3-btn w3-red">Delete</button>
                                     </td>
                                 </tr>
@@ -64,7 +64,7 @@
                 </div>
                 <footer class="w3-container w3-white">
                     <p class="flex" style="justify-content: center;">
-                        <button onclick="rmItem(onDel);" class="w3-btn w3-red"
+                        <button onclick="removeChart('contractors', onDel)" class="w3-btn w3-red"
                             style="margin-left: 20px; margin-right: 20px;">Confirm
                             Delete</button>
                         <button onclick="$js('confirmDel').style.display='none'" class="w3-btn main-bg-color"
@@ -315,17 +315,6 @@
         console.log("ok click");
         $js('confirmDel').style.display = 'block';
         onDel = e.target.id;
-    }
-
-    function rmItem(dbId) {
-        getRef('contractors').child(dbId).remove()
-            .then(function (sucess) {
-                $js('confirmDel').style.display = 'none';
-                notify('Deleted Sucessfully', 1);
-            })
-            .catch(function (err) {
-                notify(err, 2);
-            });
     }
     // Delete data end......................
     //pdf making and save............................Start....................

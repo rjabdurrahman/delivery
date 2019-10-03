@@ -35,7 +35,7 @@
                                         <button id="{{paddyDry.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
                                     </td>
                                     <td ng-if="userInfo.c_10_d">
-                                        <button id="{{paddyDry.$id}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
+                                        <button id="{{paddyDry.code}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -59,7 +59,7 @@
                 </div>
                 <footer class="w3-container w3-white">
                     <p class="flex" style="justify-content: center;">
-                        <button onclick="rmItem(onDel);" class="w3-btn w3-red" style="margin-left: 20px; margin-right: 20px;">Confirm
+                        <button onclick="removeChart('loans', onDel)" class="w3-btn w3-red" style="margin-left: 20px; margin-right: 20px;">Confirm
                             Delete</button>
                         <button onclick="$js('confirmDel').style.display='none'" class="w3-btn main-bg-color" style="margin-left: 20px; margin-right: 20px;">Cancel</button>
                     </p>
@@ -336,17 +336,6 @@
         console.log("ok click");
         $js('confirmDel').style.display = 'block';
         onDel = e.target.id;
-    }
-
-    function rmItem(dbId) {
-        getRef('paddyDry').child(dbId).remove()
-            .then(function(sucess) {
-                $js('confirmDel').style.display = 'none';
-                notify('Deleted Sucessfully', 1);
-            })
-            .catch(function(err) {
-                notify(err, 2);
-            });
     }
     // Delete data end......................
     //pdf making and save............................Start....................

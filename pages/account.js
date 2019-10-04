@@ -4,13 +4,18 @@ app.controller('AccountCntlr', function ($scope, $firebaseArray) {
     $scope.accounts = accounts;
     $scope.load = false;
     $scope.nodata = false;
-    dbAccounts = $scope.comAccounts = $firebaseArray(ref);
-    $scope.comAccounts.$loaded().then(function () {
-        $scope.load = true;
-        if ($scope.comAccounts.length == 0) {
-            $scope.nodata = true;
-        }
-    });
+    axios.get(apiUrl + 'chart/accounts')
+        .then(function (res) {
+            dbAccounts = $scope.comAccounts = res.data;
+            $scope.$applyAsync();
+            $scope.load = true;
+            if ($scope.comAccounts.length == 0) {
+                $scope.nodata = true;
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
     $scope.getAccArr = function(fl){
         return $scope.comAccounts.filter(function(el){
             return el.flag == fl;

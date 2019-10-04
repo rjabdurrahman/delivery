@@ -1185,149 +1185,152 @@
             $js('submitAccBtn').innerHTML = 'Update';
             document.getElementById('id01').style.display = 'block';
             var id = ID.slice(0, -1);
-            dbID = ID.slice(0, -1);
+            console.log(id);
             editTriget = 1;
-            console.log(id, editTriget);
-            getRef('accounts/' + id).on('value', function (snapshot) {
-                let dbData = snapshot.val();
-                console.log(dbData);
+            axios.get(apiUrl + 'chart/accounts/' + id)
+                .then(function (res) {
+                    let dbData = res.data[0];
+                    dbDataCode = dbData.accCode;
+                    let codeSp = dbData.accCode.split("-");
+                    console.log(codeSp);
+                    var codeShortForm = codeSp[0];
+                    var firstCode = codeSp[1];
+                    var secondCode = '';
+                    $('#rateArea').hide();
+                    if (codeSp.length == 3) {
+                        secondCode = codeSp[2];
+                    }
+                    if (dbData.nature == 'Equity') {
+                        $js('accNature').selectedIndex = 5;
+                        console.log(codeShortForm);
+                        $js('natureCodeFill').style.display = 'none';
+                        $js('equitySelector').style.display = 'block';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
+                        if (codeShortForm == 'RE') {
+                            $js('equitySelector').selectedIndex = 1;
 
-                dbDataCode = dbData.accCode;                   //      
+                        } else if (codeShortForm == 'SE') {
+                            $js('equitySelector').selectedIndex = 0;
 
-                let codeSp = dbData.accCode.split("-");
-                console.log(codeSp);
-                var codeShortForm = codeSp[0];
-                var firstCode = codeSp[1];
-                var secondCode = '';
-                $('#rateArea').hide();
-                if (codeSp.length == 3) {
-                    secondCode = codeSp[2];
-                }
-                if (dbData.nature == 'Equity') {
-                    $js('accNature').selectedIndex = 5;
-                    console.log(codeShortForm);
-                    $js('natureCodeFill').style.display = 'none';
-                    $js('equitySelector').style.display = 'block';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
-                    if (codeShortForm == 'RE') {
-                        $js('equitySelector').selectedIndex = 1;
-
-                    } else if (codeShortForm == 'SE') {
-                        $js('equitySelector').selectedIndex = 0;
+                        }
 
                     }
+                    else {
+                        $js('natureCodeFill').style.display = 'block';
+                        $js('equitySelector').style.display = 'none';
+                    }
+                    // Fill AC Code
+                    if (dbData.nature == 'Current Asset') {
+                        $js('accNature').selectedIndex = 1;
+                        console.log('ok isn');
+                        $js('natureCodeFill').value = 'CA';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
+                    }
+                    else if (dbData.nature == 'Non-Current Asset') {
+                        $js('accNature').selectedIndex = 2;
+                        $js('natureCodeFill').value = 'NCA';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
+                        $('#rateArea').show();
+                        $js('rate').value = parseFloat(dbData.rate);
 
-                }
-                else {
-                    $js('natureCodeFill').style.display = 'block';
-                    $js('equitySelector').style.display = 'none';
-                }
-                // Fill AC Code
-                if (dbData.nature == 'Current Asset') {
-                    $js('accNature').selectedIndex = 1;
-                    console.log('ok isn');
-                    $js('natureCodeFill').value = 'CA';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
-                }
-                else if (dbData.nature == 'Non-Current Asset') {
-                    $js('accNature').selectedIndex = 2;
-                    $js('natureCodeFill').value = 'NCA';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
-                    $('#rateArea').show();
-                    $js('rate').value = parseFloat(dbData.rate);
+                    }
+                    else if (dbData.nature == 'Current Liability') {
+                        $js('accNature').selectedIndex = 3;
+                        $js('natureCodeFill').value = 'CL';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
 
-                }
-                else if (dbData.nature == 'Current Liability') {
-                    $js('accNature').selectedIndex = 3;
-                    $js('natureCodeFill').value = 'CL';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
+                    }
+                    else if (dbData.nature == 'Non-Current Liability') {
+                        $js('accNature').selectedIndex = 4;
+                        $js('natureCodeFill').value = 'NCL';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
 
-                }
-                else if (dbData.nature == 'Non-Current Liability') {
-                    $js('accNature').selectedIndex = 4;
-                    $js('natureCodeFill').value = 'NCL';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
+                    }
+                    else if (dbData.nature == 'Expense') {
+                        $js('accNature').selectedIndex = 6;
+                        $js('natureCodeFill').value = 'EX';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
 
-                }
-                else if (dbData.nature == 'Expense') {
-                    $js('accNature').selectedIndex = 6;
-                    $js('natureCodeFill').value = 'EX';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
+                    }
+                    else if (dbData.nature == 'Revenue') {
+                        $js('accNature').selectedIndex = 7;
+                        $js('natureCodeFill').value = 'REV';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
 
-                }
-                else if (dbData.nature == 'Revenue') {
-                    $js('accNature').selectedIndex = 7;
-                    $js('natureCodeFill').value = 'REV';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
+                    }
+                    else if (dbData.nature == 'Cost of Goods Sold') {
+                        $js('accNature').selectedIndex = 8;
+                        $js('natureCodeFill').value = 'COGS';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
 
-                }
-                else if (dbData.nature == 'Cost of Goods Sold') {
-                    $js('accNature').selectedIndex = 8;
-                    $js('natureCodeFill').value = 'COGS';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
+                    }
+                    else if (dbData.nature == 'Contra') {
+                        $js('accNature').selectedIndex = 9;
+                        $js('natureCodeFill').value = 'CN';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
 
-                }
-                else if (dbData.nature == 'Contra') {
-                    $js('accNature').selectedIndex = 9;
-                    $js('natureCodeFill').value = 'CN';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
+                    }
+                    else if (dbData.nature == 'Production') {
+                        $js('accNature').selectedIndex = 10;
+                        $js('natureCodeFill').value = 'WIP';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
+                    }
+                    else if (dbData.nature == 'Withdrawal') {
+                        $js('accNature').selectedIndex = 11;
+                        $js('natureCodeFill').value = 'WD';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
 
-                }
-                else if (dbData.nature == 'Production') {
-                    $js('accNature').selectedIndex = 10;
-                    $js('natureCodeFill').value = 'WIP';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
-                }
-                else if (dbData.nature == 'Withdrawal') {
-                    $js('accNature').selectedIndex = 11;
-                    $js('natureCodeFill').value = 'WD';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
+                    }
+                    else if (dbData.nature == 'Contra Expense') {
+                        $js('accNature').selectedIndex = 12;
+                        $js('natureCodeFill').value = 'PD';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
 
-                }
-                else if (dbData.nature == 'Contra Expense') {
-                    $js('accNature').selectedIndex = 12;
-                    $js('natureCodeFill').value = 'PD';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
+                    }
+                    else if (dbData.nature == 'Contra Revenue') {
+                        $js('accNature').selectedIndex = 13;
+                        $js('natureCodeFill').value = 'SD';
+                        $js('accCodeFirst').value = firstCode;
+                        $js('accCodeSecond').value = secondCode;
+                        $js('accTxt').value = dbData.accText;
 
-                }
-                else if (dbData.nature == 'Contra Revenue') {
-                    $js('accNature').selectedIndex = 13;
-                    $js('natureCodeFill').value = 'SD';
-                    $js('accCodeFirst').value = firstCode;
-                    $js('accCodeSecond').value = secondCode;
-                    $js('accTxt').value = dbData.accText;
+                    }
+                    if (codeShortForm == 'SE' || codeShortForm == 'RE') {
+                        $js('begBal').value = dbData.balance;
+                    }
+                    else if (accounts[codeShortForm].begBal) {
+                        $js('begBal').value = numToComma(dbData.balance);
+                    }
+                })
+                .catch(function (error) {
+                    notify(error.message, 2);
+                });
+            getRef('accounts/' + id).on('value', function (snapshot) {
 
-                }
-                if (codeShortForm == 'SE' || codeShortForm == 'RE') {
-                    $js('begBal').value = dbData.balance;
-                }
-                else if (accounts[codeShortForm].begBal) {
-                    $js('begBal').value = numToComma(dbData.balance);
-                }
             });
         }
 
@@ -1412,24 +1415,13 @@
                 account['balance'] = commaToNum(balance);
             }
 
-            if (editTriget == 1 && dbDataCode == accNumber) {
-                editTriget = 0;
-                db.child('accounts/' + dbID).update(account, function (error) {
-                    if (error) {
-                        $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                    } else {
-                        $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-                        clearFields();
-
-                    }
-                });
-            }
-            else if (editTriget == 1 && dbDataCode != accNumber) {
+            if (editTriget == 1) {
                 editTriget = 0;
                 updateChart('accounts', account, clearFields);
-            } else {
+            }
+            else {
                 editTriget = 0;
-                if(!insertChart('accounts', account, clearFields)) return;
+                if (!insertChart('accounts', account, clearFields)) return;
             }
             exitModel();
         }

@@ -248,11 +248,13 @@ function insertChart(route, data, clearF) {
         headers: { 'Content-Type': 'application/json' }
     })
         .then(function (res) {
-            clearF()
-            if (res.data.err)
+            if (res.data.err){
                 notify(res.data.err, 2);
+                return false;
+            }
             else {
                 notify("Added Successfully!", 1);
+                clearF();
                 location.reload();
             }
         })

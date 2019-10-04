@@ -368,7 +368,7 @@
             });
         } else {
             editTriget = 0;
-            insertChart('debtors', receive, clearFields);
+            if(!insertChart('debtors', receive, clearFields)) return;
         }
         exitModel();
     }

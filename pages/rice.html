@@ -376,7 +376,7 @@
             });
         } else {
             editTriget = 0;
-            insertChart('finished_goods', rice, clearFields);
+            if(!insertChart('finished_goods', rice, clearFields)) return;
         }
 
         exitModel();

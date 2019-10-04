@@ -393,7 +393,7 @@
             });
         } else {
             editTriget = 0;
-            insertChart('by_products', byProduct, clearFields);
+            if(!insertChart('by_products', byProduct, clearFields)) return;
         }
         console.log(" edit and update an insert last");
 

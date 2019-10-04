@@ -421,7 +421,7 @@
             });
         } else {
             editTriget = 0;
-            insertChart('raw_materials', paddyRaw, clearFields);
+            if(!insertChart('raw_materials', paddyRaw, clearFields)) return;
         }
 
         exitModel();

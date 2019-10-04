@@ -226,7 +226,7 @@
             });
         } else {
             editTriget = 0;
-            insertChart('com_heads', ch, clearFields);
+            if(!insertChart('com_heads', ch, clearFields)) return;
         }
 
         exitModel();

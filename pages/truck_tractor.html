@@ -248,7 +248,7 @@
             });
         } else {
             editTriget = 0;
-            insertChart('vehicles', tr, clearFields);
+            if(!insertChart('vehicles', tr, clearFields)) return;
         }
         // db.child('truckTrackors').push(tr, function (error) {
         //     if (error) {

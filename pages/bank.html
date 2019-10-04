@@ -262,7 +262,7 @@
             });
         } else {
             editTriget = 0;
-            insertChart('banks', bank, clearFields);
+            if(!insertChart('banks', bank, clearFields)) return;
         }
         // db.child('banks').push(bank, function (error) {
         //     if (error) {

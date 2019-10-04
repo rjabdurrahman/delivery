@@ -309,9 +309,8 @@
             });
         } else {
             editTriget = 0;
-            insertChart('employees', emp, clearFields);
+            if(!insertChart('employees', emp, clearFields)) return;
         }
-
         exitModel();
     }
 

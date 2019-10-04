@@ -265,7 +265,7 @@
             });
         } else {
             editTriget = 0;
-            insertChart('loans', loan, clearFields);
+            if(!insertChart('loans', loan, clearFields)) return;
         }
         // db.child('banks').push(bank, function (error) {
         //     if (error) {

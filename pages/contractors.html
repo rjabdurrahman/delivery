@@ -244,7 +244,7 @@
             });
         } else {
             editTriget = 0;
-            insertChart('contractors', contractor, clearFields);
+            if(!insertChart('contractors', contractor, clearFields)) return;
         }
         // db.child('contractors').push(contractor, function (error) {
         //     if (error) {

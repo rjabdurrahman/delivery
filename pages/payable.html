@@ -346,7 +346,7 @@
             });
         } else {
             editTriget = 0;
-            insertChart('creditors', pay, clearFields);
+            if(!insertChart('creditors', pay, clearFields)) return;
         }
         exitModel();
     }

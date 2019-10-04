@@ -195,7 +195,7 @@
             });
         } else {
             editTriget = 0;
-            insertChart('cost_centers', {value: costCenterName}, clearFields);
+            if(!insertChart('cost_centers', {value: costCenterName}, clearFields)) return;
         }
         // db.child('costCenters').push(costCenterName, function (error) {
         //     if (error) {

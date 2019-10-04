@@ -338,40 +338,10 @@
             totalPri: commaToNum(totalPri),
             type: 1
         };
-
-        if (editTriget == 1 && dbDataCode == riceCode) {
-            editTriget = 0;
-            db.child('rice/' + dbID).update(rice, function(error) {
-                if (error) {
-                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                } else {
-                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-                    $js('nodata').style.display = "none";
-                    clearFields();
-
-                }
-            });
-        } else if (editTriget == 1 && dbDataCode != riceCode) {
-
-            for (i = 0; i < dbRices.length; i++) {
-                if (riceCode == dbRices[i].code) {
-                    $('#notification').html("<h6>Code Already Used in Another Account!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                    $js('riceCode').focus();
-                    return;
-                }
-            }
-            editTriget = 0;
-            db.child('rice/' + dbID).update(rice, function(error) {
-                if (error) {
-                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                } else {
-                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-                    $js('nodata').style.display = "none";
-                    clearFields();
-
-                }
-            });
-        } else {
+        if (editTriget == 1){
+            updateChart('finished_goods', rice, clearFields);
+        }
+        else {
             editTriget = 0;
             if(!insertChart('finished_goods', rice, clearFields)) return;
         }

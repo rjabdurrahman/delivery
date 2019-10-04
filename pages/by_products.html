@@ -352,41 +352,10 @@
             type: 1
         };
 
-        if (editTriget == 1 && dbDataCode == byProductCode) {
-
-            editTriget = 0;
-            db.child('buyProducts/' + dbID).update(byProduct, function (error) {
-                if (error) {
-                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                } else {
-                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-                    $js('nodata').style.display = "none";
-                    clearFields();
-
-                }
-            });
-
-        } else if (editTriget == 1 && dbDataCode != byProductCode) {
-
-            for (i = 0; i < dbByProducts.length; i++) {
-                if (byProductCode == dbByProducts[i].code) {
-                    $('#notification').html("<h6>Code Already Used in Another Account!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                    $js('byProductCode').focus();
-                    return;
-                }
-            }
-            editTriget = 0;
-            db.child('buyProducts/' + dbID).update(byProduct, function (error) {
-                if (error) {
-                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                } else {
-                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-                    $js('nodata').style.display = "none";
-                    clearFields();
-
-                }
-            });
-        } else {
+        if (editTriget == 1){
+            updateChart('by_products', byProduct, clearFields);
+        }
+        else {
             editTriget = 0;
             if(!insertChart('by_products', byProduct, clearFields)) return;
         }

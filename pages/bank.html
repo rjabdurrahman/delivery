@@ -225,39 +225,10 @@
             accno: bAccNo,
             actype: 1
         };
-        if (editTriget == 1 && dbDataCode == bankCode) {
-            editTriget = 0;
-            db.child('banks/' + dbID).update(bank, function (error) {
-                if (error) {
-                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                } else {
-                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-                    $js('nodata').style.display = "none";
-                    clearFields();
-
-                }
-            });
-        } else if (editTriget == 1 && dbDataCode != bankCode) {
-
-            for (i = 0; i < dbBanks.length; i++) {
-                if (bankCode == dbBanks[i].code) {
-                    $('#notification').html("<h6>Code Already Used in Another Account!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                    $js('bankCode').focus();
-                    return;
-                }
-            }
-            editTriget = 0;
-            db.child('banks/' + dbID).update(bank, function (error) {
-                if (error) {
-                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                } else {
-                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-                    $js('nodata').style.display = "none";
-                    clearFields();
-
-                }
-            });
-        } else {
+        if (editTriget == 1){
+            updateChart('banks', bank, clearFields);
+        }
+        else {
             editTriget = 0;
             if(!insertChart('banks', bank, clearFields)) return;
         }

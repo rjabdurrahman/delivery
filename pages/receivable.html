@@ -330,47 +330,10 @@
 
         };
         console.log(receive);
-
-        if (editTriget == 1 && dbDataCode == recACCode) {
-            editTriget = 0;
-            db.child('receivables/' + dbID).update(receive, function (error) {
-                if (error) {
-                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                } else {
-                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-                    $js('nodata').style.display = "none";
-                    clearFields();
-
-                }
-            });
-        } else if (editTriget == 1 && dbDataCode != recACCode) {
-
-            for (i = 0; i < dbReceivables.length; i++) {
-                if (recACCode == dbReceivables[i].code) {
-                    $('#notification').html("<h6>Code Already Used in Another Account!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                    $js('recACCode').focus();
-                    return;
-                }
-            }
-            editTriget = 0;
-            axios.post(apiUrl + 'chart/update/debtors', data, {
-                headers: { 'Content-Type': 'application/json' }
-            })
-                .then(function (res) {
-                    if (res.data.err) {
-                        notify(res.data.err, 2);
-                        return false;
-                    }
-                    else {
-                        notify("Added Successfully!", 1);
-                        clearF();
-                        location.reload();
-                    }
-                })
-                .catch(function (error) {
-                    notify(error.message, 2);
-                });
-        } else {
+        if (editTriget == 1){
+            updateChart('debtors', receive, clearFields);
+        }
+        else {
             editTriget = 0;
             if (!insertChart('debtors', receive, clearFields)) return;
         }

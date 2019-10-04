@@ -208,39 +208,10 @@
             type: 1
 
         };
-        if (editTriget == 1 && dbDataCode == conCode) {
-            editTriget = 0;
-            db.child('contractors/' + dbID).update(contractor, function (error) {
-                if (error) {
-                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                } else {
-                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-                    $js('nodata').style.display = "none";
-                    clearFields();
-
-                }
-            });
-        } else if (editTriget == 1 && dbDataCode != conCode) {
-
-            for (i = 0; i < dbContractors.length; i++) {
-                if (conCode == dbContractors[i].code) {
-                    $('#notification').html("<h6>Code Already Used in Another Account!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                    $js('conCode').focus();
-                    return;
-                }
-            }
-            editTriget = 0;
-            db.child('contractors/' + dbID).update(contractor, function (error) {
-                if (error) {
-                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                } else {
-                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-                    $js('nodata').style.display = "none";
-                    clearFields();
-
-                }
-            });
-        } else {
+        if (editTriget == 1){
+            updateChart('contractors', contractor, clearFields);
+        }
+        else {
             editTriget = 0;
             if(!insertChart('contractors', contractor, clearFields)) return;
         }

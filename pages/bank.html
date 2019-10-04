@@ -35,7 +35,7 @@
                                     <td name="num" ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">
                                         {{comNum(bank.balance)}}</td>
                                     <td ng-if="userInfo.c_7_e">
-                                        <button id="{{bank.$id}}e" onclick="editView(this.id)"
+                                        <button id="{{bank.code}}e" onclick="editView(this.id)"
                                             class="w3-btn w3-blue">Edit</button>
                                     </td>
                                     <td ng-if="userInfo.c_7_d">
@@ -185,20 +185,17 @@
         $js('submitBankBtn').innerHTML = 'Update';
         document.getElementById('id01').style.display = 'block';
         var id = ID.slice(0, -1);
-        dbID = ID.slice(0, -1);
         editTriget = 1;
-        console.log(id, editTriget);
-        getRef('banks/' + id).on('value', function (snapshot) {
-            let dbData = snapshot.val();
-            console.log(dbData);
-
-            dbDataCode = dbData.code; ///   from database code grip to control notification...............
-
+        axios.get(apiUrl + 'chart/banks/' + id)
+        .then(function (res) {
+            let dbData = res.data[0];
             $js('bankCode').value = dbData.code;
             $js('bankName').value = dbData.name;
             $js('begBal').value = numToComma(dbData.balance);
             $js('bAccNo').value = dbData.accno;
-
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
         });
     }
     $('input.comma-num-minus').keyup(commaNumMakerMinus);

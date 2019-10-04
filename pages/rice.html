@@ -38,7 +38,7 @@
                                     <td>{{comNum (rice.stdUnitPri)}}</td>
                                     <td>{{comNum (rice.totalPri)}}</td>
                                     <td ng-if="userInfo.c_11_e">
-                                        <button id="{{rice.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
+                                        <button id="{{rice.code}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
                                     </td>
                                     <td ng-if="userInfo.c_11_d">
                                         <button id="{{rice.code}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
@@ -269,15 +269,10 @@
         $js('submitRiceBtn').innerHTML = 'Update';
         document.getElementById('id01').style.display = 'block';
         var id = ID.slice(0, -1);
-        dbID = ID.slice(0, -1);
         editTriget = 1;
-        console.log(id, editTriget);
-        getRef('rice/' + id).on('value', function(snapshot) {
-            let dbData = snapshot.val();
-            console.log(dbData);
-
-            dbDataCode = dbData.code; ///   from database code grip to control notification...............
-
+        axios.get(apiUrl + 'chart/finished_goods/' + id)
+        .then(function (res) {
+            let dbData = res.data[0];
             $js('riceCode').value = dbData.code;
             $js('riceName').value = dbData.name;
             $js('stdUnit').value = dbData.stdUnit;
@@ -286,7 +281,9 @@
             $js('totalQu').value = numToComma(dbData.totalQu);
             $js('stdUnitPri').value = numToComma(dbData.stdUnitPri);
             $js('totalPri').value = numToComma(dbData.totalPri);
-
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
         });
     }
 

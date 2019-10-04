@@ -36,7 +36,7 @@
                                     <td>{{comNum(emp.salary)}}</td>
                                     <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(emp.balance)}}</td>
                                     <td ng-if="userInfo.c_6_e">
-                                        <button id="{{emp.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
+                                        <button id="{{emp.code}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
                                     </td>
                                     <td ng-if="userInfo.c_6_d">
                                         <button id="{{emp.code}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
@@ -209,16 +209,11 @@
     function editView(ID) {
         $js('submitEmpBtn').innerHTML = 'Update';
         document.getElementById('id01').style.display = 'block';
-        var id = ID.slice(0, -1);
-        dbID = ID.slice(0, -1);
+        let id = ID.slice(0, -1);
         editTriget = 1;
-        console.log(id, editTriget);
-        getRef('employees/' + id).on('value', function(snapshot) {
-            let dbData = snapshot.val();
-            console.log(dbData);
-
-            dbDataCode = dbData.code; ///   from database code grip to control notification...............
-
+        axios.get(apiUrl + 'chart/employees/' + id)
+        .then(function (res) {
+            let dbData = res.data[0];
             $js('empCode').value = dbData.code;
             $js('empName').value = dbData.name;
             $js('empType').value = dbData.type;
@@ -226,7 +221,9 @@
             $js('empDes').value = dbData.des;
             $js('empSalary').value = numToComma(dbData.salary);
             $js('begBal').value = numToComma(dbData.balance);
-
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
         });
     }
 

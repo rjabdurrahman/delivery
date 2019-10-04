@@ -47,7 +47,7 @@
                                     <td>{{rec.address}}</td>
                                     <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(rec.balance)}}</td>
                                     <td ng-if="userInfo.c_2_e" name="debEdt1">
-                                        <button id="{{rec.$id}}e" onclick="editView(this.id)"
+                                        <button id="{{rec.code}}e" onclick="editView(this.id)"
                                             class="w3-btn w3-blue">Edit</button>
                                     </td>
                                     <td ng-if="userInfo.c_2_d" name="debDel1">
@@ -259,24 +259,21 @@
     function editView(ID) {
         $js('submitButton').innerHTML = 'Update';
         document.getElementById('id01').style.display = 'block';
-        var id = ID.slice(0, -1);
-        dbID = ID.slice(0, -1);
+        let id = ID.slice(0, -1);
         editTriget = 1;
-        console.log(id, editTriget);
-        getRef('receivables/' + id).on('value', function (snapshot) {
-            let dbData = snapshot.val();
-            //console.log(dbData);
-
-            dbDataCode = dbData.code; ///   from database code grip to control notification...............
-
-            $js('recACCode').value = dbData.code;
-            $js('recPartyName').value = dbData.name;
-            $js('recCustomerType').value = dbData.cusType;
-            $js('recProprietor').value = dbData.recProprietor;
-            $js('recMObileNo').value = dbData.mobile.slice(5);
-            $js('recEmail').value = dbData.email;
-            $js('recAddress').value = dbData.address;
-            $js('begBal').value = numToComma(dbData.balance);
+        axios.get(apiUrl + 'chart/debtors/' + id)
+        .then(function (res) {
+            $js('recACCode').value = res.data[0].code;
+            $js('recPartyName').value = res.data[0].name;
+            $js('recCustomerType').value = res.data[0].cusType;
+            $js('recProprietor').value = res.data[0].recProprietor;
+            $js('recMObileNo').value = res.data[0].mobile;
+            $js('recEmail').value = res.data[0].email;
+            $js('recAddress').value = res.data[0].address;
+            $js('begBal').value = numToComma(res.data[0].balance);
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
         });
     }
 
@@ -356,19 +353,26 @@
                 }
             }
             editTriget = 0;
-            db.child('receivables/' + dbID).update(receive, function (error) {
-                if (error) {
-                    $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
-                } else {
-                    $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-                    $js('nodata').style.display = "none";
-                    clearFields();
-
-                }
-            });
+            axios.post(apiUrl + 'chart/update/debtors', data, {
+                headers: { 'Content-Type': 'application/json' }
+            })
+                .then(function (res) {
+                    if (res.data.err) {
+                        notify(res.data.err, 2);
+                        return false;
+                    }
+                    else {
+                        notify("Added Successfully!", 1);
+                        clearF();
+                        location.reload();
+                    }
+                })
+                .catch(function (error) {
+                    notify(error.message, 2);
+                });
         } else {
             editTriget = 0;
-            if(!insertChart('debtors', receive, clearFields)) return;
+            if (!insertChart('debtors', receive, clearFields)) return;
         }
         exitModel();
     }

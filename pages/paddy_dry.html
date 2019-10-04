@@ -32,7 +32,7 @@
                                     <td>{{paddyDry.nature}}</td>
                                     <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(paddyDry.balance)}}</td>
                                     <td ng-if="userInfo.c_10_e">
-                                        <button id="{{paddyDry.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
+                                        <button id="{{paddyDry.code}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
                                     </td>
                                     <td ng-if="userInfo.c_10_d">
                                         <button id="{{paddyDry.code}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
@@ -182,21 +182,18 @@
         $js('loanSubmit').innerHTML = 'Update';
         document.getElementById('id01').style.display = 'block';
         var id = ID.slice(0, -1);
-        dbID = ID.slice(0, -1);
         editTriget = 1;
-        console.log(id, editTriget);
-        getRef('paddyDry/' + id).on('value', function(snapshot) {
-            let dbData = snapshot.val();
-            console.log(dbData);
-
-            dbDataCode = dbData.code; ///   from database code grip to control notification...............
-
+        axios.get(apiUrl + 'chart/loans/' + id)
+        .then(function (res) {
+            let dbData = res.data[0];
             $js('code').value = dbData.code;
             $js('loanNo').value = dbData.name;
             $js('loanType').value = dbData.type;
             $js('loanNature').value = dbData.nature;
             $js('begBal').value = numToComma(dbData.balance);
-
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
         });
     }
     $('input.comma-num-minus').keyup(commaNumMakerMinus);

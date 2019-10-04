@@ -40,7 +40,7 @@
                                     <td>{{pay.address}}</td>
                                     <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(pay.balance)}}</td>
                                     <td ng-if="userInfo.c_3_e">
-                                        <button id="{{pay.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
+                                        <button id="{{pay.code}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
                                     </td>
                                     <td ng-if="userInfo.c_3_d">
                                         <button id="{{pay.code}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
@@ -229,16 +229,10 @@
         $js('submitPayBtn').innerHTML = 'Update';
         document.getElementById('id01').style.display = 'block';
         var id = ID.slice(0, -1);
-        dbID = ID.slice(0, -1);
         editTriget = 1;
-        console.log(id, editTriget);
-        getRef('payables/' + id).on('value', function(snapshot) {
-            let dbData = snapshot.val();
-
-            console.log(dbData);
-
-            dbDataCode = dbData.code; ///   from database code grip to control notification...............
-            console.log(dbDataCode);
+        axios.get(apiUrl + 'chart/creditors/' + id)
+        .then(function (res) {
+            let dbData = res.data[0];
             $js('payAddress').value = dbData.address;
             $js('payACCode').value = dbData.code;
             $js('payEmail').value = dbData.email;
@@ -247,7 +241,9 @@
             $js('payPartyType').value = dbData.partyType;
             $js('payProprietor').value = dbData.proprietor;
             $js('begBal').value = numToComma(dbData.balance);
-
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
         });
     }
 

@@ -43,7 +43,7 @@
                                     <td>{{comNum(paddyRaw.stdUnitPri)}}</td>
                                     <td>{{comNum(paddyRaw.totalPri)}}</td>
                                     <td ng-if="userInfo.c_9_e">
-                                        <button id="{{paddyRaw.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
+                                        <button id="{{paddyRaw.code}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
                                     </td>
                                     <td ng-if="userInfo.c_9_d">
                                         <button id="{{paddyRaw.code}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
@@ -296,15 +296,10 @@
         $js('paddyRawSubmit').innerHTML = 'Update';
         document.getElementById('id01').style.display = 'block';
         var id = ID.slice(0, -1);
-        dbID = ID.slice(0, -1);
         editTriget = 1;
-        console.log(id, editTriget);
-        getRef('paddyRaw/' + id).on('value', function (snapshot) {
-            let dbData = snapshot.val();
-            console.log(dbData);
-
-            dbDataCode = dbData.code;   ///   from database code grip to control notification...............
-
+        axios.get(apiUrl + 'chart/raw_materials/' + id)
+        .then(function (res) {
+            let dbData = res.data[0];
             $js('paddyRawCode').value = dbData.code;
             $js('paddyRawName').value = dbData.name;
             $js('priUnit').value = dbData.priUnit;
@@ -315,6 +310,9 @@
             $js('stdUnitPri').value = numToComma(dbData.stdUnitPri);
             $js('stdQu').value = numToComma(dbData.stdQu);
             $js('totalPri').value = numToComma(dbData.totalPri);
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
         });
     }
 

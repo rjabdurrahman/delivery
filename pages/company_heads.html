@@ -30,7 +30,7 @@
                                     <td>{{ch.code}}</td>
                                     <td>{{ch.name}}</td>
                                     <td ng-if="userInfo.c_4_e">
-                                        <button id="{{ch.$id}}e" onclick="editView(this.id)"
+                                        <button id="{{ch.code}}e" onclick="editView(this.id)"
                                             class="w3-btn w3-blue">Edit</button>
                                     </td>
                                     <td ng-if="userInfo.c_4_d">
@@ -160,17 +160,15 @@
         $js('submitChBtn').innerHTML = 'Update';
         document.getElementById('id01').style.display = 'block';
         var id = ID.slice(0, -1);
-        dbID = ID.slice(0, -1);
         editTriget = 1;
-        console.log(id, editTriget);
-        getRef('companyHeads/' + id).on('value', function (snapshot) {
-            let dbData = snapshot.val();
-            console.log(dbData);
-
-            dbDataCode = dbData.code; ///   from database code grip to control notification...............
+        axios.get(apiUrl + 'chart/com_heads/' + id)
+        .then(function (res) {
+            let dbData = res.data[0];
             $js('chACCode').value = dbData.code;
             $js('chPartyName').value = dbData.name;
-
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
         });
     }
 

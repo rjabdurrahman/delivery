@@ -42,7 +42,7 @@
                                     <td>{{comNum (byProduct.stdUnitPri)}}</td>
                                     <td>{{comNum (byProduct.totalPri)}}</td>
                                     <td ng-if="userInfo.c_12_e">
-                                        <button id="{{byProduct.$id}}e" onclick="editView(this.id)"
+                                        <button id="{{byProduct.code}}e" onclick="editView(this.id)"
                                             class="w3-btn w3-blue">Edit</button>
                                     </td>
                                     <td ng-if="userInfo.c_12_d">
@@ -285,15 +285,10 @@
         $js('byProductSubmit').innerHTML = 'Update';
         document.getElementById('id01').style.display = 'block';
         var id = ID.slice(0, -1);
-        dbID = ID.slice(0, -1);
         editTriget = 1;
-        console.log(id, editTriget);
-        getRef('buyProducts/' + id).on('value', function (snapshot) {
-            let dbData = snapshot.val();
-            console.log(dbData);
-
-            dbDataCode = dbData.code; ///   from database code grip to control notification...............
-
+        axios.get(apiUrl + 'chart/by_products/' + id)
+        .then(function (res) {
+            let dbData = res.data[0];
             $js('byProductCode').value = dbData.code;
             $js('byProductName').value = dbData.name;
             $js('stdUnit').value = dbData.stdUnit;
@@ -302,10 +297,10 @@
             $js('totalQu').value = numToComma(dbData.totalQu);
             $js('stdUnitPri').value = numToComma(dbData.stdUnitPri);
             $js('totalPri').value = numToComma(dbData.totalPri);
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
         });
-
-        console.log(" view last");
-
     }
 
     /// edit data show in field end........................

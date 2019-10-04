@@ -30,7 +30,7 @@
                                     <td>{{Tr.name}}</td>
                                     <td ng-hide="!(begBalPer.$value == 1 || userInfo.uc)">{{comNum(Tr.balance)}}</td>
                                     <td ng-if="userInfo.c_5_e">
-                                        <button id="{{Tr.$id}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
+                                        <button id="{{Tr.code}}e" onclick="editView(this.id)" class="w3-btn w3-blue">Edit</button>
                                     </td>
                                     <td ng-if="userInfo.c_5_d">
                                         <button id="{{Tr.code}}" onclick="getDbId(event)" class="w3-btn w3-red">Delete</button>
@@ -170,21 +170,18 @@
         $js('submitTrBtn').innerHTML = 'Update';
         document.getElementById('id01').style.display = 'block';
         var id = ID.slice(0, -1);
-        dbID = ID.slice(0, -1);
         editTriget = 1;
-        console.log(id, editTriget);
-        getRef('truckTrackors/' + id).on('value', function(snapshot) {
-            let dbData = snapshot.val();
-            console.log(dbData);
-
-            dbDataCode = dbData.code; ///   from database code grip to control notification...............
-
+        axios.get(apiUrl + 'chart/vehicles/' + id)
+        .then(function (res) {
+            let dbData = res.data[0];
             $js('trCode').value = dbData.code;
             $js('trNo').value = dbData.name;
             $js('begBal').value = numToComma(dbData.balance);
             $js('vType').value = dbData.type;
-
-        });
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        })
     }
 
     /// edit data show in field end........................

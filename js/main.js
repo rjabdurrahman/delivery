@@ -263,7 +263,29 @@ function insertChart(route, data, clearF) {
         });
 }
 
-// Reove Chart 
+
+// Update Chart
+function updateChart(route, data, clearF){
+    axios.post(apiUrl + 'chart/update/' + route, data, {
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(function (res) {
+            if (res.data.err){
+                notify(res.data.err, 2);
+                return false;
+            }
+            else {
+                notify("Added Successfully!", 1);
+                clearF();
+                location.reload();
+            }
+        })
+        .catch(function (error) {
+            notify(error.message, 2);
+        });
+}
+
+// Remove Chart 
 function removeChart(route, code) {
     axios.post(apiUrl + 'chart/remove/' + route, { code }, {
         headers: { 'Content-Type': 'application/json' }

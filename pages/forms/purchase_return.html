@@ -492,13 +492,11 @@
                     totalQuantity: parseFloat(totalQuantity.value),
                     stdUnit: stdUnit.value,
                     stdUnitPrice: parseFloat(stdUnitPrice.value),
-                    totalPriceTK: parseFloat(totalPriceTK.value.split(',').join("")),
+                    totalPriceTK: parseFloat(totalPriceTK.value.split(',').join(""))
                 }
                 ACCodes.push(ACCodeEl.value);
                 debitCredit.push(credit);
                 partyCodes.push(partyCodeEl.value);
-
-
             }
         }
 
@@ -519,10 +517,6 @@
             uId: firebase.auth().currentUser.uid,
             flagPrejournal: 0
         }
-
-
-
-
         function clearFields() {
             for (index in drPartyCodeEls) {
                 if (drPartyCodeEls.hasOwnProperty(index)) {
@@ -553,9 +547,7 @@
         }
         console.log(purshaseRet);
         // Firestore Store
-        formDataToFire("JournalForm", entryNo.value, purshaseRet, clearFields);
-
-
+        formDataToFire(purshaseRet, clearFields, 'purchase_return');
         // let purchaseReturnForm = lsExGJInit('purchaseReturnForm', []);
         // purchaseReturnForm.push(purshaseRet);
         // lsSetJ('purchaseReturnForm', purchaseReturnForm);

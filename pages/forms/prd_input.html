@@ -594,7 +594,7 @@
                     let primaryUnitPrice = $js('primaryUnitPrice');
                     let totalPricePrimary = $js('totalPriceTK');
                     let stdUnit = $js('stdUnit');
-                    let StandarunitQuantity = $js('stdUnitQuantity');
+                    let stdUnitQuantity = $js('stdUnitQuantity');
                     let stdUnitPrice = $js('stdUnitPrice');
                     let totalPrice = $js("TotPrice");
                     clearer(partyCodeEl, partyNameEl, ACCodeEl, ACNameEl, crAmount, primaryUnit, primaryQuantity, primaryUnitPrice, stdUnit, StandarunitQuantity, stdUnitPrice);
@@ -623,8 +623,7 @@
         }
         console.log(prdInput);
         // Firestore Store
-        formDataToFire("JournalForm", entryNo.value, prdInput, clearFields);
-
+        formDataToFire(prdInput, clearFields, 'prd_input');
 
         // console.log(purshaseDataForDatabase2);
 

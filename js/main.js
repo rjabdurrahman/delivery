@@ -231,16 +231,23 @@ function formDataToFire(data, cleardata, name) {
         .catch(function (error) {
             notify(error.message, 2);
         });
-    // fsDb.collection(cname).doc(dname).set(data)
-    //     .then(function () {
-    //         db.child('lastFormEntry').set(++lastEntryNo.$value);
-    //         $('#notification').html("<h6>Added Sucessfully</h6>").removeClass('w3-red').addClass('w3-green').fadeIn(200).delay(300).fadeOut(200);
-    //         cleardata();
-    //     })
-    //     .catch(function (error) {
-    //         $('#notification').html("<h6>Something Went Wrong in Database!</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(300).fadeOut(200);
-    //     });
 }
+
+// Get Rest Data
+// function getRestData(){
+//     axios.get(apiUrl + 'chart/employees')
+//         .then(function (res) {
+//             dbEmps = $scope.comEmps = res.data;
+//             $scope.$applyAsync();
+//             $scope.load = true;
+//             if ($scope.comEmps.length == 0) {
+//                 $scope.nodata = true;
+//             }
+//         })
+//         .catch(function (error) {
+//             notify(error.message, 2);
+//         });
+// }
 
 // Insert Chart
 function insertChart(route, data, clearF) {

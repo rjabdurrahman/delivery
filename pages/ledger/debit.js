@@ -61,103 +61,27 @@ app.controller('DebitLedgerCntlr', function ($scope, $firebaseArray) {
         });
         $scope.records = [];
         $scope.preRecords = [];
-        fsDb.collection("JournalForm").where('ACCodes', 'array-contains', code.value).where("date", "<", dateToNum(dateFrom.value)).get()
-            .then(function (snapshot) {
-                $scope.recShow = true;
-                if (snapshot.size == 0) {
-                    // e.target.disabled = false;
-                    // e.target.textContent = 'Calculate';
-                    // $scope.nodata = true;
-                    // $scope.$applyAsync();
-                }
-                else {
-                    snapshot.docs.forEach(element => {
-                        let obj = element.data();
-                        obj.sCode = code.value;
-                        var dlen = obj.ACCodes.length;
-                        if (dlen > 2) {
-                            var debCres = [];
-                            var debCresCode = [];
-                            debCres = debCres.concat(obj.debitCredit);
-                            debCresCode = debCresCode.concat(obj.ACCodes)
-                            obj.debitCredit = [];
-                            obj.ACCodes = [];
-
-                            for (i = 0; i < dlen; i++) {
-                                console.log(i);
-                                obj.debitCredit.push(debCres.shift());
-                                obj.debitCredit.push(debCres.shift());
-                                obj.ACCodes.push(debCresCode.shift());
-                                obj.ACCodes.push(debCresCode.shift());
-                                let newObj = Object.assign({}, obj);
-                                if (newObj.ACCodes.indexOf(newObj.sCode) >= 0)
-                                    $scope.preRecords.push(newObj);
-                                obj.debitCredit = [];
-                                obj.ACCodes = [];
-                                i++;
-                            }
-                        }
-                        else
-                            $scope.preRecords.push(obj);
-                        $scope.nodata = false;
-                        $scope.$applyAsync();
-                        $print('Pre Records');
-                        $print($scope.preRecords);
-                        // e.target.disabled = false;
-                        // e.target.textContent = 'Calculate';
-                    });
-                }
+        axios.post(apiUrl + 'ledger/debit', {ACCode : code.value, dateFrom : dateToNum(dateFrom.value), operation: 0})
+            .then(function (res) {
+                $scope.preRecords.push(...res.data);
+                $scope.nodata = false;
+                $scope.$applyAsync();
+                $print('Pre Records');
+                $print($scope.preRecords);
             })
             .catch(function (err) {
                 $print(err);
                 e.target.disabled = false;
                 e.target.textContent = 'Calculate';
             });
-        fsDb.collection("JournalForm").where('ACCodes', 'array-contains', code.value).where("date", ">=", dateToNum(dateFrom.value)).where("date", "<=", dateToNum(dateTo.value)).get()
-            .then(function (snapshot) {
-                $scope.recShow = true;
-                if (snapshot.size == 0) {
-                    e.target.disabled = false;
-                    e.target.textContent = 'Calculate';
-                    $scope.nodata = true;
-                    $scope.$applyAsync();
-                }
-                else {
-                    snapshot.docs.forEach(element => {
-                        let obj = element.data();
-                        obj.sCode = code.value;
-                        var dlen = obj.ACCodes.length;
-                        if (dlen > 2) {
-                            var debCres = [];
-                            var debCresCode = [];
-                            debCres = debCres.concat(obj.debitCredit);
-                            debCresCode = debCresCode.concat(obj.ACCodes)
-                            obj.debitCredit = [];
-                            obj.ACCodes = [];
-
-                            for (i = 0; i < dlen; i++) {
-                                console.log(i);
-                                obj.debitCredit.push(debCres.shift());
-                                obj.debitCredit.push(debCres.shift());
-                                obj.ACCodes.push(debCresCode.shift());
-                                obj.ACCodes.push(debCresCode.shift());
-                                let newObj = Object.assign({}, obj);
-                                if (newObj.ACCodes.indexOf(newObj.sCode) >= 0)
-                                    $scope.records.push(newObj);
-                                obj.debitCredit = [];
-                                obj.ACCodes = [];
-                                i++;
-                            }
-                        }
-                        else
-                            $scope.records.push(obj);
-                        $scope.nodata = false;
-                        $scope.$applyAsync();
-                        $print($scope.records);
-                        e.target.disabled = false;
-                        e.target.textContent = 'Calculate';
-                    });
-                }
+        axios.post(apiUrl + 'ledger/debit', {ACCode : code.value, dateFrom : dateToNum(dateFrom.value), dateTo : dateToNum(dateTo.value), operation: 1})
+            .then(function (res) {
+                $scope.records.push(...res.data);
+                $scope.nodata = false;
+                $scope.$applyAsync();
+                $print($scope.records);
+                e.target.disabled = false;
+                e.target.textContent = 'Calculate';
             })
             .catch(function (err) {
                 $print(err);
@@ -170,11 +94,11 @@ app.controller('DebitLedgerCntlr', function ($scope, $firebaseArray) {
         if (index == -1) return 0;
         let total = 0;
         for (i = 0; i <= index; i++) {
-            if (arr[i].sCode == arr[i].ACCodes[0] && (t == 0 || t == 1)) {
-                total += arr[i].debitCredit[0].drAmount;
+            if (arr[i].type == 'Dr' && (t == 0 || t == 1)) {
+                total += arr[i].drAmount;
             }
-            if (arr[i].sCode == arr[i].ACCodes[1] && (t == 0 || t == 2)) {
-                total -= arr[i].debitCredit[1].crAmount;
+            if (arr[i].type == 'Cr' && (t == 0 || t == 2)) {
+                total -= arr[i].crAmount;
             }
         }
         return total;

@@ -233,22 +233,6 @@ function formDataToFire(data, cleardata, name) {
         });
 }
 
-// Get Rest Data
-// function getRestData(){
-//     axios.get(apiUrl + 'chart/employees')
-//         .then(function (res) {
-//             dbEmps = $scope.comEmps = res.data;
-//             $scope.$applyAsync();
-//             $scope.load = true;
-//             if ($scope.comEmps.length == 0) {
-//                 $scope.nodata = true;
-//             }
-//         })
-//         .catch(function (error) {
-//             notify(error.message, 2);
-//         });
-// }
-
 // Insert Chart
 function insertChart(route, data, clearF) {
     axios.post(apiUrl + 'chart/' + route, data, {

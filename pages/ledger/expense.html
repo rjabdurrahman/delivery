@@ -120,11 +120,11 @@
                                 <td>{{rec.ACCode}}</td>
                                 <td>{{rec.ACName}}</td>
                                 <td>{{rec.costCenter}}</td>
-                                <td ng-if="rec.type == 'Dr' style=" text-align: right;">
+                                <td ng-if="rec.type == 'Dr'" style=" text-align: right;">
                                     {{comNum(rec.drAmount)}}</td>
-                                <td ng-if="rec.type == 'Dr' style=" text-align: right;">_____</td>
-                                <td ng-if="rec.type == 'Cr' style=" text-align: right;">_____</td>
-                                <td ng-if="rec.type == 'Cr' style=" text-align: right;">
+                                <td ng-if="rec.type == 'Dr'" style=" text-align: right;">_____</td>
+                                <td ng-if="rec.type == 'Cr'" style=" text-align: right;">_____</td>
+                                <td ng-if="rec.type == 'Cr'" style=" text-align: right;">
                                     {{comNum(rec.crAmount)}}</td>
                                 <td style="text-align: right;">
                                     {{comNum(arrTotal(preRecords, preRecords.length - 1, 0) + arrTotal(records, $index, 0))}}

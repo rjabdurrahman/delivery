@@ -61,7 +61,7 @@ app.controller('DebitLedgerCntlr', function ($scope, $firebaseArray) {
         });
         $scope.records = [];
         $scope.preRecords = [];
-        axios.post(apiUrl + 'ledger/debit', {ACCode : code.value, dateFrom : dateToNum(dateFrom.value), operation: 0})
+        axios.post(apiUrl + 'ledger/debit', {type: 'debit', ACCode : code.value, dateFrom : dateToNum(dateFrom.value), operation: 0})
             .then(function (res) {
                 $scope.preRecords.push(...res.data);
                 $scope.nodata = false;
@@ -74,7 +74,7 @@ app.controller('DebitLedgerCntlr', function ($scope, $firebaseArray) {
                 e.target.disabled = false;
                 e.target.textContent = 'Calculate';
             });
-        axios.post(apiUrl + 'ledger/debit', {ACCode : code.value, dateFrom : dateToNum(dateFrom.value), dateTo : dateToNum(dateTo.value), operation: 1})
+        axios.post(apiUrl + 'ledger/debit', {type: 'debit', ACCode : code.value, dateFrom : dateToNum(dateFrom.value), dateTo : dateToNum(dateTo.value), operation: 1})
             .then(function (res) {
                 $scope.records.push(...res.data);
                 $scope.nodata = false;

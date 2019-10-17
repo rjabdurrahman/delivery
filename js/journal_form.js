@@ -1,5 +1,5 @@
 function findTotal(e) {
-    e.target.value = comNum(e.target.value.replace(',',''));
+    e.target.value = comNum(e.target.value.replace(',', ''));
     let amountsEl = document.getElementsByName(e.target.name);
     let total = 0;
     for (var amountEl in amountsEl) {
@@ -19,18 +19,20 @@ function findTotal(e) {
 
 
 var accArray = null;
+// Depricated
+
 function ACNameComplete(event) {
     event.target.value = $.trim(event.target.value);
-    let data = accArray.find(function (el) {
-        return el.accCode == event.target.value;
-    });
-    // $print(data);
-    if (data) {
-        event.target.parentElement.nextElementSibling.firstElementChild.value = data.accText;
-    }
-    else event.target.parentElement.nextElementSibling.firstElementChild.value = '';
-
-    //$print(data.nature); 
+    getAcNameOrBal(
+        event.target.value, 
+        'ACName',
+        function (res) {
+            event.target.parentElement.nextElementSibling.firstElementChild.value = res.data[0].ACName;
+        },
+        function (err) {
+            event.target.parentElement.nextElementSibling.firstElementChild.value = "";
+        }
+    );
 }
 
 function costcenterDisableforEx(event) {
@@ -38,6 +40,7 @@ function costcenterDisableforEx(event) {
     let data = accArray.filter(function (el) {
         return el.flag == 6;
     });
+    
     let fdata = data.find(function (el) {
         return el.accCode == event.target.value;
     });
@@ -73,22 +76,19 @@ function inputfiledStdPrimayInactive(event) {
 
 
 var partyArray = null;
+// Depricated
 function partyNameComplete(event) {
     event.target.value = $.trim(event.target.value);
-    $print(event.target.value);
-    $print(partyArray.length);
-    for (i = 0; i < partyArray.length; i++) {
-        for (j = 0; j < partyArray[i].length; j++) {
-            // $print(partyArray[i][j].code);
-            // $print(event.target.value);
-
-            if (partyArray[i][j].code == event.target.value) {
-                event.target.parentElement.nextElementSibling.firstElementChild.value = partyArray[i][j].name;
-                return;
-            }
+    getPartyNameOrBal(
+        event.target.value, 
+        'name',
+        function (res) {
+            event.target.parentElement.nextElementSibling.firstElementChild.value = res.data[0].name;
+        },
+        function (err) {
+            event.target.parentElement.nextElementSibling.firstElementChild.value = "";
         }
-    }
-    event.target.parentElement.nextElementSibling.firstElementChild.value = '';
+    )
 }
 
 

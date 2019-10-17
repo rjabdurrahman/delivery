@@ -294,6 +294,24 @@ function removeChart(route, code) {
         });
 }
 
+// Get Account Name or Balance
+function getAcNameOrBal(code, param, success, fail){
+    axios.get(apiUrl + 'chart/ac/' + code + '/' + param, {
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(success)
+        .catch(fail);
+}
+
+// Get Party Name or Balance
+function getPartyNameOrBal(code, param, success, fail){
+    axios.get(apiUrl + 'chart/party/' + code + '/' + param, {
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(success)
+        .catch(fail);
+}
+
 // Date to Number function
 function dateToNum(dateStr) {
     let dateArr = dateStr.split('-');

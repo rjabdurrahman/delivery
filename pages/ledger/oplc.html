@@ -357,16 +357,19 @@
     $js('ctorDataForm').focus();
     var creditorCodes = null;
     function ACNameComplete(event) {
-        event.target.value = $.trim(event.target.value);
-        let data = creditorCodes.find(function (el) {
-            return el.code == event.target.value;
-        });
-        // $print(data);
-        if (data) {
-            event.target.parentElement.nextElementSibling.lastElementChild.value = $js('acNameEx').innerHTML = data.name;
-        }
-        else event.target.parentElement.nextElementSibling.lastElementChild.value = '';
+        event.target.value = $.trim(event.target.value).toUpperCase();
+        getPartyNameOrBal(
+            event.target.value,
+            'name',
+            function (res) {
+                event.target.parentElement.nextElementSibling.lastElementChild.value = res.data[0].name;
+            },
+            function (err) {
+                event.target.parentElement.nextElementSibling.lastElementChild.value = "";
+            }
+        );
     }
+
     $js("creditorForm").addEventListener("submit", function (event) {
         event.preventDefault();
     });

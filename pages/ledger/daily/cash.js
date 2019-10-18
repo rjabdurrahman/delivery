@@ -51,16 +51,13 @@ app.controller('CashCntlr', function ($scope, $firebaseArray) {
         axios.post(apiUrl + 'ledger/daily', { type: 'debit', ACCode: code.value, dateFrom: dateToNum(dateFrom.value), operation: 0 })
             .then(function (res) {
                 if (isPurchase) {
-                    $scope.preRecords = req.data[0].map(x => !x.psNo && !x.seqNo);
+                    $scope.preRecords = res.data.filter( x=> !x.psNo && !seqNo);
                 }
                 else {
                     $scope.preRecords.push(...res.data);
                 }
-
                 $scope.nodata = false;
                 $scope.$applyAsync();
-                $print('Pre Records');
-                $print($scope.preRecords);
             })
             .catch(function (err) {
                 $print(err);
@@ -70,15 +67,13 @@ app.controller('CashCntlr', function ($scope, $firebaseArray) {
         axios.post(apiUrl + 'ledger/daily', { type: 'debit', ACCode: code.value, dateFrom: dateToNum(dateFrom.value), operation: 1 })
             .then(function (res) {
                 if (isPurchase) {
-                    $scope.records = res.data[0].map(x => !x.psNo && !x.seqNo);
+                    $scope.records = res.data.filter( x=> !x.psNo && !seqNo);
                 }
                 else {
                     $scope.records.push(...res.data);
                 }
-
                 $scope.nodata = false;
                 $scope.$applyAsync();
-                $print($scope.records);
                 e.target.disabled = false;
                 e.target.textContent = 'Calculate';
             })

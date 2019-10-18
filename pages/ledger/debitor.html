@@ -373,21 +373,20 @@
 <!-- Pdf print hide table...........end.................. -->
 <script>
     $js('ctorDataForm').focus();
-    var debitorCodes = null;
     function ACNameComplete(event) {
-        event.target.value = $.trim(event.target.value);
-        for (i in debitorCodes) {
-            let data = debitorCodes[i].find(function (el) {
-                return el.code == event.target.value;
-            });
-            // $print(data);
-            if (data) {
-                event.target.parentElement.nextElementSibling.lastElementChild.value = $js('acNameEx').innerHTML = data.name;
-                return;
+        event.target.value = $.trim(event.target.value).toUpperCase();
+        getPartyNameOrBal(
+            event.target.value,
+            'name',
+            function (res) {
+                event.target.parentElement.nextElementSibling.lastElementChild.value = res.data[0].name;
+            },
+            function (err) {
+                event.target.parentElement.nextElementSibling.lastElementChild.value = 0;
             }
-            else event.target.parentElement.nextElementSibling.lastElementChild.value = '';
-        }
+        );
     }
+
     $js("creditorForm").addEventListener("submit", function (event) {
         event.preventDefault();
     });

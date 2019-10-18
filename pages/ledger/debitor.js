@@ -7,17 +7,7 @@ app.controller('DebitorLedgerCntlr', function ($scope, $firebaseArray) {
     $scope.recShow = false;
     $scope.nodata = false;
     $scope.begBal = 0;
-    debitorCodes = [$firebaseArray(getRef('buyProducts'))];
-    debitorCodes.push($firebaseArray(getRef('buyProducts')));
-    debitorCodes.push($firebaseArray(getRef('buyProducts')));
-    debitorCodes.push($firebaseArray(getRef('companyHeads')));
-    debitorCodes.push($firebaseArray(getRef('contractors')));
-    debitorCodes.push($firebaseArray(getRef('employees')));
-    debitorCodes.push($firebaseArray(getRef('paddyDry')));
-    debitorCodes.push($firebaseArray(getRef('paddyRaw')));
-    debitorCodes.push($firebaseArray(getRef('receivables')));
-    debitorCodes.push($firebaseArray(getRef('rice')));
-    debitorCodes.push($firebaseArray(getRef('truckTrackors')));
+    
     $scope.debitTaker = function (e) {
         let name = e.target.parentElement.previousElementSibling.lastElementChild;
         let code = name.parentElement.previousElementSibling.lastElementChild;
@@ -65,22 +55,22 @@ app.controller('DebitorLedgerCntlr', function ($scope, $firebaseArray) {
 
         e.target.disabled = true;
         e.target.textContent = 'Loading...';
-        // $print(dateToNum(dateTo.value));
-        // $print(dateToNum(dateFrom.value));
+
         $scope.records = [];
         $scope.preRecords = [];
+
         // Begining Balance
-        for (i in debitorCodes) {
-            let data = debitorCodes[i].find(function (el) {
-                return el.code == code.value;
-            });
-            // $print(data);
-            if (data) {
-                $scope.begBal = data.balance;
-                break;
+        getPartyNameOrBal(
+            code.value,
+            'balance',
+            function (res) {
+                $scope.begBal = res.data[0].balance;
+            },
+            function (err) {
+                $scope.begBal = 0;
             }
-            else $scope.begBal = 0;
-        }
+        );
+
         axios.post(apiUrl + 'ledger/debit', {type: 'debitor', partyCode : code.value, dateFrom : dateToNum(dateFrom.value), operation: 0})
             .then(function (res) {
                 $scope.preRecords.push(...res.data);

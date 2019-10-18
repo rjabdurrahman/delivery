@@ -7,6 +7,7 @@ app.controller('CreditorLedgerCntlr', function ($scope, $firebaseArray) {
     $scope.recShow = false;
     $scope.nodata = false;
     $scope.begBal = 0;
+    
     $scope.debitTaker = function (e) {
         let name = e.target.parentElement.previousElementSibling.lastElementChild;
         let code = name.parentElement.previousElementSibling.lastElementChild;
@@ -54,15 +55,21 @@ app.controller('CreditorLedgerCntlr', function ($scope, $firebaseArray) {
 
         e.target.disabled = true;
         e.target.textContent = 'Loading...';
-        // $print(dateToNum(dateTo.value));
-        // $print(dateToNum(dateFrom.value));
         $scope.records = [];
         $scope.preRecords = [];
+        
         // Begining Balance
-        let ref = firebase.database().ref("payables");
-        ref.orderByChild("code").equalTo(code.value).on("child_added", function (snapshot) {
-            $scope.begBal = snapshot.val().balance;
-        });
+        getPartyNameOrBal(
+            code.value,
+            'balance',
+            function (res) {
+                $scope.begBal = res.data[0].balance;
+            },
+            function (err) {
+                $scope.begBal = 0;
+            }
+        );
+
         axios.post(apiUrl + 'ledger/debit', {type: 'debitor', partyCode : code.value, dateFrom : dateToNum(dateFrom.value), operation: 0})
             .then(function (res) {
                 $scope.preRecords.push(...res.data);

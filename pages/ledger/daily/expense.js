@@ -12,34 +12,20 @@ app.controller('DailyExpCntlr', function ($scope, $firebaseArray) {
     $scope.reCalculate = function (e) {
         coCen = e.target.textContent;
         dropFunction();
-        $print(e.target.parentElement);
         $scope.records = [];
-        fsDb.collection("JournalForm").where("date", "==", dateToNum(dateFrom.value)).where("costCenter", "==", coCen).get()
-            .then(function (snapshot) {
-                $scope.recShow = true;
-                if (snapshot.size == 0) {
-                    $scope.nodata = true;
-                    $scope.$applyAsync();
-                }
-                else {
-                    snapshot.docs.forEach(element => {
-                        let obj = element.data();
-                        obj.ACCodes = obj.ACCodes.map(function (x) {
-                            return x.substr(0, 3);
-                        });
-                        if (obj.ACCodes.indexOf('EX-') >= 0) {
-                            $scope.records.push(obj);
-                        }
-                        $scope.records.push(obj);
-                        $scope.nodata = false;
-                        $scope.$applyAsync();
-                    });
-                }
+        axios.post(apiUrl + 'ledger/daily_expense', {operation: 2, costCenter: coCen, dateFrom : dateToNum(dateFrom.value)})
+            .then(function (res) {
+                $scope.records.push(...res.data);
+                $scope.nodata = false;
+                $scope.$applyAsync();
             })
             .catch(function (err) {
-                $print(err);
+                alert(err);
+                e.target.disabled = false;
+                e.target.textContent = 'Calculate';
             });
     }
+
     $scope.debitTaker = function (e) {
         name = e.target.parentElement.previousElementSibling.lastElementChild;
         code = name.parentElement.previousElementSibling.lastElementChild;
@@ -72,32 +58,14 @@ app.controller('DailyExpCntlr', function ($scope, $firebaseArray) {
         // $print(dateToNum(dateFrom.value));
         $scope.records = [];
         $scope.costCenters = [];
-        fsDb.collection("JournalForm").where("date", "==", dateToNum(dateFrom.value)).get()
-            .then(function (snapshot) {
-                $scope.recShow = true;
-                if (snapshot.size == 0) {
-                    e.target.disabled = false;
-                    e.target.textContent = 'Calculate';
-                    $scope.nodata = true;
-                    $scope.$applyAsync();
-                }
-                else {
-                    snapshot.docs.forEach(element => {
-                        let obj = element.data();
-                        obj.ACCodes = obj.ACCodes.map(function (x) {
-                            return x.substr(0, 3);
-                        });
-                        if (obj.ACCodes.indexOf('EX-') >= 0) {
-                            if (obj.costCenter && $scope.costCenters.indexOf(obj.costCenter) < 0) $scope.costCenters.push(obj.costCenter);
-                            $scope.records.push(obj);
-                        }
-                        $scope.nodata = false;
-                        $scope.$applyAsync();
-                        $print($scope.records);
-                        e.target.disabled = false;
-                        e.target.textContent = 'Calculate';
-                    });
-                }
+        axios.post(apiUrl + 'ledger/daily_expense', {operation: 1, dateFrom : dateToNum(dateFrom.value)})
+            .then(function (res) {
+                $scope.records.push(...res.data);
+                $scope.costCenters = [...new Set(res.data.map( x => x.costCenter))];
+                $scope.nodata = false;
+                $scope.$applyAsync();
+                e.target.disabled = false;
+                e.target.textContent = 'Calculate';
             })
             .catch(function (err) {
                 $print(err);
@@ -110,16 +78,13 @@ app.controller('DailyExpCntlr', function ($scope, $firebaseArray) {
         if (index == -1) return 0;
         let total = 0;
         for (i = 0; i <= index; i++) {
-            if (arr[i].ACCodes[0].indexOf('EX-') >= 0 && (t == 0 || t == 1)) {
-                total += arr[i].debitCredit[0].drAmount;
+            if (arr[i].type == 'Dr' && (t == 0 || t == 1)) {
+                total += arr[i].drAmount;
             }
-            if (arr[i].ACCodes[1].indexOf('EX-') >= 0 && (t == 0 || t == 2)) {
-                total -= arr[i].debitCredit[1].crAmount;
+            if (arr[i].type == 'Cr' && (t == 0 || t == 2)) {
+                total -= arr[i].crAmount;
             }
         }
         return total;
-    }
-    $scope.codeMatch = function(code){
-        return code.substr(0, 3) == 'EX-';
     }
 });

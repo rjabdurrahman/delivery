@@ -72,11 +72,6 @@ function inputfiledStdPrimayInactive(event) {
     event.target.value = $.trim(event.target.value);
 }
 
-
-
-
-var partyArray = null;
-// Depricated
 function partyNameComplete(event) {
     event.target.value = $.trim(event.target.value);
     getPartyNameOrBal(

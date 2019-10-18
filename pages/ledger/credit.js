@@ -49,13 +49,19 @@ app.controller('CreditLedgerCntlr', function ($scope, $firebaseArray) {
 
         e.target.disabled = true;
         e.target.textContent = 'Loading...';
-        // $print(dateToNum(dateTo.value));
-        // $print(dateToNum(dateFrom.value));
+
         // Begining Balance
-        let ref = firebase.database().ref("accounts");
-        ref.orderByChild("accCode").equalTo(code.value).on("child_added", function (snapshot) {
-            $scope.begBal = snapshot.val().balance;
-        });
+        getAcNameOrBal(
+            code.value,
+            'balance',
+            function (res) {
+                $scope.begBal = res.data[0].balance;
+            },
+            function (err) {
+                $scope.begBal = 0;
+            }
+        );
+        
         $scope.records = [];
         $scope.preRecords = [];
         axios.post(apiUrl + 'ledger/debit', { type: 'debit', ACCode: code.value, dateFrom: dateToNum(dateFrom.value), operation: 0 })

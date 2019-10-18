@@ -5,7 +5,6 @@ app.controller('CashCntlr', function ($scope, $firebaseArray) {
     $scope.recShow = false;
     $scope.nodata = false;
     $scope.begBal = 0;
-    accArrayA = $firebaseArray(getRef('accounts'));
     $scope.debitTaker = function (e) {
         let name = e.target.parentElement.previousElementSibling.lastElementChild;
         let code = name.parentElement.previousElementSibling.lastElementChild;
@@ -37,95 +36,51 @@ app.controller('CashCntlr', function ($scope, $firebaseArray) {
         e.target.disabled = true;
         e.target.textContent = 'Loading...';
         let ref = firebase.database().ref("accounts");
-        ref.orderByChild("accCode").equalTo(code.value).on("child_added", function (snapshot) {
-            $scope.begBal = snapshot.val().balance;
-        });
+        getAcNameOrBal(
+            code.value,
+            'balance',
+            function (res) {
+                $scope.begBal = res.data[0].balance;
+            },
+            function (err) {
+                $scope.begBal = 0;
+            }
+        );
         $scope.records = [];
         $scope.preRecords = [];
-        fsDb.collection("JournalForm").where('ACCodes', 'array-contains', code.value).where("date", "<", dateToNum(dateFrom.value)).get()
-            .then(function (snapshot) {
-                $scope.recShow = true;
-                if (snapshot.size == 0) {
-                    // e.target.disabled = false;
-                    // e.target.textContent = 'Calculate';
-                    // $scope.nodata = true;
-                    // $scope.$applyAsync();
+        axios.post(apiUrl + 'ledger/daily', { type: 'debit', ACCode: code.value, dateFrom: dateToNum(dateFrom.value), operation: 0 })
+            .then(function (res) {
+                if (isPurchase) {
+                    $scope.preRecords = req.data[0].map(x => !x.psNo && !x.seqNo);
                 }
                 else {
-                    snapshot.docs.forEach(element => {
-                        let obj = element.data();
-                        obj.sCode = code.value;
-                        // $print(obj);
-                        if (isPurchase) {
-                            if (!obj.psNo && !obj.seqNo)
-                                $scope.preRecords.push(obj);
-                        }
-                        else {
-                            $scope.preRecords.push(obj);
-                        }
-                        $scope.nodata = false;
-                        $scope.$applyAsync();
-                        // $print('Pre Records');
-                        // $print($scope.preRecords);
-                    });
+                    $scope.preRecords.push(...res.data);
                 }
+
+                $scope.nodata = false;
+                $scope.$applyAsync();
+                $print('Pre Records');
+                $print($scope.preRecords);
             })
             .catch(function (err) {
                 $print(err);
                 e.target.disabled = false;
                 e.target.textContent = 'Calculate';
             });
-        fsDb.collection("JournalForm").where('ACCodes', 'array-contains', code.value).where("date", "==", dateToNum(dateFrom.value)).get()
-            .then(function (snapshot) {
-                $scope.recShow = true;
-                if (snapshot.size == 0) {
-                    e.target.disabled = false;
-                    e.target.textContent = 'Calculate';
-                    $scope.nodata = true;
-                    $scope.$applyAsync();
+        axios.post(apiUrl + 'ledger/daily', { type: 'debit', ACCode: code.value, dateFrom: dateToNum(dateFrom.value), operation: 1 })
+            .then(function (res) {
+                if (isPurchase) {
+                    $scope.records = res.data[0].map(x => !x.psNo && !x.seqNo);
                 }
                 else {
-                    snapshot.docs.forEach(element => {
-                        let obj = element.data();
-                        obj.sCode = code.value;
-                        let nObj = JSON.parse(JSON.stringify(obj));
-                        let mObj = JSON.parse(JSON.stringify(obj));
-                        if (obj.debitCredit[0].ACCode == obj.debitCredit[1].ACCode) {
-                            if (obj.isPurchase) {
-                                if (!obj.psNo && !obj.seqNo) {
-                                    nObj.ACCodes[0] = 'ZZZ0';
-                                    // console.log(nObj);
-                                    $scope.records.push(nObj);
-                                    mObj.ACCodes[1] = 'ZZZ1';
-                                    $scope.records.push(mObj);
-                                    // console.log(mObj);
-                                }
-                            }
-                            else {
-                                nObj.ACCodes[0] = 'ZZZ0';
-                                // console.log(nObj);
-                                $scope.records.push(nObj);
-                                mObj.ACCodes[1] = 'ZZZ1';
-                                $scope.records.push(mObj);
-                                // console.log(mObj);
-                            }
-                        }
-                        else {
-                            if (isPurchase) {
-                                if (!obj.psNo && !obj.seqNo)
-                                    $scope.records.push(obj);
-                            }
-                            else {
-                                $scope.records.push(obj);
-                            }
-                        }
-                        $scope.nodata = false;
-                        $scope.$applyAsync();
-                        // $print($scope.records);
-                        e.target.disabled = false;
-                        e.target.textContent = 'Calculate';
-                    });
+                    $scope.records.push(...res.data);
                 }
+
+                $scope.nodata = false;
+                $scope.$applyAsync();
+                $print($scope.records);
+                e.target.disabled = false;
+                e.target.textContent = 'Calculate';
             })
             .catch(function (err) {
                 $print(err);

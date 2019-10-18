@@ -108,20 +108,14 @@
                                 <td>{{rec.entryNo}}</td>
                                 <td>{{rec.voucherNo}}</td>
                                 <td>{{numToDate(rec.date)}}</td>
-                                <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].partyCode}}</td>
-                                <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].partyCode}}</td>
-                                <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].partyName}}</td>
-                                <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].partyName}}</td>
-                                <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].ACCode}}</td>
-                                <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].ACCode}}</td>
-                                <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].ACName}}</td>
-                                <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].ACName}}</td>
-                                <td ng-if="rec.sCode == rec.ACCodes[0]" style="text-align: right;">
-                                    {{comNum(rec.debitCredit[0].drAmount)}}</td>
-                                <td ng-if="rec.sCode == rec.ACCodes[0]" style="text-align: right;">_____</td>
-                                <td ng-if="rec.sCode == rec.ACCodes[1]" style="text-align: right;">_____</td>
-                                <td ng-if="rec.sCode == rec.ACCodes[1]" style="text-align: right;">
-                                    {{comNum(rec.debitCredit[1].crAmount)}}</td>
+                                <td>{{rec.partyCode}}</td>
+                                <td>{{rec.partyName}}</td>
+                                <td>{{rec.ACCode}}</td>
+                                <td>{{rec.ACName}}</td>
+                                <td ng-if="rec.type == 'Dr'" style="text-align: right;">{{comNum(rec.drAmount)}}</td>
+                                <td ng-if="rec.type == 'Dr'" style="text-align: right;">_____</td>
+                                <td ng-if="rec.type == 'Cr'" style="text-align: right;">_____</td>
+                                <td ng-if="rec.type == 'Cr'" style="text-align: right;">{{comNum(rec.crAmount)}}</td>
                                 <td style="text-align: right;">
                                     {{comNum(begBal + arrTotal(preRecords, preRecords.length - 1, 0) + arrTotal(records, $index, 0))}}
                                 </td>
@@ -211,27 +205,23 @@
         <td>Balance</td>
     </tr>
     <tr ng-repeat="rec in records track by $index">
+    <tr ng-repeat="rec in records track by $index">
         <td>{{$index + 1}}</td>
         <td>{{rec.entryNo}}</td>
         <td>{{rec.voucherNo}}</td>
         <td>{{numToDate(rec.date)}}</td>
-        <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].partyCode}}</td>
-        <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].partyCode}}</td>
-        <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].partyName}}</td>
-        <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].partyName}}</td>
-        <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].ACCode}}</td>
-        <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].ACCode}}</td>
-        <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].ACName}}</td>
-        <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].ACName}}</td>
-        <td ng-if="rec.sCode == rec.ACCodes[0]" style="text-align: right;">
-            {{comNum(rec.debitCredit[0].drAmount)}}</td>
-        <td ng-if="rec.sCode == rec.ACCodes[0]" style="text-align: right;">_____</td>
-        <td ng-if="rec.sCode == rec.ACCodes[1]" style="text-align: right;">_____</td>
-        <td ng-if="rec.sCode == rec.ACCodes[1]" style="text-align: right;">
-            {{comNum(rec.debitCredit[1].crAmount)}}</td>
+        <td>{{rec.partyCode}}</td>
+        <td>{{rec.partyName}}</td>
+        <td>{{rec.ACCode}}</td>
+        <td>{{rec.ACName}}</td>
+        <td ng-if="rec.type == 'Dr'" style="text-align: right;">{{comNum(rec.drAmount)}}</td>
+        <td ng-if="rec.type == 'Dr'" style="text-align: right;">_____</td>
+        <td ng-if="rec.type == 'Cr'" style="text-align: right;">_____</td>
+        <td ng-if="rec.type == 'Cr'" style="text-align: right;">{{comNum(rec.crAmount)}}</td>
         <td style="text-align: right;">
             {{comNum(begBal + arrTotal(preRecords, preRecords.length - 1, 0) + arrTotal(records, $index, 0))}}
         </td>
+    </tr>
     </tr>
 </table>
 <!-- Excel Tabel End -->
@@ -240,8 +230,10 @@
     <table border="1" cellspacing="0" style="visibility: hidden;" id="debPdfTable">
         <tr>
             <td colspan="12" style="text-align: center; height: 50px; font-size: 25px;">
-                <img style="width: 50px; height: 50px; float: left;" src="http://testing.afsanajasi.com/Rahman/img/logo3.png"> <span>DAILY CASH</span>
-                <img style="width: 50px; height: 50px; float: right;" src="http://testing.afsanajasi.com/Rahman/img/logo32.png">
+                <img style="width: 50px; height: 50px; float: left;"
+                    src="http://testing.afsanajasi.com/Rahman/img/logo3.png"> <span>DAILY CASH</span>
+                <img style="width: 50px; height: 50px; float: right;"
+                    src="http://testing.afsanajasi.com/Rahman/img/logo32.png">
             </td>
         </tr>
         <tr>
@@ -295,25 +287,23 @@
             <th>Balance</th>
         </tr>
         <tr ng-repeat="rec in records track by $index">
+        <tr ng-repeat="rec in records track by $index">
             <td>{{$index + 1}}</td>
             <td>{{rec.entryNo}}</td>
             <td>{{rec.voucherNo}}</td>
             <td>{{numToDate(rec.date)}}</td>
-            <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].partyCode}}</td>
-            <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].partyCode}}</td>
-            <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].partyName}}</td>
-            <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].partyName}}</td>
-            <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].ACCode}}</td>
-            <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].ACCode}}</td>
-            <td ng-if="rec.sCode == rec.ACCodes[0]">{{rec.debitCredit[1].ACName}}</td>
-            <td ng-if="rec.sCode == rec.ACCodes[1]">{{rec.debitCredit[0].ACName}}</td>
-            <td ng-if="rec.sCode == rec.ACCodes[0]" style="text-align: right;">{{rec.debitCredit[0].drAmount}}</td>
-            <td ng-if="rec.sCode == rec.ACCodes[0]" style="text-align: right;">_____</td>
-            <td ng-if="rec.sCode == rec.ACCodes[1]" style="text-align: right;">_____</td>
-            <td ng-if="rec.sCode == rec.ACCodes[1]" style="text-align: right;">{{rec.debitCredit[1].crAmount}}</td>
-            <td style="text-align: right;">{{begBal + arrTotal(preRecords, preRecords.length - 1, 0) +
-                arrTotal(records, $index,
-                0)}}</td>
+            <td>{{rec.partyCode}}</td>
+            <td>{{rec.partyName}}</td>
+            <td>{{rec.ACCode}}</td>
+            <td>{{rec.ACName}}</td>
+            <td ng-if="rec.type == 'Dr'" style="text-align: right;">{{comNum(rec.drAmount)}}</td>
+            <td ng-if="rec.type == 'Dr'" style="text-align: right;">_____</td>
+            <td ng-if="rec.type == 'Cr'" style="text-align: right;">_____</td>
+            <td ng-if="rec.type == 'Cr'" style="text-align: right;">{{comNum(rec.crAmount)}}</td>
+            <td style="text-align: right;">
+                {{comNum(begBal + arrTotal(preRecords, preRecords.length - 1, 0) + arrTotal(records, $index, 0))}}
+            </td>
+        </tr>
         </tr>
     </table>
 </div>

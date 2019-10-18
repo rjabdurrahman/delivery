@@ -93,11 +93,11 @@ app.controller('CashCntlr', function ($scope, $firebaseArray) {
         if (index == -1) return 0;
         let total = 0;
         for (i = 0; i <= index; i++) {
-            if (arr[i].sCode == arr[i].ACCodes[0] && (t == 0 || t == 1)) {
-                total += arr[i].debitCredit[0].drAmount;
+            if (arr[i].type == 'Dr' && (t == 0 || t == 1)) {
+                total += arr[i].drAmount;
             }
-            if (arr[i].sCode == arr[i].ACCodes[1] && (t == 0 || t == 2)) {
-                total -= arr[i].debitCredit[1].crAmount;
+            if (arr[i].type == 'Cr' && (t == 0 || t == 2)) {
+                total -= arr[i].crAmount;
             }
         }
         return total;

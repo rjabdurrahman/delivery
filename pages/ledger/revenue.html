@@ -380,18 +380,20 @@
     $js('ACCodeS').addEventListener('focusout', function (e) {
         e.target.parentElement.removeChild(e.target.nextElementSibling);
     });
-    var accArrayA = null;
+    
     function ACNameComplete(event) {
         event.target.value = event.target.value.toUpperCase();
         event.target.value = $.trim(event.target.value);
-        let data = accArrayA.find(function (el) {
-            return el.accCode == event.target.value;
-        });
-        // $print(data);
-        if (data) {
-            event.target.parentElement.nextElementSibling.lastElementChild.value = $js('acNameEx').innerHTML = data.accText;
-        }
-        else event.target.parentElement.nextElementSibling.lastElementChild.value = '';
+        getAcNameOrBal(
+            event.target.value,
+            'ACName',
+            function (res) {
+                event.target.parentElement.nextElementSibling.lastElementChild.value = $js('acNameEx').innerHTML = res.data[0].ACName;
+            },
+            function (err) {
+                event.target.parentElement.nextElementSibling.lastElementChild.value = $js('acNameEx').innerHTML = "";
+            }
+        );
     }
     $js("debitForm").addEventListener("submit", function (event) {
         event.preventDefault();

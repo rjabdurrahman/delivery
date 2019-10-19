@@ -33,71 +33,28 @@ app.controller('DailyRevCntlr', function ($scope, $firebaseArray) {
 
         e.target.disabled = true;
         e.target.textContent = 'Loading...';
-        // $print(dateToNum(dateFrom.value));
-        // Begining Balance
-        let ref = firebase.database().ref("accounts");
-        ref.orderByChild("accCode").equalTo(code.value).on("child_added", function (snapshot) {
-            $scope.begBal = snapshot.val().balance;
-        });
+
         $scope.records = [];
         $scope.preRecords = [];
-        fsDb.collection("JournalForm").where("date", "<", dateToNum(dateFrom.value)).get()
-            .then(function (snapshot) {
-                $scope.recShow = true;
-                if (snapshot.size == 0) {
-                    // e.target.disabled = false;
-                    // e.target.textContent = 'Calculate';
-                    // $scope.nodata = true;
-                    // $scope.$applyAsync();
-                }
-                else {
-                    snapshot.docs.forEach(element => {
-                        let obj = element.data();
-                        obj.ACCodes = obj.ACCodes.map(function (x) {
-                            return x.substr(0, 4);
-                        });
-                        if (obj.ACCodes.indexOf('REV-') >= 0) {
-                            $scope.preRecords.push(obj);
-                        }
-                        $scope.nodata = false;
-                        $scope.$applyAsync();
-                        $print('Pre Records');
-                        $print($scope.preRecords);
-                        // e.target.disabled = false;
-                        // e.target.textContent = 'Calculate';
-                    });
-                }
+        $scope.preRecords = [];
+        axios.post(apiUrl + 'ledger/daily_sales', { dateFrom: dateToNum(dateFrom.value), operation: 0 })
+            .then(function (res) {
+                $scope.preRecords.push(...res.data);
+                $scope.nodata = false;
+                $scope.$applyAsync();
             })
             .catch(function (err) {
                 $print(err);
                 e.target.disabled = false;
                 e.target.textContent = 'Calculate';
             });
-        fsDb.collection("JournalForm").where("date", "==", dateToNum(dateFrom.value)).get()
-            .then(function (snapshot) {
-                $scope.recShow = true;
-                if (snapshot.size == 0) {
-                    e.target.disabled = false;
-                    e.target.textContent = 'Calculate';
-                    $scope.nodata = true;
-                    $scope.$applyAsync();
-                }
-                else {
-                    snapshot.docs.forEach(element => {
-                        let obj = element.data();
-                        obj.ACCodes = obj.ACCodes.map(function (x) {
-                            return x.substr(0, 4);
-                        });
-                        if (obj.ACCodes.indexOf('REV-') >= 0) {
-                            $scope.records.push(obj);
-                        }
-                        $scope.nodata = false;
-                        $scope.$applyAsync();
-                        $print($scope.records);
-                        e.target.disabled = false;
-                        e.target.textContent = 'Calculate';
-                    });
-                }
+        axios.post(apiUrl + 'ledger/daily_sales', { dateFrom: dateToNum(dateFrom.value), operation: 1 })
+            .then(function (res) {
+                $scope.records.push(...res.data);
+                $scope.nodata = false;
+                $scope.$applyAsync();
+                e.target.disabled = false;
+                e.target.textContent = 'Calculate';
             })
             .catch(function (err) {
                 $print(err);
@@ -110,16 +67,13 @@ app.controller('DailyRevCntlr', function ($scope, $firebaseArray) {
         if (index == -1) return 0;
         let total = 0;
         for (i = 0; i <= index; i++) {
-            if (arr[i].ACCodes[0].indexOf('REV-') >= 0 && (t == 0 || t == 1)) {
-                total -= arr[i].debitCredit[0].drAmount;
+            if (arr[i].type == 'Dr' && (t == 0 || t == 1)) {
+                total -= arr[i].drAmount;
             }
-            if (arr[i].ACCodes[1].indexOf('REV-') >= 0 && (t == 0 || t == 2)) {
-                total += arr[i].debitCredit[1].crAmount;
+            if (arr[i].type == 'Cr' && (t == 0 || t == 2)) {
+                total += arr[i].crAmount;
             }
         }
         return total;
-    }
-    $scope.codeMatch = function(code){
-        return code.substr(0, 4) == 'REV-';
     }
 });

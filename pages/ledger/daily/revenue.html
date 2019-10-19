@@ -25,7 +25,8 @@
                     </div>
                     <div style="width: 500px;">
                         <label>Account Code</label>
-                        <input id="ACCodeS" class="w3-input w3-border" type="text" autocomplete="off" value="[RANGE: 7001 - 7999]" disabled>
+                        <input id="ACCodeS" class="w3-input w3-border" type="text" value="[RANGE: 7001 - 7999]"
+                            disabled>
                     </div>
                     <div>
                         <label>Account Name</label>
@@ -57,9 +58,9 @@
                             <tr>
                                 <td>Begining Balance</td>
                                 <td id="begc" style="text-align: right;">_____</td>
-                                <td id="begd" style="text-align: right;">{{comNum(begBal + arrTotal(preRecords,
+                                <td id="begd" style="text-align: right;">{{comNum(arrTotal(preRecords,
                                     preRecords.length - 1, 0))}}</td>
-                                <td id="begb" style="text-align: right;">{{comNum(begBal + arrTotal(preRecords,
+                                <td id="begb" style="text-align: right;">{{comNum(arrTotal(preRecords,
                                     preRecords.length - 1, 0))}}</td>
                             </tr>
                             <tr>
@@ -68,7 +69,7 @@
                                     1))}}</td>
                                 <td id="totc" style="text-align: right;">{{comNum(arrTotal(records, records.length
                                     - 1, 2))}}</td>
-                                <td id="totb" style="text-align: right;">{{comNum(begBal + arrTotal(preRecords,
+                                <td id="totb" style="text-align: right;">{{comNum(arrTotal(preRecords,
                                     preRecords.length - 1, 0) + arrTotal(records, records.length - 1, 0))}}</td>
                             </tr>
                         </tbody>
@@ -114,36 +115,24 @@
                                 <td>{{rec.entryNo}}</td>
                                 <td>{{rec.voucherNo}}</td>
                                 <td>{{numToDate(rec.date)}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].ACCode}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].ACCode}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].ACName}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].ACName}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].partyCode}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].partyCode}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].partyName}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].partyName}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].ACCode}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].ACCode}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].ACName}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].ACName}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].stdUnit}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].stdUnit}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].packSize}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].packSize}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].packs}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].packs}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].totalQuantity}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].totalQuantity}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].stdUnitPrice}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].stdUnitPrice}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])" style="text-align: right;">
-                                    {{comNum(rec.debitCredit[0].drAmount)}}</td>
-                                <td ng-if="codeMatch(rec.ACCodes[0])" style="text-align: right;">_____</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])" style="text-align: right;">_____</td>
-                                <td ng-if="codeMatch(rec.ACCodes[1])" style="text-align: right;">
-                                    {{comNum(rec.debitCredit[1].crAmount)}}</td>
-                                <td style="text-align: right;">{{comNum(begBal + arrTotal(preRecords, preRecords.length
-                                    - 1, 0) + arrTotal(records, $index, 0))}}</td>
+                                <td>{{rec.pairACCode}}</td>
+                                <td>{{rec.pairACName}}</td>
+                                <td>{{rec.partyCode}}</td>
+                                <td>{{rec.partyName}}</td>
+                                <td>{{rec.ACCode}}</td>
+                                <td>{{rec.ACName}}</td>
+                                <td>{{rec.stdUnit}}</td>
+                                <td>{{rec.packSize}}</td>
+                                <td>{{rec.packs}}</td>
+                                <td>{{rec.totalQuantity}}</td>
+                                <td>{{rec.stdUnitPrice}}</td>
+                                <td ng-if="rec.type == 'Dr'" style=" text-align: right;">{{comNum(rec.drAmount)}}</td>
+                                <td ng-if="rec.type == 'Dr'" style="text-align: right;">_____</td>
+                                <td ng-if="rec.type == 'Cr'" style="text-align: right;">_____</td>
+                                <td ng-if="rec.type == 'Cr'" style="text-align: right;">{{comNum(rec.crAmount)}}</td>
+                                <td style="text-align: right;">
+                                    {{comNum(arrTotal(preRecords, preRecords.length - 1, 0) + arrTotal(records, $index, 0))}}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -188,9 +177,9 @@
     <tr>
         <td>Begining Balance</td>
         <td>_____</td>
-        <td>{{comNum(begBal + arrTotal(preRecords,
+        <td>{{comNum(arrTotal(preRecords,
             preRecords.length - 1, 0))}}</td>
-        <td>{{comNum(begBal + arrTotal(preRecords,
+        <td>{{comNum(arrTotal(preRecords,
             preRecords.length - 1, 0))}}</td>
     </tr>
     <tr>
@@ -199,7 +188,7 @@
             1))}}</td>
         <td>{{comNum(arrTotal(records, records.length
             - 1, 2))}}</td>
-        <td>{{comNum(begBal + arrTotal(preRecords,
+        <td>{{comNum(arrTotal(preRecords,
             preRecords.length - 1, 0) + arrTotal(records, records.length - 1, 0))}}</td>
     </tr>
     <tr>
@@ -210,60 +199,48 @@
     </tr>
     <tr>
         <th>No</th>
-            <th>EN</th>
-            <th>VN</th>
-            <th>Date</th>
-            <th>REV Code</th>
-            <th>Revenue</th>
-            <th>Party Code</th>
-            <th>Party Name</th>
-            <th>A/C Code</th>
-            <th>A/C Name</th>
-            <th>SU</th>
-            <th>PS</th>
-            <th>NOP</th>
-            <th>TQ</th>
-            <th>SUP</th>
-            <th>Debit Amount</th>
-            <th>Credit Amount</th>
-            <th>Balance</th>
+        <th>EN</th>
+        <th>VN</th>
+        <th>Date</th>
+        <th>REV Code</th>
+        <th>Revenue</th>
+        <th>Party Code</th>
+        <th>Party Name</th>
+        <th>A/C Code</th>
+        <th>A/C Name</th>
+        <th>SU</th>
+        <th>PS</th>
+        <th>NOP</th>
+        <th>TQ</th>
+        <th>SUP</th>
+        <th>Debit Amount</th>
+        <th>Credit Amount</th>
+        <th>Balance</th>
     </tr>
     <tr ng-repeat="rec in records track by $index">
         <td>{{$index + 1}}</td>
-            <td>{{rec.entryNo}}</td>
-            <td>{{rec.voucherNo}}</td>
-            <td>{{numToDate(rec.date)}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].ACCode}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].ACCode}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].ACName}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].ACName}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].partyCode}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].partyCode}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].partyName}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].partyName}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].ACCode}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].ACCode}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].ACName}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].ACName}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].stdUnit}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].stdUnit}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].packSize}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].packSize}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].packs}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].packs}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].totalQuantity}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].totalQuantity}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[0].stdUnitPrice}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[1].stdUnitPrice}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])" style="text-align: right;">
-                {{comNum(rec.debitCredit[0].drAmount)}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])" style="text-align: right;">_____</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])" style="text-align: right;">_____</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])" style="text-align: right;">
-                {{comNum(rec.debitCredit[1].crAmount)}}</td>
-            <td style="text-align: right;">{{comNum(begBal + arrTotal(preRecords, preRecords.length
-                - 1, 0) + arrTotal(records, $index, 0))}}</td>
-        </tr>
+        <td>{{rec.entryNo}}</td>
+        <td>{{rec.voucherNo}}</td>
+        <td>{{numToDate(rec.date)}}</td>
+        <td>{{rec.pairACCode}}</td>
+        <td>{{rec.pairACName}}</td>
+        <td>{{rec.partyCode}}</td>
+        <td>{{rec.partyName}}</td>
+        <td>{{rec.ACCode}}</td>
+        <td>{{rec.ACName}}</td>
+        <td>{{rec.stdUnit}}</td>
+        <td>{{rec.packSize}}</td>
+        <td>{{rec.packs}}</td>
+        <td>{{rec.totalQuantity}}</td>
+        <td>{{rec.stdUnitPrice}}</td>
+        <td ng-if="rec.type == 'Dr'" style=" text-align: right;">{{comNum(rec.drAmount)}}</td>
+        <td ng-if="rec.type == 'Dr'" style="text-align: right;">_____</td>
+        <td ng-if="rec.type == 'Cr'" style="text-align: right;">_____</td>
+        <td ng-if="rec.type == 'Cr'" style="text-align: right;">{{comNum(rec.crAmount)}}</td>
+        <td style="text-align: right;">
+            {{comNum(arrTotal(preRecords, preRecords.length - 1, 0) + arrTotal(records, $index, 0))}}
+        </td>
+    </tr>
 </table>
 <!-- Excel Tabel End -->
 
@@ -272,8 +249,10 @@
     <table border="1" cellspacing="0" style="visibility: hidden;" id="debPdfTable">
         <tr>
             <td colspan="12" style="text-align: center; height: 50px; font-size: 25px;">
-                <img style="width: 50px; height: 50px; float: left;" src="http://testing.afsanajasi.com/Rahman/img/logo3.png"> <span>DAILY REVENUE</span>
-                <img style="width: 50px; height: 50px; float: right;" src="http://testing.afsanajasi.com/Rahman/img/logo32.png">
+                <img style="width: 50px; height: 50px; float: left;"
+                    src="http://testing.afsanajasi.com/Rahman/img/logo3.png"> <span>DAILY REVENUE</span>
+                <img style="width: 50px; height: 50px; float: right;"
+                    src="http://testing.afsanajasi.com/Rahman/img/logo32.png">
             </td>
         </tr>
         <tr>
@@ -338,32 +317,24 @@
             <td>{{rec.entryNo}}</td>
             <td>{{rec.voucherNo}}</td>
             <td>{{numToDate(rec.date)}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].partyCode}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].partyCode}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].partyName}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].partyName}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].ACCode}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].ACCode}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].ACName}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].ACName}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].stdUnit}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].stdUnit}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].packSize}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].packSize}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].packs}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].packs}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].totalQuantity}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].totalQuantity}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])">{{rec.debitCredit[1].stdUnitPrice}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])">{{rec.debitCredit[0].stdUnitPrice}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])" style="text-align: right;">
-                {{comNum(rec.debitCredit[0].drAmount)}}</td>
-            <td ng-if="codeMatch(rec.ACCodes[0])" style="text-align: right;">_____</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])" style="text-align: right;">_____</td>
-            <td ng-if="codeMatch(rec.ACCodes[1])" style="text-align: right;">
-                {{comNum(rec.debitCredit[1].crAmount)}}</td>
-            <td style="text-align: right;">{{comNum(begBal + arrTotal(preRecords, preRecords.length
-                - 1, 0) + arrTotal(records, $index, 0))}}</td>
+            <td>{{rec.pairACCode}}</td>
+            <td>{{rec.pairACName}}</td>
+            <td>{{rec.partyCode}}</td>
+            <td>{{rec.partyName}}</td>
+            <td>{{rec.ACCode}}</td>
+            <td>{{rec.ACName}}</td>
+            <td>{{rec.stdUnit}}</td>
+            <td>{{rec.packSize}}</td>
+            <td>{{rec.packs}}</td>
+            <td>{{rec.totalQuantity}}</td>
+            <td>{{rec.stdUnitPrice}}</td>
+            <td ng-if="rec.type == 'Dr'" style=" text-align: right;">{{comNum(rec.drAmount)}}</td>
+            <td ng-if="rec.type == 'Dr'" style="text-align: right;">_____</td>
+            <td ng-if="rec.type == 'Cr'" style="text-align: right;">_____</td>
+            <td ng-if="rec.type == 'Cr'" style="text-align: right;">{{comNum(rec.crAmount)}}</td>
+            <td style="text-align: right;">
+                {{comNum(arrTotal(preRecords, preRecords.length - 1, 0) + arrTotal(records, $index, 0))}}
+            </td>
         </tr>
     </table>
 </div>
@@ -371,32 +342,6 @@
 
 <script>
     $js('debDataForm').focus();
-    $("#ACCodeS").keyup(ACNameComplete);
-    $js('ACCodeS').onpaste = ACNameComplete;
-    $js('ACCodeS').addEventListener('keyup', function (e) {
-        if (e.target.value.length < 4) {
-            e.target.value = 'REV-';
-        }
-    });
-    $js('ACCodeS').addEventListener('focus', function (e) {
-        e.target.nextElementSibling.style.display = 'block';
-    });
-    $js('ACCodeS').addEventListener('focusout', function (e) {
-        e.target.parentElement.removeChild(e.target.nextElementSibling);
-    });
-    var accArrayA = null;
-    function ACNameComplete(event) {
-        event.target.value = event.target.value.toUpperCase();
-        event.target.value = $.trim(event.target.value);
-        let data = accArrayA.find(function (el) {
-            return el.accCode == event.target.value;
-        });
-        // $print(data);
-        if (data) {
-            event.target.parentElement.nextElementSibling.lastElementChild.value = $js('acNameEx').innerHTML = data.accText;
-        }
-        else event.target.parentElement.nextElementSibling.lastElementChild.value = '';
-    }
     $js("debitForm").addEventListener("submit", function (event) {
         event.preventDefault();
     });

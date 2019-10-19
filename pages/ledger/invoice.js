@@ -11,30 +11,24 @@ app.controller('InvoiceCntlr', function ($scope) {
             voucherNo = $scope.vn = parseInt(voucherNo);
             e.target.disabled = true;
             e.target.textContent = 'Loading';
-            fsDb.collection("JournalForm").where('voucherNo', '==', voucherNo).get()
-                .then(function (snapshot) {
-                    if (snapshot.size == 0) {
-                        e.target.disabled = false;
-                        e.target.textContent = 'Create';
-                    }
-                    else {
-                        let count = 0;
-                        $scope.totalAmount = 0;
-                        snapshot.docs.forEach(element => {
-                            let obj = element.data();
-                            obj.date = numToDateConv(obj.date);
-                            if (count % 2 == 0) {
-                                $scope.totalAmount += obj.debitCredit[1].totalPriceTK;
-                            }
-                            count++;
-                            $scope.records.push(obj);
-                            $print(obj);
-                            $scope.$applyAsync();
-                            $js('pdfBtn').style.display = 'block';
-                        });
-                        e.target.disabled = false;
-                        e.target.textContent = 'Create';
-                    }
+            axios.post(apiUrl + 'ledger/invoice', { vNo: voucherNo, operation: 0 })
+                .then(function (res) {
+                    $scope.date = numToDateConv(res.data[0].date);
+                    $scope.partyCode = res.data[0].partyCode;
+                    $scope.partyName = res.data[0].partyName;
+                })
+                .catch(function (err) {
+                    $print(err);
+                    e.target.disabled = false;
+                    e.target.textContent = 'Create';
+                });
+            axios.post(apiUrl + 'ledger/invoice', { vNo: voucherNo, operation: 1 })
+                .then(function (res) {
+                    $scope.records.push(...res.data);
+                    $scope.nodata = false;
+                    $scope.$applyAsync();
+                    e.target.disabled = false;
+                    e.target.textContent = 'Create';
                 })
                 .catch(function (err) {
                     $print(err);

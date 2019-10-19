@@ -33,7 +33,7 @@
                         <label class="w3-medium">Date</label>
                     </div>
                     <div class="w3-rest">
-                        <input class="w3-input w3-border" type="text" ng-value="(records[0].date)"
+                        <input class="w3-input w3-border" type="text" ng-value="date"
                             style="width: 200px; padding: 5px; text-align: center;" disabled>
                     </div>
                 </div>
@@ -42,9 +42,9 @@
                         <label class="w3-medium">Party</label>
                     </div>
                     <div class="w3-rest flex">
-                        <input class="w3-input w3-border" type="text" ng-value="records[0].partyCodes[0]"
+                        <input class="w3-input w3-border" type="text" ng-value="partyCode"
                             style="width: 120px; padding: 5px; text-align: center;" disabled>
-                        <input class="w3-input w3-border" type="text" ng-value="records[0].debitCredit[0].partyName"
+                        <input class="w3-input w3-border" type="text" ng-value="partyName"
                             style="width: 300px; padding: 5px; text-align: center;" disabled>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                             <tbody>
                                 <tr ng-repeat="rec in records track by $index" ng-if="$odd">
                                     <td>{{$index}}</td>
-                                    <td>{{rec.debitCredit[1].partyCode}}</td>
+                                    <td>{{rec.partyCode}}</td>
                                     <td>{{rec.debitCredit[1].partyName}}</td>
                                     <td>{{records[$index - 1].debitCredit[1].stdUnit}}</td>
                                     <td>{{records[$index - 1].debitCredit[1].packType}}</td>

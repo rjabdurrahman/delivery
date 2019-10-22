@@ -7,20 +7,19 @@ app.controller('RawMaterialLedgerCntlr', function ($scope, $firebaseArray) {
     $scope.recShow = false;
     $scope.nodata = false;
     $scope.beg = 0;
-    if(location.hash == '#/rawmaterials'){
-        debitorCodes = [$firebaseArray(getRef('paddyRaw'))];
-    }
-    if(location.hash == '#/finishedandby'){
-        debitorCodes = [$firebaseArray(getRef('buyProducts'))];
-        debitorCodes.push($firebaseArray(getRef('rice')))
-    }
-    console.log(location.hash);
     $scope.debitTaker = function (e) {
         let name = e.target.parentElement.previousElementSibling.lastElementChild;
         let code = name.parentElement.previousElementSibling.lastElementChild;
         let dateTo = code.parentElement.previousElementSibling.lastElementChild;
         let dateFrom = dateTo.parentElement.previousElementSibling.lastElementChild;
-        $print(name);
+        // Begining Balance
+        axios.get(apiUrl + 'chart/raw_materials/' + code.value)
+            .then(function (res) {
+                $scope.beg = res.data[0];
+            })
+            .catch(function (error) {
+                notify(error.message, 2);
+            });
 
         if (dateFrom.value == "") {
             $('#notification').html("<h6>Input Date From</h6>").removeClass('w3-green').addClass('w3-red').fadeIn(200).delay(1000).fadeOut(200);
@@ -62,121 +61,33 @@ app.controller('RawMaterialLedgerCntlr', function ($scope, $firebaseArray) {
 
         e.target.disabled = true;
         e.target.textContent = 'Loading...';
-        // $print(dateToNum(dateTo.value));
-        // $print(dateToNum(dateFrom.value));
+
         $scope.records = [];
         $scope.preRecords = [];
-        // Begining Balance
-        for (i in debitorCodes) {
-            let data = debitorCodes[i].find(function (el) {
-                return el.code == code.value;
-            });
-            // $print(data);
-            if (data) {
-                $scope.beg = data;
-                break;
-            }
-            else $scope.beg = 0;
-        }
-        fsDb.collection("JournalForm").where('partyCodes', 'array-contains', code.value).where("date", "<", dateToNum(dateFrom.value)).get()
-            .then(function (snapshot) {
-                $scope.recShow = true;
-                if (snapshot.size == 0) {
-                    // e.target.disabled = false;
-                    // e.target.textContent = 'Calculate';
-                    // $scope.nodata = true;
-                    // $scope.$applyAsync();
-                }
-                else {
-                    snapshot.docs.forEach(element => {
-                        let obj = element.data();
-                        obj.sCode = code.value;
-                        var dlen = obj.partyCodes.length;
-                        if (dlen > 2) {
-                            var debCres = [];
-                            var debCresCode = [];
-                            debCres = debCres.concat(obj.debitCredit);
-                            debCresCode = debCresCode.concat(obj.partyCodes)
-                            obj.debitCredit = [];
-                            obj.partyCodes = [];
-
-                            for (i = 0; i < dlen; i++) {
-                                console.log(i);
-                                obj.debitCredit.push(debCres.shift());
-                                obj.debitCredit.push(debCres.shift());
-                                obj.partyCodes.push(debCresCode.shift());
-                                obj.partyCodes.push(debCresCode.shift());
-                                let newObj = Object.assign({}, obj);
-                                if (newObj.partyCodes.indexOf(newObj.sCode) >= 0)
-                                    $scope.preRecords.push(newObj);
-                                obj.debitCredit = [];
-                                obj.partyCodes = [];
-                                i++;
-                            }
-                        }
-                        else
-                            $scope.preRecords.push(obj);
-                        $scope.nodata = false;
-                        $scope.$applyAsync();
-                        // $print($scope.preRecords);
-                        // e.target.disabled = false;
-                        // e.target.textContent = 'Calculate';
-                    });
-                }
+        axios.post(apiUrl + 'ledger/debit', {type: 'debitor', partyCode : code.value, dateFrom : dateToNum(dateFrom.value), operation: 0})
+            .then(function (res) {
+                $scope.preRecords.push(...res.data);
+                $scope.nodata = false;
+                $scope.$applyAsync();
+                $print('Pre Records');
+                $print($scope.preRecords);
             })
             .catch(function (err) {
-                notify('Something went wrong in Database', 2);
+                $print(err);
                 e.target.disabled = false;
                 e.target.textContent = 'Calculate';
             });
-        fsDb.collection("JournalForm").where('partyCodes', 'array-contains', code.value).where("date", ">=", dateToNum(dateFrom.value)).where("date", "<=", dateToNum(dateTo.value)).get()
-            .then(function (snapshot) {
-                $scope.recShow = true;
-                if (snapshot.size == 0) {
-                    e.target.disabled = false;
-                    e.target.textContent = 'Calculate';
-                    $scope.nodata = true;
-                    $scope.$applyAsync();
-                }
-                else {
-                    snapshot.docs.forEach(element => {
-                        let obj = element.data();
-                        obj.sCode = code.value;
-                        var dlen = obj.partyCodes.length;
-                        if (dlen > 2) {
-                            var debCres = [];
-                            var debCresCode = [];
-                            debCres = debCres.concat(obj.debitCredit);
-                            debCresCode = debCresCode.concat(obj.partyCodes)
-                            obj.debitCredit = [];
-                            obj.partyCodes = [];
-
-                            for (i = 0; i < dlen; i++) {
-                                console.log(i);
-                                obj.debitCredit.push(debCres.shift());
-                                obj.debitCredit.push(debCres.shift());
-                                obj.partyCodes.push(debCresCode.shift());
-                                obj.partyCodes.push(debCresCode.shift());
-                                let newObj = Object.assign({}, obj);
-                                if (newObj.partyCodes.indexOf(newObj.sCode) >= 0)
-                                    $scope.records.push(newObj);
-                                obj.debitCredit = [];
-                                obj.partyCodes = [];
-                                i++;
-                            }
-                        }
-                        else
-                            $scope.records.push(obj);
-                        $scope.nodata = false;
-                        $scope.$applyAsync();
-                        // $print($scope.records);
-                        e.target.disabled = false;
-                        e.target.textContent = 'Calculate';
-                    });
-                }
+        axios.post(apiUrl + 'ledger/debit', {type: 'debitor', partyCode : code.value, dateFrom : dateToNum(dateFrom.value), dateTo : dateToNum(dateTo.value), operation: 1})
+            .then(function (res) {
+                $scope.records.push(...res.data);
+                $scope.nodata = false;
+                $scope.$applyAsync();
+                $print($scope.records);
+                e.target.disabled = false;
+                e.target.textContent = 'Calculate';
             })
             .catch(function (err) {
-                notify('Something went wrong in Database', 2);
+                $print(err);
                 e.target.disabled = false;
                 e.target.textContent = 'Calculate';
             });
@@ -186,17 +97,17 @@ app.controller('RawMaterialLedgerCntlr', function ($scope, $firebaseArray) {
         if (index == -1) return 0;
         let total = 0;
         for (i = 0; i <= index; i++) {
-            if (arr[i].sCode == arr[i].partyCodes[0] && (t == 0 || t == 1)) {
-                total += arr[i].debitCredit[0].drAmount;
+            if (arr[i].type == 'Dr' && (t == 0 || t == 1)) {
+                total += arr[i].drAmount;
             }
-            if (arr[i].sCode == arr[i].partyCodes[1] && (t == 0 || t == 2)) {
-                total -= arr[i].debitCredit[1].crAmount;
+            if (arr[i].type == 'Cr' && (t == 0 || t == 2)) {
+                total -= arr[i].crAmount;
             }
         }
         return total;
     }
-    $scope.zeroDiv = function (n){
-        if(n == 0) return 1;
+    $scope.zeroDiv = function (n) {
+        if (n == 0) return 1;
         else return n;
     }
     $scope.dataTotal = function (arr, index, t) {

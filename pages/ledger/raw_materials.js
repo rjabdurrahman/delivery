@@ -116,31 +116,31 @@ app.controller('RawMaterialLedgerCntlr', function ($scope, $firebaseArray) {
         let total = 0;
         for (i = 0; i <= index; i++) {
             if (arr[i].sCode == arr[i].partyCodes[0]) {
-                if (t == 1 && !isNaN(arr[i].debitCredit[0].primaryQuantity)) {
-                    total += arr[i].debitCredit[0].primaryQuantity;
+                if (t == 1 && !isNaN(arr[i].primaryQuantity)) {
+                    total += arr[i].primaryQuantity;
                 }
-                if (t == 5 && !isNaN(arr[i].debitCredit[0].totalQuantity)) {
-                    total += arr[i].debitCredit[0].totalQuantity;
+                if (t == 5 && !isNaN(arr[i].totalQuantity)) {
+                    total += arr[i].totalQuantity;
                 }
-                if (t == 7 && arr[i].debitCredit[0].primaryUnit != '') {
-                    return arr[i].debitCredit[0].primaryUnit;
+                if (t == 7 && arr[i].primaryUnit != '') {
+                    return arr[i].primaryUnit;
                 }
-                if (t == 8 && arr[i].debitCredit[1].stdUnit != '') {
-                    return arr[i].debitCredit[1].stdUnit;
+                if (t == 8 && arr[i].stdUnit != '') {
+                    return arr[i].stdUnit;
                 }
             }
             if (arr[i].sCode == arr[i].partyCodes[1]) {
-                if (t == 1 && !isNaN(arr[i].debitCredit[1].primaryQuantity)) {
-                    total -= arr[i].debitCredit[1].primaryQuantity;
+                if (t == 1 && !isNaN(arr[i].primaryQuantity)) {
+                    total -= arr[i].primaryQuantity;
                 }
-                if (t == 5 && !isNaN(arr[i].debitCredit[1].totalQuantity)) {
-                    total -= arr[i].debitCredit[1].totalQuantity;
+                if (t == 5 && !isNaN(arr[i].totalQuantity)) {
+                    total -= arr[i].totalQuantity;
                 }
-                if (t == 7 && arr[i].debitCredit[1].primaryUnit != '') {
-                    return arr[i].debitCredit[1].primaryUnit;
+                if (t == 7 && arr[i].primaryUnit != '') {
+                    return arr[i].primaryUnit;
                 }
-                if (t == 8 && arr[i].debitCredit[1].stdUnit != '') {
-                    return arr[i].debitCredit[1].stdUnit;
+                if (t == 8 && arr[i].stdUnit != '') {
+                    return arr[i].stdUnit;
                 }
             }
         }
